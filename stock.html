@@ -1,0 +1,3252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Green Angan • Stock Manager</title>
+
+<style>
+:root{
+    --green:#007e5b;
+    --green-dark:#00543d;
+    --green-deep:#003c2c;
+    --green-light:#00a878;
+
+    --gold:#f59e0b;
+    --gold-light:#fbbf24;
+    --gold-soft:#fff8e7;
+
+    --red:#dc3545;
+    --red-soft:#fff0f2;
+
+    --blue:#2563eb;
+    --blue-soft:#eff6ff;
+
+    --success:#15803d;
+    --success-soft:#ecfdf3;
+
+    --bg:#f3f7f5;
+    --card:#ffffff;
+    --text:#17221e;
+    --muted:#71807a;
+    --border:#dfe8e4;
+
+    --shadow-sm:0 3px 12px rgba(0,60,44,.06);
+    --shadow:0 10px 30px rgba(0,60,44,.09);
+    --shadow-lg:0 25px 70px rgba(0,30,22,.18);
+
+    --radius:16px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(
+            circle at 0% 0%,
+            rgba(0,168,120,.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 100% 100%,
+            rgba(245,158,11,.07),
+            transparent 30%
+        ),
+        var(--bg);
+    color:var(--text);
+    padding-bottom:50px;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+}
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+#pinLockScreen{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(0,168,120,.35),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(251,191,36,.22),
+            transparent 27%
+        ),
+        linear-gradient(
+            135deg,
+            #001f17,
+            #00543d 52%,
+            #00291f
+        );
+}
+
+#pinLockScreen:before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:35px 35px;
+}
+
+.login-glow{
+    position:absolute;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.10),
+            transparent 70%
+        );
+
+    filter:blur(5px);
+}
+
+.login-glow.one{
+    top:-90px;
+    left:-70px;
+}
+
+.login-glow.two{
+    bottom:-100px;
+    right:-70px;
+}
+
+.pin-box{
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    max-width:420px;
+
+    padding:38px 30px 32px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.98),
+            rgba(246,252,249,.96)
+        );
+
+    border:1px solid rgba(255,255,255,.65);
+
+    border-radius:24px;
+
+    box-shadow:
+        0 35px 100px rgba(0,0,0,.42);
+
+    animation:loginIn .55s ease;
+}
+
+@keyframes loginIn{
+    from{
+        opacity:0;
+        transform:translateY(20px) scale(.97);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.pin-box:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:5px;
+
+    border-radius:24px 24px 0 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green),
+            var(--gold),
+            var(--green-light)
+        );
+}
+
+.pin-logo{
+    width:82px;
+    height:82px;
+    object-fit:contain;
+
+    border-radius:18px;
+
+    margin-bottom:14px;
+
+    box-shadow:
+        0 12px 30px rgba(0,80,60,.14);
+}
+
+.login-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    padding:6px 10px;
+
+    border-radius:30px;
+
+    background:var(--success-soft);
+    color:var(--success);
+
+    font-size:10px;
+    font-weight:800;
+
+    margin-bottom:12px;
+}
+
+.pin-box h2{
+    color:var(--green-dark);
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:-.5px;
+
+    margin-bottom:6px;
+}
+
+.pin-box p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.6;
+
+    margin-bottom:22px;
+}
+
+.pin-input-wrap{
+    position:relative;
+}
+
+#adminPin{
+    width:100%;
+
+    padding:15px 45px 15px 15px;
+
+    border:1px solid #d7e1dd;
+    border-radius:12px;
+
+    outline:none;
+
+    text-align:center;
+
+    font-size:22px;
+    letter-spacing:8px;
+
+    color:var(--green-dark);
+
+    background:#f8fbfa;
+
+    transition:.2s;
+}
+
+#adminPin:focus{
+    background:white;
+    border-color:var(--green-light);
+
+    box-shadow:
+        0 0 0 4px rgba(0,168,120,.10);
+}
+
+.pin-icon{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+
+    pointer-events:none;
+
+    font-size:17px;
+}
+
+#unlockBtn{
+    width:100%;
+
+    margin-top:12px;
+
+    padding:14px;
+
+    border:0;
+    border-radius:12px;
+
+    color:white;
+
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #008d66,
+            #00543d
+        );
+
+    box-shadow:
+        0 9px 22px rgba(0,100,70,.22);
+
+    transition:.2s;
+}
+
+#unlockBtn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 13px 28px rgba(0,100,70,.28);
+}
+
+#pinError{
+    display:none;
+
+    margin-top:12px;
+
+    padding:9px;
+
+    border-radius:9px;
+
+    background:var(--red-soft);
+    color:#c62836;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+.login-footer{
+    margin-top:18px;
+
+    color:#87948f;
+
+    font-size:10px;
+}
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+#stockManagerContent{
+    display:none;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    min-height:70px;
+
+    padding:10px 24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    background:
+        linear-gradient(
+            100deg,
+            rgba(255,255,255,.94),
+            rgba(247,252,250,.90)
+        );
+
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+
+    border-bottom:1px solid rgba(210,225,219,.8);
+
+    box-shadow:
+        0 4px 20px rgba(0,60,44,.07);
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.logo{
+    width:45px;
+    height:45px;
+
+    object-fit:contain;
+    border-radius:11px;
+
+    box-shadow:
+        0 5px 15px rgba(0,80,60,.12);
+}
+
+.brand-title{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.header h2{
+    color:var(--green-dark);
+
+    font-size:18px;
+    font-weight:900;
+
+    letter-spacing:-.3px;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+
+    background:#16a34a;
+
+    box-shadow:
+        0 0 0 4px rgba(22,163,74,.10);
+}
+
+.header-subtitle{
+    display:block;
+
+    color:#81908a;
+
+    font-size:9px;
+    font-weight:600;
+
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.header-btn{
+    border:1px solid #d6e2dd;
+
+    background:white;
+    color:var(--green-dark);
+
+    padding:9px 13px;
+
+    border-radius:10px;
+
+    font-size:11px;
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.header-btn:hover{
+    transform:translateY(-2px);
+
+    background:#eef8f4;
+    border-color:#bcd8cd;
+
+    box-shadow:
+        0 6px 15px rgba(0,80,60,.08);
+}
+
+.header-btn.lock{
+    color:#c62836;
+
+    background:#fff4f5;
+
+    border-color:#f1d4d8;
+}
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+    width:92%;
+    max-width:1100px;
+
+    margin:0 auto;
+
+    padding:25px 0;
+}
+
+.page-heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:18px;
+}
+
+.page-heading h1{
+    color:var(--text);
+
+    font-size:26px;
+    font-weight:900;
+
+    letter-spacing:-.7px;
+}
+
+.page-heading p{
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:5px;
+}
+
+.date-chip{
+    padding:8px 12px;
+
+    background:white;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    color:var(--green-dark);
+
+    font-size:10px;
+    font-weight:800;
+
+    box-shadow:var(--shadow-sm);
+}
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status{
+    display:none;
+
+    padding:12px 15px;
+
+    border-radius:12px;
+
+    margin-bottom:17px;
+
+    font-size:12px;
+    font-weight:800;
+
+    animation:toastIn .3s ease;
+}
+
+.success{
+    background:var(--success-soft);
+    color:#166534;
+
+    border:1px solid #ccebd8;
+}
+
+.error{
+    background:var(--red-soft);
+    color:#b42318;
+
+    border:1px solid #f3cdd2;
+}
+
+@keyframes toastIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
+.summary{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:11px;
+
+    margin-bottom:18px;
+}
+
+.summary-card{
+    position:relative;
+
+    overflow:hidden;
+
+    background:white;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    padding:16px;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:.22s;
+}
+
+.summary-card:hover{
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 14px 30px rgba(0,60,44,.10);
+}
+
+.summary-card:after{
+    content:"";
+
+    position:absolute;
+    left:0;
+    bottom:0;
+
+    width:100%;
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green),
+            var(--green-light)
+        );
+}
+
+.summary-card.gold:after{
+    background:
+        linear-gradient(
+            90deg,
+            #f59e0b,
+            #fbbf24
+        );
+}
+
+.summary-card.red:after{
+    background:
+        linear-gradient(
+            90deg,
+            #dc3545,
+            #ef6673
+        );
+}
+
+.summary-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.summary-icon{
+    width:38px;
+    height:38px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:#edf8f4;
+
+    font-size:18px;
+}
+
+.summary-card.gold .summary-icon{
+    background:var(--gold-soft);
+}
+
+.summary-card.red .summary-icon{
+    background:var(--red-soft);
+}
+
+.summary-card span{
+    display:block;
+
+    color:#7a8882;
+
+    font-size:9px;
+    font-weight:800;
+
+    text-transform:uppercase;
+    letter-spacing:.6px;
+
+    margin-top:10px;
+}
+
+.summary-card strong{
+    display:block;
+
+    color:var(--text);
+
+    font-size:22px;
+    font-weight:900;
+
+    margin-top:4px;
+}
+
+/* =====================================================
+   PANELS
+===================================================== */
+
+.panel{
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.98),
+            rgba(250,253,252,.98)
+        );
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    padding:21px;
+
+    margin-bottom:18px;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:.2s;
+}
+
+.panel:hover{
+    box-shadow:var(--shadow);
+}
+
+.panel-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:15px;
+
+    padding-bottom:13px;
+
+    border-bottom:1px solid #edf2ef;
+}
+
+.panel-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.panel-title h3{
+    color:#20332c;
+
+    font-size:14px;
+    font-weight:900;
+}
+
+.panel-title small{
+    color:#8a9691;
+
+    font-size:9px;
+}
+
+.panel-icon{
+    width:34px;
+    height:34px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:#edf8f4;
+
+    font-size:16px;
+}
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:9px;
+}
+
+.form-group{
+    position:relative;
+}
+
+.form-group.full{
+    grid-column:span 2;
+}
+
+.form-label{
+    display:block;
+
+    color:#5f7069;
+
+    font-size:10px;
+    font-weight:800;
+
+    margin:2px 0 5px;
+}
+
+input,
+select{
+    width:100%;
+
+    padding:12px 13px;
+
+    border:1px solid #d6e0dc;
+
+    border-radius:10px;
+
+    outline:none;
+
+    color:#24332e;
+
+    background:#f9fbfa;
+
+    font-size:12px;
+
+    transition:.2s;
+}
+
+input:hover,
+select:hover{
+    border-color:#c2d4cc;
+}
+
+input:focus,
+select:focus{
+    background:white;
+
+    border-color:var(--green-light);
+
+    box-shadow:
+        0 0 0 4px rgba(0,168,120,.08);
+}
+
+.file-box{
+    grid-column:span 2;
+
+    padding:13px;
+
+    border:1px dashed #bcd5ca;
+
+    border-radius:11px;
+
+    background:#f6fbf8;
+}
+
+.file-label{
+    display:block;
+
+    color:var(--green-dark);
+
+    font-size:10px;
+    font-weight:900;
+
+    margin-bottom:7px;
+}
+
+.file-box input{
+    background:white;
+}
+
+.save-btn{
+    grid-column:span 2;
+
+    width:100%;
+
+    padding:13px;
+
+    margin-top:2px;
+
+    border:0;
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #008d66,
+            #00543d
+        );
+
+    color:white;
+
+    font-size:12px;
+    font-weight:900;
+
+    box-shadow:
+        0 8px 20px rgba(0,90,65,.18);
+
+    transition:.2s;
+}
+
+.save-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(0,90,65,.25);
+}
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.inventory-tools{
+    display:grid;
+
+    grid-template-columns:
+        1fr 180px;
+
+    gap:8px;
+
+    margin-bottom:14px;
+}
+
+.search-wrap{
+    position:relative;
+}
+
+.search-wrap input{
+    padding-left:38px;
+}
+
+.search-symbol{
+    position:absolute;
+
+    left:13px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#82918b;
+
+    pointer-events:none;
+}
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+.delete-area{
+    display:grid;
+
+    grid-template-columns:1fr 180px;
+
+    gap:9px;
+}
+
+.delete-btn{
+    border:0;
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e64a59,
+            #c62836
+        );
+
+    color:white;
+
+    font-size:11px;
+    font-weight:900;
+
+    box-shadow:
+        0 7px 17px rgba(198,40,54,.15);
+
+    transition:.2s;
+}
+
+.delete-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 22px rgba(198,40,54,.22);
+}
+
+/* =====================================================
+   STOCK GRID
+===================================================== */
+
+.stock-list{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:11px;
+}
+
+.stock-item{
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    min-width:0;
+
+    padding:12px;
+
+    background:white;
+
+    border:1px solid #e3ebe7;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    transition:.22s;
+}
+
+.stock-item:hover{
+    transform:translateY(-3px);
+
+    border-color:#bfd8cc;
+
+    box-shadow:
+        0 10px 25px rgba(0,60,44,.08);
+}
+
+.stock-item.low{
+    border-color:#f2d9a4;
+    background:#fffdf7;
+}
+
+.stock-item.out{
+    border-color:#f1cdd2;
+    background:#fffafb;
+}
+
+.stock-image-wrap{
+    position:relative;
+    flex-shrink:0;
+}
+
+.stock-item img{
+    width:68px;
+    height:68px;
+
+    border-radius:12px;
+
+    object-fit:cover;
+
+    border:1px solid #e2e9e6;
+
+    background:#f5f8f6;
+}
+
+.stock-info{
+    flex:1;
+    min-width:0;
+}
+
+.stock-info strong{
+    display:block;
+
+    color:var(--green-dark);
+
+    font-size:13px;
+    font-weight:900;
+
+    margin-bottom:4px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.stock-category{
+    display:inline-flex;
+
+    padding:4px 7px;
+
+    border-radius:6px;
+
+    background:#eef7f3;
+
+    color:#24745b;
+
+    font-size:8px;
+    font-weight:800;
+
+    margin-bottom:7px;
+}
+
+.stock-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+}
+
+.meta-pill{
+    display:inline-flex;
+    align-items:center;
+
+    padding:4px 6px;
+
+    border-radius:6px;
+
+    background:#f4f7f6;
+
+    color:#61706a;
+
+    font-size:8px;
+    font-weight:800;
+}
+
+.price-pill{
+    background:var(--gold-soft);
+    color:#9a6708;
+}
+
+.stock-count{
+    position:absolute;
+
+    top:10px;
+    right:10px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+
+    padding:5px 8px;
+
+    border-radius:30px;
+
+    font-size:8px;
+    font-weight:900;
+
+    white-space:nowrap;
+}
+
+.badge.green{
+    color:#16743a;
+    background:#e9f8ee;
+    border:1px solid #cdebd8;
+}
+
+.badge.orange{
+    color:#9a6708;
+    background:#fff5dc;
+    border:1px solid #f2dfb1;
+}
+
+.badge.red{
+    color:#c62836;
+    background:#fff0f2;
+    border:1px solid #f0ccd1;
+}
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty-stock{
+    grid-column:1/-1;
+
+    padding:35px 15px;
+
+    text-align:center;
+
+    color:#81908a;
+
+    border:1px dashed #cbd9d3;
+
+    border-radius:13px;
+
+    background:#fafcfb;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+/* =====================================================
+   FLOATING TOAST
+===================================================== */
+
+#toast{
+    position:fixed;
+
+    right:22px;
+    bottom:22px;
+
+    z-index:100000;
+
+    min-width:250px;
+    max-width:360px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:13px 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #17221e,
+            #26352f
+        );
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-left:4px solid var(--green-light);
+
+    border-radius:13px;
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.25);
+
+    font-size:11px;
+    font-weight:800;
+
+    transform:translateY(20px);
+    opacity:0;
+    pointer-events:none;
+
+    transition:.3s;
+}
+
+#toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-height:120px;
+
+    color:#75837d;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+.spinner{
+    width:18px;
+    height:18px;
+
+    border:2px solid #dce7e2;
+    border-top-color:var(--green);
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+
+    margin-right:8px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:800px){
+
+    .summary{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stock-list{
+        grid-template-columns:1fr;
+    }
+
+    .inventory-tools{
+        grid-template-columns:1fr;
+    }
+
+    .delete-area{
+        grid-template-columns:1fr;
+    }
+
+    .delete-btn{
+        min-height:44px;
+    }
+}
+
+@media(max-width:600px){
+
+    .header{
+        padding:9px 11px;
+    }
+
+    .logo{
+        width:38px;
+        height:38px;
+    }
+
+    .header h2{
+        font-size:14px;
+    }
+
+    .header-subtitle{
+        display:none;
+    }
+
+    .header-actions{
+        gap:4px;
+    }
+
+    .header-btn{
+        padding:8px 9px;
+        font-size:9px;
+    }
+
+    .container{
+        width:94%;
+        padding-top:18px;
+    }
+
+    .page-heading{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .page-heading h1{
+        font-size:22px;
+    }
+
+    .date-chip{
+        align-self:flex-start;
+    }
+
+    .panel{
+        padding:15px;
+        border-radius:14px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full,
+    .file-box,
+    .save-btn{
+        grid-column:auto;
+    }
+
+    .summary{
+        gap:8px;
+    }
+
+    .summary-card{
+        padding:13px;
+    }
+
+    .summary-card strong{
+        font-size:18px;
+    }
+
+    .summary-icon{
+        width:32px;
+        height:32px;
+        font-size:15px;
+    }
+
+    .stock-item{
+        padding:10px;
+    }
+
+    .stock-item img{
+        width:60px;
+        height:60px;
+    }
+
+    #toast{
+        left:12px;
+        right:12px;
+        bottom:12px;
+        min-width:0;
+        max-width:none;
+    }
+}
+
+@media(max-width:400px){
+
+    .header-btn.store{
+        font-size:0;
+        width:34px;
+        height:34px;
+        padding:0;
+    }
+
+    .header-btn.store:before{
+        content:"🏪";
+        font-size:15px;
+    }
+
+    .header-btn.lock{
+        font-size:0;
+        width:34px;
+        height:34px;
+        padding:0;
+    }
+
+    .header-btn.lock:before{
+        content:"🔒";
+        font-size:14px;
+    }
+
+    .summary-card span{
+        font-size:8px;
+    }
+
+    .stock-info strong{
+        font-size:12px;
+    }
+}
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible{
+    outline:2px solid var(--green-light);
+    outline-offset:2px;
+}
+
+::selection{
+    background:#bce8d8;
+    color:#003c2c;
+}
+
+::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#edf2ef;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#b6ccc3;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#769c8e;
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<div id="pinLockScreen">
+
+    <div class="login-glow one"></div>
+    <div class="login-glow two"></div>
+
+    <div class="pin-box">
+
+        <img
+            src="Logo.png"
+            class="pin-logo"
+            alt="Green Angan"
+        >
+
+        <div class="login-badge">
+            🟢 SECURE MANAGER ACCESS
+        </div>
+
+        <h2>Stock Manager</h2>
+
+        <p>
+            Manage products, stock levels and inventory
+            from one premium control panel.
+        </p>
+
+        <div class="pin-input-wrap">
+
+            <input
+                type="password"
+                id="adminPin"
+                placeholder="••••••"
+                maxlength="6"
+                inputmode="numeric"
+                autocomplete="off"
+            >
+
+            <span class="pin-icon">🔐</span>
+
+        </div>
+
+        <button id="unlockBtn">
+            🔓 Unlock Stock Manager
+        </button>
+
+        <div id="pinError">
+            ❌ Wrong PIN. Please try again.
+        </div>
+
+        <div class="login-footer">
+            🌿 Green Angan • Authorized Access Only
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div id="stockManagerContent">
+
+    <header class="header">
+
+        <div class="header-left">
+
+            <img
+                src="Logo.png"
+                class="logo"
+                alt="Green Angan"
+            >
+
+            <div>
+
+                <div class="brand-title">
+
+                    <h2>
+                        📦 Green Angan Stock
+                    </h2>
+
+                    <span class="live-dot"></span>
+
+                </div>
+
+                <small class="header-subtitle">
+                    Live Inventory Control Center
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                class="header-btn store"
+                onclick="window.location.href='index.html'"
+            >
+                🏪 Store
+            </button>
+
+            <button
+                class="header-btn lock"
+                id="lockManagerBtn"
+            >
+                🔒 Lock
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-heading">
+
+            <div>
+
+                <h1>
+                    📦 Inventory Dashboard
+                </h1>
+
+                <p>
+                    Add, monitor and manage your Green Angan products.
+                </p>
+
+            </div>
+
+            <div class="date-chip" id="todayDate">
+                📅 Loading...
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div id="statusBox" class="status"></div>
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================= -->
+
+        <section class="summary">
+
+            <div class="summary-card">
+
+                <div class="summary-top">
+
+                    <div class="summary-icon">
+                        📦
+                    </div>
+
+                </div>
+
+                <span>Total Products</span>
+
+                <strong id="totalProducts">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-top">
+
+                    <div class="summary-icon">
+                        📊
+                    </div>
+
+                </div>
+
+                <span>Total Stock</span>
+
+                <strong id="totalStock">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card gold">
+
+                <div class="summary-top">
+
+                    <div class="summary-icon">
+                        ⚠️
+                    </div>
+
+                </div>
+
+                <span>Low Stock</span>
+
+                <strong id="lowStock">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card red">
+
+                <div class="summary-top">
+
+                    <div class="summary-icon">
+                        🚫
+                    </div>
+
+                </div>
+
+                <span>Out of Stock</span>
+
+                <strong id="outStock">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ADD PRODUCT
+        ================================================= -->
+
+        <section class="panel">
+
+            <div class="panel-heading">
+
+                <div class="panel-title">
+
+                    <div class="panel-icon">
+                        ➕
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Add New Stock
+                        </h3>
+
+                        <small>
+                            Create a new product in inventory
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        PRODUCT NAME
+                    </label>
+
+                    <input
+                        type="text"
+                        id="stockProdName"
+                        placeholder="e.g. Organic Honey"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        CATEGORY
+                    </label>
+
+                    <input
+                        type="text"
+                        id="stockProdCat"
+                        placeholder="e.g. Seeds, Honey"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        SELLING PRICE
+                    </label>
+
+                    <input
+                        type="number"
+                        id="stockProdPrice"
+                        placeholder="Price ₹"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        INITIAL STOCK
+                    </label>
+
+                    <input
+                        type="number"
+                        id="stockProdQty"
+                        placeholder="Quantity"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        UNIT
+                    </label>
+
+                    <select id="stockProdUnit">
+
+                        <option value="kg">
+                            KG
+                        </option>
+
+                        <option value="43KG-PER 1BUNDLE">
+                            KG-1-KATTA
+                        </option>
+
+                        <option value="Packets">
+                            Packets
+                        </option>
+
+                        <option value="pc">
+                            PC
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        LOW STOCK LIMIT
+                    </label>
+
+                    <input
+                        type="number"
+                        id="stockLowLimit"
+                        value="5"
+                        min="0"
+                        placeholder="e.g. 5"
+                    >
+
+                </div>
+
+
+                <div class="file-box">
+
+                    <label class="file-label">
+                        📸 PRODUCT IMAGE
+                    </label>
+
+                    <input
+                        type="file"
+                        id="stockProdImgFile"
+                        accept="image/*"
+                    >
+
+                </div>
+
+
+                <button
+                    class="save-btn"
+                    id="saveStockBtn"
+                >
+                    💾 Save Product to Inventory
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DELETE
+        ================================================= -->
+
+        <section class="panel">
+
+            <div class="panel-heading">
+
+                <div class="panel-title">
+
+                    <div class="panel-icon">
+                        🗑️
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Product Management
+                        </h3>
+
+                        <small>
+                            Remove an existing product
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="delete-area">
+
+                <select id="deleteProdSelect">
+
+                    <option value="">
+                        -- Choose Product --
+                    </option>
+
+                </select>
+
+                <button
+                    class="delete-btn"
+                    id="deleteStockBtn"
+                >
+                    🗑️ Delete Product
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CURRENT STOCK
+        ================================================= -->
+
+        <section class="panel">
+
+            <div class="panel-heading">
+
+                <div class="panel-title">
+
+                    <div class="panel-icon">
+                        📋
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Current Inventory
+                        </h3>
+
+                        <small id="inventoryCount">
+                            Live products
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="inventory-tools">
+
+                <div class="search-wrap">
+
+                    <span class="search-symbol">
+                        🔎
+                    </span>
+
+                    <input
+                        type="search"
+                        id="stockSearch"
+                        placeholder="Search product name or category..."
+                    >
+
+                </div>
+
+
+                <select id="stockFilter">
+
+                    <option value="all">
+                        All Stock
+                    </option>
+
+                    <option value="healthy">
+                        🟢 Healthy
+                    </option>
+
+                    <option value="low">
+                        🟡 Low Stock
+                    </option>
+
+                    <option value="out">
+                        🔴 Out of Stock
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                id="stockList"
+                class="stock-list"
+            >
+
+                <div class="loading">
+
+                    <span class="spinner"></span>
+
+                    Loading inventory...
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    push,
+    remove,
+    onValue
+}
+from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+
+/* =====================================================
+   ADMIN PIN
+===================================================== */
+
+const ADMIN_PIN = "2026";
+
+const pinLockScreen =
+    document.getElementById("pinLockScreen");
+
+const stockManagerContent =
+    document.getElementById("stockManagerContent");
+
+const adminPin =
+    document.getElementById("adminPin");
+
+const unlockBtn =
+    document.getElementById("unlockBtn");
+
+const pinError =
+    document.getElementById("pinError");
+
+
+function unlockStockManager(){
+
+    const enteredPin =
+        adminPin.value.trim();
+
+    if(enteredPin === ADMIN_PIN){
+
+        pinLockScreen.style.display =
+            "none";
+
+        stockManagerContent.style.display =
+            "block";
+
+        pinError.style.display =
+            "none";
+
+        adminPin.value = "";
+
+        sessionStorage.setItem(
+            "green_angan_stock_unlocked",
+            "yes"
+        );
+
+    }else{
+
+        pinError.style.display =
+            "block";
+
+        adminPin.value = "";
+
+        adminPin.focus();
+
+    }
+
+}
+
+
+unlockBtn.onclick =
+    unlockStockManager;
+
+
+adminPin.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Enter"){
+            unlockStockManager();
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SESSION LOGIN
+===================================================== */
+
+if(
+    sessionStorage.getItem(
+        "green_angan_stock_unlocked"
+    ) === "yes"
+){
+
+    pinLockScreen.style.display =
+        "none";
+
+    stockManagerContent.style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   LOCK
+===================================================== */
+
+document
+    .getElementById("lockManagerBtn")
+    .onclick =
+    function(){
+
+        sessionStorage.removeItem(
+            "green_angan_stock_unlocked"
+        );
+
+        location.reload();
+
+    };
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyAwydVIDNYu6n3ze_yaI-Q9r1Ms6MMCcYM",
+
+    authDomain:
+        "greenangan-7a085.firebaseapp.com",
+
+    databaseURL:
+        "https://greenangan-7a085-default-rtdb.firebaseio.com/",
+
+    projectId:
+        "greenangan-7a085",
+
+    storageBucket:
+        "greenangan-7a085.firebasestorage.app",
+
+    messagingSenderId:
+        "105971440710",
+
+    appId:
+        "1:105971440710:web:32e03bcb5cd2fcf8713347",
+
+    measurementId:
+        "G-L5KCJ9FS2F"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const database =
+    getDatabase(app);
+
+
+let products = [];
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+document
+    .getElementById("todayDate")
+    .innerText =
+        "📅 " +
+        new Date().toLocaleDateString(
+            "en-IN",
+            {
+                day:"numeric",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.innerText =
+        message;
+
+    toast.classList.add("show");
+
+    clearTimeout(
+        window.stockToastTimer
+    );
+
+    window.stockToastTimer =
+        setTimeout(
+            () => {
+                toast.classList.remove("show");
+            },
+            3000
+        );
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function showStatus(
+    message,
+    type="success"
+){
+
+    const box =
+        document.getElementById(
+            "statusBox"
+        );
+
+    box.innerText =
+        message;
+
+    box.className =
+        "status " + type;
+
+    box.style.display =
+        "block";
+
+    setTimeout(
+        () => {
+            box.style.display =
+                "none";
+        },
+        3500
+    );
+
+    showToast(message);
+
+}
+
+
+/* =====================================================
+   IMAGE COMPRESS
+===================================================== */
+
+const compressAndGetBase64 =
+file =>
+new Promise(
+    (resolve,reject) => {
+
+        const reader =
+            new FileReader();
+
+        reader.onload =
+        event => {
+
+            const img =
+                new Image();
+
+            img.onload =
+            () => {
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+                const maxSize =
+                    400;
+
+                let width =
+                    img.width;
+
+                let height =
+                    img.height;
+
+
+                if(width > height){
+
+                    if(width > maxSize){
+
+                        height *=
+                            maxSize / width;
+
+                        width =
+                            maxSize;
+
+                    }
+
+                }else{
+
+                    if(height > maxSize){
+
+                        width *=
+                            maxSize / height;
+
+                        height =
+                            maxSize;
+
+                    }
+
+                }
+
+
+                canvas.width =
+                    width;
+
+                canvas.height =
+                    height;
+
+
+                const ctx =
+                    canvas.getContext(
+                        "2d"
+                    );
+
+
+                ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+
+                resolve(
+                    canvas.toDataURL(
+                        "image/jpeg",
+                        .6
+                    )
+                );
+
+            };
+
+
+            img.onerror =
+                reject;
+
+            img.src =
+                event.target.result;
+
+        };
+
+
+        reader.onerror =
+            reject;
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* =====================================================
+   LOAD PRODUCTS
+===================================================== */
+
+onValue(
+    ref(
+        database,
+        "products"
+    ),
+    snapshot => {
+
+        const data =
+            snapshot.val();
+
+        products = [];
+
+
+        if(data){
+
+            Object.keys(data)
+                .forEach(key => {
+
+                    products.push({
+
+                        firebaseKey:key,
+
+                        ...data[key]
+
+                    });
+
+                });
+
+        }
+
+
+        renderEverything();
+
+    },
+    error => {
+
+        console.error(error);
+
+        showStatus(
+            "❌ Unable to load Firebase products.",
+            "error"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   STOCK HELPERS
+===================================================== */
+
+function getStock(product){
+
+    return Number(
+        product.stock || 0
+    );
+
+}
+
+
+function getLowLimit(product){
+
+    return Number(
+        product.lowStockLimit ??
+        5
+    );
+
+}
+
+
+function stockStatus(product){
+
+    const stock =
+        getStock(product);
+
+    const limit =
+        getLowLimit(product);
+
+
+    if(stock <= 0)
+        return "out";
+
+    if(stock <= limit)
+        return "low";
+
+    return "healthy";
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function renderSummary(){
+
+    const totalProducts =
+        products.length;
+
+    const totalStock =
+        products.reduce(
+            (sum,p) =>
+                sum + getStock(p),
+            0
+        );
+
+    const low =
+        products.filter(
+            p =>
+                stockStatus(p) === "low"
+        ).length;
+
+    const out =
+        products.filter(
+            p =>
+                stockStatus(p) === "out"
+        ).length;
+
+
+    document.getElementById(
+        "totalProducts"
+    ).innerText =
+        totalProducts;
+
+
+    document.getElementById(
+        "totalStock"
+    ).innerText =
+        totalStock.toLocaleString(
+            "en-IN"
+        );
+
+
+    document.getElementById(
+        "lowStock"
+    ).innerText =
+        low;
+
+
+    document.getElementById(
+        "outStock"
+    ).innerText =
+        out;
+
+
+    document.getElementById(
+        "inventoryCount"
+    ).innerText =
+        `${totalProducts} live product${totalProducts === 1 ? "" : "s"}`;
+
+}
+
+
+/* =====================================================
+   RENDER EVERYTHING
+===================================================== */
+
+function renderEverything(){
+
+    renderSummary();
+
+    renderStock();
+
+    populateDeleteDropdown();
+
+}
+
+
+/* =====================================================
+   SEARCH / FILTER
+===================================================== */
+
+document
+    .getElementById("stockSearch")
+    .addEventListener(
+        "input",
+        renderStock
+    );
+
+
+document
+    .getElementById("stockFilter")
+    .addEventListener(
+        "change",
+        renderStock
+    );
+
+
+/* =====================================================
+   RENDER STOCK
+===================================================== */
+
+function renderStock(){
+
+    const list =
+        document.getElementById(
+            "stockList"
+        );
+
+    const search =
+        document
+            .getElementById(
+                "stockSearch"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+    const filter =
+        document
+            .getElementById(
+                "stockFilter"
+            )
+            .value;
+
+
+    let filtered =
+        products.filter(
+            product => {
+
+                const name =
+                    String(
+                        product.name || ""
+                    ).toLowerCase();
+
+                const category =
+                    String(
+                        product.category || ""
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    name.includes(search) ||
+                    category.includes(search);
+
+
+                const status =
+                    stockStatus(product);
+
+                const matchesFilter =
+                    filter === "all" ||
+                    status === filter;
+
+
+                return (
+                    matchesSearch &&
+                    matchesFilter
+                );
+
+            }
+        );
+
+
+    if(!filtered.length){
+
+        list.innerHTML = `
+            <div class="empty-stock">
+                📦 No products match your search/filter.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        filtered.map(
+            product => {
+
+                const status =
+                    stockStatus(product);
+
+                const stock =
+                    getStock(product);
+
+                let badgeClass =
+                    "green";
+
+                let badgeText =
+                    "🟢 Healthy Stock";
+
+
+                if(status === "low"){
+
+                    badgeClass =
+                        "orange";
+
+                    badgeText =
+                        "🟡 Low Stock";
+
+                }
+
+
+                if(status === "out"){
+
+                    badgeClass =
+                        "red";
+
+                    badgeText =
+                        "🔴 Out of Stock";
+
+                }
+
+
+                const cardClass =
+                    status === "low"
+                    ? "low"
+                    : status === "out"
+                    ? "out"
+                    : "";
+
+
+                return `
+
+                <div class="stock-item ${cardClass}">
+
+                    <div class="stock-image-wrap">
+
+                        <img
+                            src="${safe(
+                                product.image ||
+                                "Logo.png"
+                            )}"
+                            alt="${safe(
+                                product.name ||
+                                "Product"
+                            )}"
+                            onerror="this.src='Logo.png'"
+                        >
+
+                    </div>
+
+
+                    <div class="stock-info">
+
+                        <strong>
+                            ${safe(
+                                product.name ||
+                                "Unnamed Product"
+                            )}
+                        </strong>
+
+
+                        <span class="stock-category">
+
+                            ${safe(
+                                product.category ||
+                                "Other"
+                            )}
+
+                        </span>
+
+
+                        <div class="stock-meta">
+
+                            <span class="meta-pill price-pill">
+                                💰 ₹${Number(
+                                    product.price || 0
+                                ).toLocaleString("en-IN")}
+                            </span>
+
+                            <span class="meta-pill">
+                                📦 ${stock}
+                                ${safe(
+                                    product.unit ||
+                                    "pc"
+                                )}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stock-count">
+
+                        <span class="badge ${badgeClass}">
+                            ${badgeText}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =====================================================
+   DELETE DROPDOWN
+===================================================== */
+
+function populateDeleteDropdown(){
+
+    const select =
+        document.getElementById(
+            "deleteProdSelect"
+        );
+
+
+    select.innerHTML = `
+        <option value="">
+            -- Choose Product --
+        </option>
+    `;
+
+
+    products
+        .slice()
+        .sort(
+            (a,b) =>
+                String(
+                    a.name || ""
+                ).localeCompare(
+                    String(
+                        b.name || ""
+                    )
+                )
+        )
+        .forEach(
+            product => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    product.firebaseKey;
+
+                option.textContent =
+                    `${product.name || "Unnamed"} • ₹${product.price || 0}`;
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   SAVE STOCK
+===================================================== */
+
+document
+    .getElementById("saveStockBtn")
+    .onclick =
+    async function(){
+
+        const button =
+            this;
+
+
+        const name =
+            document
+                .getElementById(
+                    "stockProdName"
+                )
+                .value
+                .trim();
+
+
+        const category =
+            document
+                .getElementById(
+                    "stockProdCat"
+                )
+                .value
+                .trim();
+
+
+        const price =
+            Number(
+                document
+                    .getElementById(
+                        "stockProdPrice"
+                    )
+                    .value
+            );
+
+
+        const stockQty =
+            Number(
+                document
+                    .getElementById(
+                        "stockProdQty"
+                    )
+                    .value
+            );
+
+
+        const unit =
+            document
+                .getElementById(
+                    "stockProdUnit"
+                )
+                .value;
+
+
+        const lowStockLimit =
+            Number(
+                document
+                    .getElementById(
+                        "stockLowLimit"
+                    )
+                    .value
+            );
+
+
+        const imageFile =
+            document
+                .getElementById(
+                    "stockProdImgFile"
+                )
+                .files[0];
+
+
+        /* VALIDATION */
+
+        if(
+            !name ||
+            !category ||
+            !Number.isFinite(price) ||
+            price <= 0 ||
+            !Number.isFinite(stockQty) ||
+            stockQty < 0
+        ){
+
+            showStatus(
+                "❌ Please enter valid product details.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        button.disabled =
+            true;
+
+        button.innerText =
+            "⏳ Saving Product...";
+
+
+        try{
+
+            let image =
+                "Logo.png";
+
+
+            if(imageFile){
+
+                image =
+                    await compressAndGetBase64(
+                        imageFile
+                    );
+
+            }
+
+
+            const product = {
+
+                name:name,
+
+                category:category,
+
+                price:price,
+
+                originalPrice:
+                    Math.round(
+                        price * 1.4
+                    ),
+
+                stock:stockQty,
+
+                unit:unit,
+
+                lowStockLimit:
+                    Number.isFinite(
+                        lowStockLimit
+                    )
+                    ? lowStockLimit
+                    : 5,
+
+                image:image,
+
+                createdAt:
+                    new Date().toISOString()
+
+            };
+
+
+            await push(
+                ref(
+                    database,
+                    "products"
+                ),
+                product
+            );
+
+
+            showStatus(
+                "🎉 Product added successfully!",
+                "success"
+            );
+
+
+            clearProductForm();
+
+
+        }catch(error){
+
+            console.error(error);
+
+            showStatus(
+                "❌ Failed to save product.",
+                "error"
+            );
+
+        }
+
+
+        button.disabled =
+            false;
+
+        button.innerText =
+            "💾 Save Product to Inventory";
+
+    };
+
+
+/* =====================================================
+   CLEAR FORM
+===================================================== */
+
+function clearProductForm(){
+
+    document.getElementById(
+        "stockProdName"
+    ).value = "";
+
+    document.getElementById(
+        "stockProdCat"
+    ).value = "";
+
+    document.getElementById(
+        "stockProdPrice"
+    ).value = "";
+
+    document.getElementById(
+        "stockProdQty"
+    ).value = "";
+
+    document.getElementById(
+        "stockProdImgFile"
+    ).value = "";
+
+    document.getElementById(
+        "stockLowLimit"
+    ).value = "5";
+
+}
+
+
+/* =====================================================
+   DELETE STOCK
+===================================================== */
+
+document
+    .getElementById("deleteStockBtn")
+    .onclick =
+    async function(){
+
+        const button =
+            this;
+
+
+        const key =
+            document
+                .getElementById(
+                    "deleteProdSelect"
+                )
+                .value;
+
+
+        if(!key){
+
+            showStatus(
+                "⚠️ Please select a product first.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const product =
+            products.find(
+                p =>
+                    p.firebaseKey === key
+            );
+
+
+        if(!product){
+
+            showStatus(
+                "❌ Product not found.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const confirmed =
+            confirm(
+                `Delete "${product.name}" from inventory?`
+            );
+
+
+        if(!confirmed)
+            return;
+
+
+        button.disabled =
+            true;
+
+        button.innerText =
+            "⏳ Deleting...";
+
+
+        try{
+
+            await remove(
+                ref(
+                    database,
+                    `products/${key}`
+                )
+            );
+
+
+            showStatus(
+                "🗑️ Product deleted successfully!",
+                "success"
+            );
+
+
+            document.getElementById(
+                "deleteProdSelect"
+            ).value = "";
+
+
+        }catch(error){
+
+            console.error(error);
+
+            showStatus(
+                "❌ Failed to delete product.",
+                "error"
+            );
+
+        }
+
+
+        button.disabled =
+            false;
+
+        button.innerText =
+            "🗑️ Delete Product";
+
+    };
+
+
+/* =====================================================
+   SAFE HTML
+===================================================== */
+
+function safe(value){
+
+    return String(
+        value ?? ""
+    )
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2840 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Green Angan | Plant Care Services</title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <style>
+    :root{
+        --green:#0b4d3a;
+        --green2:#147a5b;
+        --accent:#2e8b57;
+        --lime:#8bc34a;
+        --bg:#f3f8f5;
+        --text:#17231e;
+        --muted:#66756e;
+        --border:#dce8e1;
+        --white:#fff;
+        --orange:#ff9900;
+        --red:#d93025;
+    }
+
+    *{
+        box-sizing:border-box;
+    }
+
+    html{
+        scroll-behavior:smooth;
+    }
+
+    body{
+        margin:0;
+        background:#f3f8f5;
+        color:var(--text);
+        font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+    }
+
+    /* ================= TOP NAV ================= */
+
+    .top{
+        background:var(--green);
+        color:#fff;
+    }
+
+    .nav{
+        max-width:1400px;
+        margin:auto;
+        padding:13px 20px;
+        display:flex;
+        align-items:center;
+        gap:22px;
+    }
+
+    .brand{
+        font-size:25px;
+        font-weight:900;
+        white-space:nowrap;
+    }
+
+    .brand span{
+        color:#a6d96a;
+    }
+
+    .search{
+        flex:1;
+        display:flex;
+        max-width:700px;
+    }
+
+    .search input{
+        width:100%;
+        height:44px;
+        border:0;
+        padding:0 15px;
+        border-radius:7px 0 0 7px;
+        outline:0;
+        font-size:14px;
+    }
+
+    .search button{
+        width:52px;
+        border:0;
+        background:var(--lime);
+        color:#fff;
+        border-radius:0 7px 7px 0;
+        cursor:pointer;
+        font-size:20px;
+    }
+
+    .nav a{
+        color:#fff;
+        text-decoration:none;
+        font-weight:700;
+        font-size:14px;
+        white-space:nowrap;
+    }
+
+    .cart-btn{
+        position:relative;
+        background:transparent;
+        border:0;
+        color:#fff;
+        font-size:24px;
+        cursor:pointer;
+    }
+
+    .cart-count{
+        position:absolute;
+        top:-5px;
+        right:-8px;
+        background:#ff9900;
+        color:#111;
+        font-size:11px;
+        font-weight:900;
+        min-width:19px;
+        height:19px;
+        border-radius:50%;
+        display:grid;
+        place-items:center;
+    }
+
+    /* ================= SUB NAV ================= */
+
+    .subnav{
+        background:#073b2d;
+    }
+
+    .subnav-inner{
+        max-width:1400px;
+        margin:auto;
+        padding:10px 20px;
+        display:flex;
+        gap:25px;
+        overflow:auto;
+    }
+
+    .subnav a{
+        color:#fff;
+        text-decoration:none;
+        white-space:nowrap;
+        font-size:13px;
+    }
+
+    /* ================= PAGE ================= */
+
+    .wrap{
+        max-width:1400px;
+        margin:auto;
+        padding:22px 20px;
+    }
+
+    .crumb{
+        font-size:13px;
+        color:var(--muted);
+        margin-bottom:18px;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero{
+        background:linear-gradient(120deg,#0b4d3a,#147a5b);
+        color:#fff;
+        border-radius:14px;
+        padding:30px;
+        margin-bottom:22px;
+    }
+
+    .hero h1{
+        font-size:34px;
+        margin:0 0 8px;
+    }
+
+    .hero p{
+        max-width:700px;
+        color:#e2f3eb;
+        margin:0;
+    }
+
+    /* ================= VIDEO ================= */
+
+    .video-ad-card{
+        position:relative;
+        width:100%;
+        max-width:1200px;
+        margin:0 auto;
+        border-radius:14px;
+        overflow:hidden;
+        background:#0b4d3a;
+        box-shadow:0 6px 20px rgba(0,0,0,.15);
+    }
+
+    .video-ad{
+        width:100%;
+        height:360px;
+        object-fit:cover;
+        display:block;
+    }
+
+    .video-ad-content{
+        position:absolute;
+        left:0;
+        bottom:0;
+        width:100%;
+        padding:35px 30px 25px;
+        color:white;
+        background:linear-gradient(
+            transparent,
+            rgba(0,0,0,.85)
+        );
+    }
+
+    .ad-label{
+        font-size:10px;
+        letter-spacing:1px;
+        opacity:.8;
+    }
+
+    .ad-btn{
+        background:#7fbf3f;
+        color:white;
+        border:0;
+        padding:11px 20px;
+        border-radius:7px;
+        font-weight:700;
+        cursor:pointer;
+    }
+
+    /* ================= SIZE SELECTOR ================= */
+
+    .size-section{
+        background:#fff;
+        border:1px solid var(--border);
+        border-radius:12px;
+        padding:20px;
+        margin:22px 0;
+    }
+
+    .size-section h2{
+        margin:0 0 15px;
+        font-size:21px;
+    }
+
+    .size-buttons{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+    }
+
+    .plant-size-btn{
+        border:1px solid #b9c9c1;
+        background:#fff;
+        color:var(--green);
+        padding:11px 18px;
+        border-radius:8px;
+        cursor:pointer;
+        font-weight:800;
+    }
+
+    .plant-size-btn:hover,
+    .plant-size-btn.active{
+        background:var(--green);
+        color:#fff;
+        border-color:var(--green);
+    }
+
+    /* ================= SHOP TOOLBAR ================= */
+
+    .shop-toolbar{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:15px;
+        margin:25px 0 16px;
+        flex-wrap:wrap;
+    }
+
+    .shop-title h2{
+        margin:0;
+        font-size:25px;
+    }
+
+    .count{
+        color:var(--muted);
+        font-size:13px;
+    }
+
+    .shop-controls{
+        display:flex;
+        gap:10px;
+    }
+
+    .plan-search,
+    .sort{
+        padding:11px 13px;
+        border:1px solid #b9c9c1;
+        border-radius:7px;
+        background:#fff;
+        outline:none;
+    }
+
+    /* ================= PRODUCT GRID ================= */
+
+    .product-grid{
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:16px;
+    }
+
+    /* ================= PRODUCT CARD ================= */
+
+    .product-card{
+        background:#fff;
+        border:1px solid #dce8e1;
+        border-radius:10px;
+        overflow:hidden;
+        position:relative;
+        transition:.2s;
+        display:flex;
+        flex-direction:column;
+    }
+
+    .product-card:hover{
+        transform:translateY(-3px);
+        box-shadow:0 8px 24px rgba(11,77,58,.13);
+    }
+
+    .product-image{
+        height:220px;
+        background:
+            radial-gradient(circle at 30% 30%,#ffffff 0,#dff0e6 30%,#b9ddc8 100%);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:relative;
+        overflow:hidden;
+    }
+
+    .product-image::before{
+        content:"";
+        position:absolute;
+        width:170px;
+        height:170px;
+        border-radius:50%;
+        background:rgba(255,255,255,.38);
+    }
+
+    .product-icon{
+        font-size:92px;
+        position:relative;
+        z-index:1;
+        filter:drop-shadow(0 8px 5px rgba(0,0,0,.15));
+    }
+
+    .wishlist{
+        position:absolute;
+        top:10px;
+        right:10px;
+        width:35px;
+        height:35px;
+        border-radius:50%;
+        border:1px solid #ddd;
+        background:#fff;
+        cursor:pointer;
+        font-size:18px;
+        z-index:2;
+    }
+
+    .wishlist.active{
+        color:#e53935;
+    }
+
+    .badge{
+        position:absolute;
+        top:11px;
+        left:11px;
+        background:#cc0c39;
+        color:#fff;
+        padding:5px 8px;
+        border-radius:4px;
+        font-size:10px;
+        font-weight:900;
+        z-index:2;
+    }
+
+    .product-body{
+        padding:15px;
+        display:flex;
+        flex-direction:column;
+        flex:1;
+    }
+
+    .category{
+        color:var(--green2);
+        font-size:10px;
+        font-weight:900;
+        text-transform:uppercase;
+    }
+
+    .product-name{
+        font-size:17px;
+        line-height:1.35;
+        margin:6px 0;
+        min-height:45px;
+    }
+
+    .rating-row{
+        display:flex;
+        align-items:center;
+        gap:6px;
+        margin:4px 0;
+    }
+
+    .stars{
+        color:#f5a623;
+        letter-spacing:1px;
+        font-size:14px;
+    }
+
+    .rating-count{
+        font-size:12px;
+        color:#4f5d57;
+    }
+
+    .description{
+        font-size:12px;
+        color:var(--muted);
+        line-height:1.5;
+        min-height:54px;
+        margin:7px 0;
+    }
+
+    .price-row{
+        display:flex;
+        align-items:center;
+        gap:8px;
+        flex-wrap:wrap;
+        margin-top:5px;
+    }
+
+    .current-price{
+        font-size:23px;
+        font-weight:900;
+        color:#111;
+    }
+
+    .old-price{
+        color:#777;
+        text-decoration:line-through;
+        font-size:13px;
+    }
+
+    .discount{
+        color:#067d62;
+        font-size:12px;
+        font-weight:800;
+    }
+
+    .delivery{
+        font-size:12px;
+        margin:8px 0;
+        color:#333;
+    }
+
+    .delivery strong{
+        color:#067d62;
+    }
+
+    .benefit-list{
+        padding:0;
+        margin:6px 0;
+        list-style:none;
+    }
+
+    .benefit-list li{
+        font-size:12px;
+        margin:5px 0;
+        color:#35443e;
+    }
+
+    .check{
+        color:#087f5b;
+        font-weight:900;
+    }
+
+    .product-actions{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+        margin-top:auto;
+        padding-top:10px;
+    }
+
+    .btn{
+        border:0;
+        padding:11px 8px;
+        border-radius:7px;
+        font-weight:800;
+        cursor:pointer;
+    }
+
+    .cart-add{
+        background:#ffd814;
+        color:#111;
+    }
+
+    .buy-now{
+        background:#ffa41c;
+        color:#111;
+    }
+
+    .cart-add:hover{
+        background:#f7ca00;
+    }
+
+    .buy-now:hover{
+        background:#ff8f00;
+    }
+
+    /* ================= EMPTY ================= */
+
+    .empty{
+        text-align:center;
+        padding:60px 20px;
+        color:var(--muted);
+        grid-column:1/-1;
+    }
+
+    /* ================= CART DRAWER ================= */
+
+    .cart-overlay{
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.45);
+        display:none;
+        z-index:50;
+    }
+
+    .cart-overlay.show{
+        display:block;
+    }
+
+    .cart-drawer{
+        position:absolute;
+        right:0;
+        top:0;
+        width:min(430px,100%);
+        height:100%;
+        background:#fff;
+        padding:20px;
+        overflow:auto;
+    }
+
+    .cart-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        border-bottom:1px solid #eee;
+        padding-bottom:15px;
+    }
+
+    .cart-header h2{
+        margin:0;
+    }
+
+    .close-cart{
+        border:0;
+        background:#edf4f0;
+        width:34px;
+        height:34px;
+        border-radius:50%;
+        cursor:pointer;
+        font-size:20px;
+    }
+
+    .cart-item{
+        display:flex;
+        gap:12px;
+        padding:14px 0;
+        border-bottom:1px solid #eee;
+    }
+
+    .cart-item-icon{
+        width:65px;
+        height:65px;
+        display:grid;
+        place-items:center;
+        background:#e5f2e9;
+        border-radius:8px;
+        font-size:35px;
+    }
+
+    .cart-item-info{
+        flex:1;
+    }
+
+    .cart-item-info h4{
+        margin:0 0 5px;
+        font-size:14px;
+    }
+
+    .cart-item-info p{
+        margin:0;
+        font-size:13px;
+        font-weight:800;
+    }
+
+    .remove-cart{
+        border:0;
+        background:none;
+        color:#d93025;
+        cursor:pointer;
+        font-size:12px;
+    }
+
+    .cart-total{
+        display:flex;
+        justify-content:space-between;
+        font-size:20px;
+        font-weight:900;
+        margin:20px 0;
+    }
+
+    .checkout-btn{
+        width:100%;
+        padding:13px;
+        background:var(--green);
+        color:#fff;
+        border:0;
+        border-radius:7px;
+        font-weight:900;
+        cursor:pointer;
+    }
+
+    /* ================= BOOKING MODAL ================= */
+
+    .modal{
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.55);
+        display:none;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+        z-index:100;
+    }
+
+    .modal.show{
+        display:flex;
+    }
+
+    .box{
+        background:#fff;
+        border-radius:14px;
+        width:min(560px,100%);
+        padding:24px;
+        max-height:90vh;
+        overflow:auto;
+    }
+
+    .box h2{
+        margin-top:0;
+        color:var(--green);
+    }
+
+    .close{
+        float:right;
+        border:0;
+        background:#edf4f0;
+        border-radius:50%;
+        width:32px;
+        height:32px;
+        cursor:pointer;
+        font-size:18px;
+    }
+
+    .form{
+        display:grid;
+        gap:10px;
+    }
+
+    .form input,
+    .form select{
+        padding:12px;
+        border:1px solid #b9c9c1;
+        border-radius:7px;
+    }
+
+    .row{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .notice{
+        font-size:12px;
+        color:var(--muted);
+        background:#f1f7f3;
+        padding:10px;
+        border-radius:7px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer{
+        margin-top:35px;
+        background:var(--green);
+        color:#dff2e8;
+        padding:30px;
+        text-align:center;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:1150px){
+
+        .product-grid{
+            grid-template-columns:repeat(3,1fr);
+        }
+
+    }
+
+    @media(max-width:850px){
+
+        .product-grid{
+            grid-template-columns:repeat(2,1fr);
+        }
+
+        .nav{
+            flex-wrap:wrap;
+        }
+
+        .search{
+            order:3;
+            flex-basis:100%;
+            max-width:none;
+        }
+
+    }
+
+    @media(max-width:600px){
+
+        .wrap{
+            padding:14px 10px;
+        }
+
+        .nav{
+            padding:12px 10px;
+            gap:12px;
+        }
+
+        .brand{
+            font-size:21px;
+        }
+
+        .nav a{
+            display:none;
+        }
+
+        .search{
+            flex-basis:calc(100% - 45px);
+        }
+
+        .hero{
+            padding:18px;
+        }
+
+        .hero h1{
+            font-size:25px;
+        }
+
+        .video-ad{
+            height:230px;
+        }
+
+        .video-ad-content{
+            padding:25px 15px 15px;
+        }
+
+        .product-grid{
+            grid-template-columns:1fr;
+            gap:12px;
+        }
+
+        .product-image{
+            height:230px;
+        }
+
+        .product-body{
+            padding:14px;
+        }
+
+        .shop-toolbar{
+            align-items:stretch;
+        }
+
+        .shop-controls{
+            width:100%;
+        }
+
+        .plan-search,
+        .sort{
+            flex:1;
+            min-width:0;
+        }
+
+        .row{
+            grid-template-columns:1fr;
+        }
+
+        .product-actions{
+            grid-template-columns:1fr 1fr;
+        }
+
+    }
+
+    /* SMALL PHONE */
+
+    @media(max-width:380px){
+
+        .product-name{
+            font-size:16px;
+        }
+
+        .current-price{
+            font-size:21px;
+        }
+
+        .product-image{
+            height:200px;
+        }
+
+    }
+    </style>
+    </head>
+
+    <body>
+
+    <!-- ================= NAV ================= -->
+
+    <div class="top">
+
+        <div class="nav">
+
+            <div class="brand">
+                green<span>angan</span>
+            </div>
+
+            <div class="search">
+                <input
+                    id="search"
+                    placeholder="Search plant care services..."
+                    oninput="renderProducts()"
+                >
+                <button onclick="renderProducts()">⌕</button>
+            </div>
+
+            <a href="index.html">Home</a>
+            <a href="admin">Admin</a>
+
+            <button class="cart-btn" onclick="openCart()">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+        </div>
+
+        <div class="subnav">
+
+            <div class="subnav-inner">
+
+                <a href="#" onclick="setCategory('All');return false">
+                    All Services
+                </a>
+
+                <a href="#" onclick="setCategory('Plant Care Services');return false">
+                    Plant Care
+                </a>
+
+                <a href="#" onclick="setCategory('Lawn Care Services');return false">
+                    Lawn Care
+                </a>
+
+                <a href="#" onclick="setCategory('Advice');return false">
+                    Advice Plans
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="wrap">
+
+        <div class="crumb">
+            Home › Plant Care Services
+        </div>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <h1>
+                Plant Care Services
+            </h1>
+
+            <p>
+                Professional plant care for your home, office and garden.
+                Choose a plan according to the number of plants you have.
+            </p>
+
+        </section>
+
+
+        <!-- VIDEO AD -->
+
+        <div class="video-ad-card">
+
+            <video
+                class="video-ad"
+                autoplay
+                muted
+                loop
+                playsinline
+                controls
+            >
+
+                <source src="greenangan.mp4" type="video/mp4">
+
+            </video>
+
+            <div class="video-ad-content">
+
+                <span class="ad-label">
+                    ADVERTISEMENT
+                </span>
+
+                <br><br>
+
+                <button
+                    class="ad-btn"
+                
+                >
+                    Explore Plant Care →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- PLANT SIZE -->
+
+        <section class="size-section">
+
+            <h2>
+                🌱 How many plants do you have?
+            </h2>
+
+            <div class="size-buttons">
+
+                <button
+                    class="plant-size-btn active"
+                    data-size="30"
+                    onclick="selectGardenSize(this)"
+                >
+                    Up to 30 Plants
+                </button>
+
+                <button
+                    class="plant-size-btn"
+                    data-size="50"
+                    onclick="selectGardenSize(this)"
+                >
+                    Up to 50 Plants
+                </button>
+
+                <button
+                    class="plant-size-btn"
+                    data-size="100"
+                    onclick="selectGardenSize(this)"
+                >
+                    Up to 100 Plants
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- SHOP TOOLBAR -->
+
+        <div class="shop-toolbar">
+
+            <div class="shop-title">
+
+                <h2 id="title">
+                    Plant Care Services
+                </h2>
+
+                <span
+                    class="count"
+                    id="count"
+                >
+                    0 services
+                </span>
+
+            </div>
+
+            <div class="shop-controls">
+
+                <input
+                    class="plan-search"
+                    id="planSearch"
+                    placeholder="Search plans..."
+                    oninput="renderProducts()"
+                >
+
+                <select
+                    class="sort"
+                    id="sort"
+                    onchange="renderProducts()"
+                >
+
+                    <option value="default">
+                        Sort by
+                    </option>
+
+                    <option value="low">
+                        Price: Low to High
+                    </option>
+
+                    <option value="high">
+                        Price: High to Low
+                    </option>
+
+                    <option value="rating">
+                        Customer Rating
+                    </option>
+
+                    <option value="name">
+                        Name
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCT GRID -->
+
+        <main>
+
+            <div
+                class="product-grid"
+                id="productsGrid"
+            ></div>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+
+        🌿 Green Angan • Plant care made simple
+
+    </div>
+
+
+    <!-- ================= CART ================= -->
+
+    <div
+        class="cart-overlay"
+        id="cartOverlay"
+        onclick="closeCartOutside(event)"
+    >
+
+        <div class="cart-drawer">
+
+            <div class="cart-header">
+
+                <h2>
+                    🛒 Your Cart
+                </h2>
+
+                <button
+                    class="close-cart"
+                    onclick="closeCart()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div id="cartItems"></div>
+
+            <div class="cart-total">
+
+                <span>Total</span>
+
+                <span id="cartTotal">
+                    ₹0
+                </span>
+
+            </div>
+
+            <button
+                class="checkout-btn"
+                onclick="checkoutCart()"
+            >
+                Proceed to Checkout
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BOOKING MODAL ================= -->
+
+    <div
+        class="modal"
+        id="modal"
+    >
+
+        <div class="box">
+
+            <button
+                class="close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+            <h2 id="modalTitle">
+                Book Service
+            </h2>
+
+            <div
+                class="notice"
+                id="modalInfo"
+            ></div>
+
+            <div
+                class="form"
+                style="margin-top:14px"
+            >
+
+                <div class="row">
+
+                    <input
+                        id="name"
+                        placeholder="Full name"
+                    >
+
+                    <input
+                        id="phone"
+                        placeholder="Mobile number"
+                    >
+
+                </div>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Email address"
+                >
+
+                <input
+                    id="address"
+                    placeholder="Service address"
+                >
+
+                <select id="variant">
+
+                    <option value="one-time">
+                        One Time
+                    </option>
+
+                    <option value="monthly">
+                        Monthly
+                    </option>
+
+                </select>
+
+                <input
+                    id="date"
+                    type="date"
+                >
+
+                <button
+                    class="checkout-btn"
+                    onclick="bookNow()"
+                >
+                    Continue to Payment
+                </button>
+
+            </div>
+
+            <p
+                id="status"
+                class="notice"
+                style="display:none;margin-top:12px"
+            ></p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FIREBASE ================= -->
+
+    <script type="module">
+
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        setDoc,
+        doc,
+        serverTimestamp,
+        getDocs
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+    let db = null;
+
+    try{
+
+        if(
+            window.GREEN_ANGAN_FIREBASE_CONFIG?.apiKey &&
+            !window.GREEN_ANGAN_FIREBASE_CONFIG.apiKey.startsWith("YOUR_")
+        ){
+
+            db = getFirestore(
+                initializeApp(
+                    window.GREEN_ANGAN_FIREBASE_CONFIG
+                )
+            );
+
+        }
+
+    }catch(e){
+
+        console.error(e);
+
+    }
+
+
+    window.db = db;
+
+
+    window.saveBooking = async function(data){
+
+        if(!db){
+            return false;
+        }
+
+        await addDoc(
+            collection(db,"orders"),
+            {
+                ...data,
+                createdAt:serverTimestamp(),
+                source:"services-page"
+            }
+        );
+
+        const key = (
+            data.phone ||
+            data.email ||
+            "guest"
+        ).replace(/\//g,"_");
+
+        await setDoc(
+            doc(db,"customers",key),
+            {
+                name:data.name,
+                phone:data.phone,
+                email:data.email,
+                address:data.address,
+                updatedAt:serverTimestamp()
+            },
+            {
+                merge:true
+            }
+        );
+
+        return true;
+
+    };
+
+
+    window.loadFirebaseServices = async function(){
+
+        if(!db){
+            return false;
+        }
+
+        try{
+
+            const snap =
+                await getDocs(
+                    collection(db,"services")
+                );
+
+            if(snap.empty){
+                return false;
+            }
+
+            const live = [];
+
+            snap.forEach(d=>{
+
+                const x = d.data();
+
+                if(x.active !== false){
+
+                    live.push({
+
+                        id:d.id,
+
+                        cat:x.category ||
+                            "Plant Care Services",
+
+                        name:x.name ||
+                            "Green Angan Service",
+
+                        price:Number(x.price || 0),
+
+                        monthly:Number(x.monthly || 0),
+
+                        duration:x.duration ||
+                            "Scheduled",
+
+                        icon:x.icon ||
+                            "🌿",
+
+                        desc:x.description ||
+                            "",
+
+                        rating:Number(x.rating || 4.8),
+
+                        reviews:Number(x.reviews || 100)
+
+                    });
+
+                }
+
+            });
+
+            if(live.length){
+
+                services.splice(
+                    0,
+                    services.length,
+                    ...live
+                );
+
+                renderProducts();
+
+            }
+
+            return true;
+
+        }catch(e){
+
+            console.error(
+                "Firebase services load failed",
+                e
+            );
+
+            return false;
+
+        }
+
+    };
+
+    </script>
+
+
+    <!-- ================= MAIN JAVASCRIPT ================= -->
+
+    <script>
+
+    const plansData = {
+
+    "30":[
+
+    {
+    name:"Essential Care",
+    sub:"One-off care — pay per visit",
+    price:0.1,
+    oldPrice:899,
+    duration:"Per visit",
+    popular:false,
+    rating:4.7,
+    reviews:128,
+    icon:"🪴",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support"
+    ]
+    },
+
+    {
+    name:"Premium Care",
+    sub:"Green Plus — monthly, no lock-in",
+    price:1099,
+    oldPrice:1399,
+    duration:"Per month · 2 visits/month",
+    popular:false,
+    rating:4.8,
+    reviews:214,
+    icon:"🌿",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Organic pest spray",
+    "Trichoderma application"
+    ]
+    },
+
+    {
+    name:"Smart Care",
+    sub:"Green Prime — quarterly",
+    price:3099,
+    oldPrice:3999,
+    duration:"Per quarter · 2 visits/month",
+    popular:true,
+    badge:"MOST POPULAR",
+    rating:4.9,
+    reviews:376,
+    icon:"🌱",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Organic pest spray",
+    "Trichoderma application",
+    "Growth promoter top-up",
+    "Vermi-compost top-up"
+    ]
+    },
+
+    {
+    name:"Elite Care",
+    sub:"Green Elite — half-yearly",
+    price:5699,
+    oldPrice:6999,
+    duration:"6 Months · 3 visits/month",
+    popular:false,
+    rating:4.9,
+    reviews:198,
+    icon:"🌳",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Organic pest spray",
+    "Trichoderma application"
+    ]
+    },
+
+    {
+    name:"Signature Care",
+    sub:"Green Prestige — complete plan",
+    price:10499,
+    oldPrice:12999,
+    duration:"Per year · 3 visits/month",
+    popular:false,
+    rating:5,
+    reviews:149,
+    icon:"🌴",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Emergency visit",
+    "Complimentary diagnosis"
+    ]
+    }
+
+    ],
+
+    "50":[
+
+    {
+    name:"Essential Care",
+    sub:"One-off care — pay per visit",
+    price:999,
+    oldPrice:1299,
+    duration:"Per visit",
+    popular:false,
+    rating:4.7,
+    reviews:98,
+    icon:"🪴",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support"
+    ]
+    },
+
+    {
+    name:"Premium Care",
+    sub:"Green Plus — monthly, no lock-in",
+    price:1599,
+    oldPrice:1999,
+    duration:"Per month · 2 visits/month",
+    popular:false,
+    rating:4.8,
+    reviews:177,
+    icon:"🌿",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "Organic pest spray",
+    "Trichoderma application"
+    ]
+    },
+
+    {
+    name:"Smart Care",
+    sub:"Green Prime — quarterly",
+    price:4499,
+    oldPrice:5499,
+    duration:"Per quarter · 2 visits/month",
+    popular:true,
+    badge:"BEST VALUE",
+    rating:4.9,
+    reviews:285,
+    icon:"🌱",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Organic pest spray",
+    "Trichoderma application",
+    "Growth promoter top-up"
+    ]
+    },
+
+    {
+    name:"Elite Care",
+    sub:"Green Elite — half-yearly",
+    price:8299,
+    oldPrice:9999,
+    duration:"6 Months · 3 visits/month",
+    popular:false,
+    rating:4.9,
+    reviews:136,
+    icon:"🌳",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Organic pest spray",
+    "Trichoderma application"
+    ]
+    },
+
+    {
+    name:"Signature Care",
+    sub:"Green Prestige — complete plan",
+    price:14999,
+    oldPrice:17999,
+    duration:"Per year · 3 visits/month",
+    popular:false,
+    rating:5,
+    reviews:92,
+    icon:"🌴",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Emergency visit",
+    "Complimentary diagnosis"
+    ]
+    }
+
+    ],
+
+    "100":[
+
+    {
+    name:"Essential Care",
+    sub:"One-off care — pay per visit",
+    price:1499,
+    oldPrice:1899,
+    duration:"Per visit",
+    popular:false,
+    rating:4.7,
+    reviews:75,
+    icon:"🪴",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support"
+    ]
+    },
+
+    {
+    name:"Premium Care",
+    sub:"Green Plus — monthly, no lock-in",
+    price:2399,
+    oldPrice:2999,
+    duration:"Per month · 2 visits/month",
+    popular:false,
+    rating:4.8,
+    reviews:121,
+    icon:"🌿",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "Organic pest spray",
+    "Trichoderma application"
+    ]
+    },
+
+    {
+    name:"Smart Care",
+    sub:"Green Prime — quarterly",
+    price:6799,
+    oldPrice:7999,
+    duration:"Per quarter · 2 visits/month",
+    popular:true,
+    badge:"POPULAR FOR LARGE GARDENS",
+    rating:4.9,
+    reviews:201,
+    icon:"🌱",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Organic pest spray",
+    "Trichoderma application",
+    "Growth promoter top-up"
+    ]
+    },
+
+    {
+    name:"Elite Care",
+    sub:"Green Elite — half-yearly",
+    price:12499,
+    oldPrice:14999,
+    duration:"6 Months · 3 visits/month",
+    popular:false,
+    rating:4.9,
+    reviews:88,
+    icon:"🌳",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Organic pest spray",
+    "Trichoderma application"
+    ]
+    },
+
+    {
+    name:"Signature Care",
+    sub:"Green Prestige — complete plan",
+    price:22999,
+    oldPrice:26999,
+    duration:"Per year · 3 visits/month",
+    popular:false,
+    rating:5,
+    reviews:64,
+    icon:"🌴",
+    benefits:[
+    "Soil loosening",
+    "Pruning",
+    "Leaf cleaning",
+    "Weed removal",
+    "Health inspection",
+    "WhatsApp support",
+    "Emergency visit",
+    "Complimentary diagnosis",
+    "Discounted replacement plants"
+    ]
+    }
+
+    ]
+
+    };
+
+
+    const services = [
+
+    {
+    id:"pc12",
+    cat:"Plant Care Services",
+    name:"Essential Plant Care",
+    price:699,
+    monthly:2199,
+    duration:"45–60 mins",
+    icon:"🪴",
+    desc:"Watering, pruning, soil check and basic plant health care.",
+    rating:4.8,
+    reviews:124
+    },
+
+    {
+    id:"pc24",
+    cat:"Plant Care Services",
+    name:"Premium Plant Care",
+    price:999,
+    monthly:2999,
+    duration:"60–75 mins",
+    icon:"🌿",
+    desc:"Complete routine care with nutrition and pest inspection.",
+    rating:4.9,
+    reviews:218
+    },
+
+    {
+    id:"pc48",
+    cat:"Plant Care Services",
+    name:"Complete Plant Care",
+    price:1499,
+    monthly:4499,
+    duration:"75–90 mins",
+    icon:"🌱",
+    desc:"Full garden care for larger home or office collections.",
+    rating:4.9,
+    reviews:186
+    },
+
+    {
+    id:"lawn500",
+    cat:"Lawn Care Services",
+    name:"Lawn Care — Up to 500 sq.ft",
+    price:799,
+    monthly:2499,
+    duration:"45–60 mins",
+    icon:"🌾",
+    desc:"Mowing, edging, weeding and basic lawn maintenance.",
+    rating:4.7,
+    reviews:94
+    },
+
+    {
+    id:"lawn1000",
+    cat:"Lawn Care Services",
+    name:"Lawn Care — 500–1000 sq.ft",
+    price:1299,
+    monthly:3999,
+    duration:"60–75 mins",
+    icon:"🍃",
+    desc:"Routine lawn maintenance with seasonal care.",
+    rating:4.8,
+    reviews:112
+    },
+
+    {
+    id:"advice",
+    cat:"Advice",
+    name:"Green Angan Advice Club",
+    price:699,
+    monthly:1999,
+    duration:"Online / Scheduled",
+    icon:"👑",
+    desc:"Personalized organic gardening advice and plant-care guidance.",
+    rating:4.9,
+    reviews:157
+    }
+
+    ];
+
+
+    let selectedGardenSize = "30";
+    let category = "All";
+    let selected = null;
+
+    let cart = JSON.parse(
+        localStorage.getItem("green_angan_cart") || "[]"
+    );
+
+
+    /* ================= HELPERS ================= */
+
+    function money(value){
+
+        return "₹" +
+            Number(value).toLocaleString("en-IN");
+
+    }
+
+
+    function getDiscount(price,oldPrice){
+
+        if(!oldPrice || oldPrice <= price){
+            return 0;
+        }
+
+        return Math.round(
+            ((oldPrice-price)/oldPrice)*100
+        );
+
+    }
+
+
+    function stars(rating){
+
+        let full = Math.round(rating);
+
+        return "★".repeat(full) +
+            "☆".repeat(5-full);
+
+    }
+
+
+    /* ================= CATEGORY ================= */
+
+    function setCategory(c){
+
+        category = c;
+
+        renderProducts();
+
+    }
+
+
+    /* ================= PRODUCT RENDER ================= */
+
+    function renderProducts(){
+
+        const grid =
+            document.getElementById("productsGrid");
+
+        if(!grid){
+            return;
+        }
+
+        const search =
+            (
+                document.getElementById("search")?.value ||
+                document.getElementById("planSearch")?.value ||
+                ""
+            ).toLowerCase();
+
+        let products = [];
+
+
+        /* PLANS */
+
+        const plans =
+            plansData[selectedGardenSize] || [];
+
+        plans.forEach((plan,index)=>{
+
+            products.push({
+
+                id:
+                    "plan_" +
+                    selectedGardenSize +
+                    "_" +
+                    index,
+
+                cat:"Plant Care Services",
+
+                name:
+                    plan.name +
+                    " — Up to " +
+                    selectedGardenSize +
+                    " Plants",
+
+                price:plan.price,
+
+                oldPrice:plan.oldPrice,
+
+                duration:plan.duration,
+
+                icon:plan.icon,
+
+                desc:plan.sub,
+
+                rating:plan.rating,
+
+                reviews:plan.reviews,
+
+                popular:plan.popular,
+
+                badge:plan.badge,
+
+                benefits:plan.benefits,
+
+                plan:plan
+
+            });
+
+        });
+
+
+        /* NORMAL SERVICES */
+
+        services.forEach(service=>{
+
+            products.push({
+
+                ...service,
+
+                oldPrice:
+                    Math.round(service.price*1.2),
+
+                benefits:[
+                    "Professional plant care",
+                    "Verified care team",
+                    "Health inspection",
+                    "WhatsApp support"
+                ]
+
+            });
+
+        });
+
+
+        /* FILTER */
+
+        let arr = products.filter(p=>{
+
+            const categoryMatch =
+                category === "All" ||
+                p.cat === category;
+
+            const searchMatch =
+                (
+                    p.name +
+                    " " +
+                    p.cat +
+                    " " +
+                    p.desc +
+                    " " +
+                    p.benefits.join(" ")
+                )
+                .toLowerCase()
+                .includes(search);
+
+            return categoryMatch && searchMatch;
+
+        });
+
+
+        /* SORT */
+
+        const sort =
+            document.getElementById("sort")?.value ||
+            "default";
+
+
+        if(sort === "low"){
+
+            arr.sort(
+                (a,b)=>a.price-b.price
+            );
+
+        }
+
+        if(sort === "high"){
+
+            arr.sort(
+                (a,b)=>b.price-a.price
+            );
+
+        }
+
+        if(sort === "rating"){
+
+            arr.sort(
+                (a,b)=>b.rating-a.rating
+            );
+
+        }
+
+        if(sort === "name"){
+
+            arr.sort(
+                (a,b)=>a.name.localeCompare(b.name)
+            );
+
+        }
+
+
+        document.getElementById("title").textContent =
+            category === "All"
+            ? "Plant Care Services"
+            : category;
+
+
+        document.getElementById("count").textContent =
+            arr.length + " services";
+
+
+        if(!arr.length){
+
+            grid.innerHTML =
+                `<div class="empty">
+                    🌿<br><br>
+                    No services found.
+                </div>`;
+
+            return;
+
+        }
+
+
+        grid.innerHTML = arr.map(product=>{
+
+            const discount =
+                getDiscount(
+                    product.price,
+                    product.oldPrice
+                );
+
+
+            const benefits =
+                product.benefits
+                    .slice(0,4)
+                    .map(
+                        b =>
+                        `<li>
+                            <span class="check">✓</span>
+                            ${b}
+                        </li>`
+                    )
+                    .join("");
+
+
+            return `
+
+            <article class="product-card">
+
+                ${
+                    product.popular
+                    ?
+                    `<span class="badge">
+                        ${product.badge || "POPULAR"}
+                    </span>`
+                    :
+                    ""
+                }
+
+
+                <button
+                    class="wishlist"
+                    onclick="toggleWishlist(this)"
+                    title="Add to wishlist"
+                >
+                    ♡
+                </button>
+
+
+                <div class="product-image">
+
+                    <div class="product-icon">
+                        ${product.icon}
+                    </div>
+
+                </div>
+
+
+                <div class="product-body">
+
+                    <div class="category">
+                        ${product.cat}
+                    </div>
+
+
+                    <h3 class="product-name">
+                        ${product.name}
+                    </h3>
+
+
+                    <div class="rating-row">
+
+                        <span class="stars">
+                            ${stars(product.rating)}
+                        </span>
+
+                        <span class="rating-count">
+                            ${product.rating} (${product.reviews})
+                        </span>
+
+                    </div>
+
+
+                    <div class="description">
+                        ${product.desc}
+                    </div>
+
+
+                    <ul class="benefit-list">
+                        ${benefits}
+                    </ul>
+
+
+                    <div class="price-row">
+
+                        <span class="current-price">
+                            ${money(product.price)}
+                        </span>
+
+                        ${
+                            product.oldPrice
+                            ?
+                            `<span class="old-price">
+                                ${money(product.oldPrice)}
+                            </span>`
+                            :
+                            ""
+                        }
+
+                        ${
+                            discount
+                            ?
+                            `<span class="discount">
+                                ${discount}% off
+                            </span>`
+                            :
+                            ""
+                        }
+
+                    </div>
+
+
+                    <div class="delivery">
+
+                        🚚
+                        <strong>
+                            Free service scheduling
+                        </strong>
+
+                        <br>
+
+                        Available for your location
+
+                    </div>
+
+
+                    <div class="product-actions">
+
+                        <button
+                            class="btn cart-add"
+                            onclick="addToCart('${product.id}')"
+                        >
+                            🛒 Add
+                        </button>
+
+                        <button
+                            class="btn buy-now"
+                            onclick="buyProduct('${product.id}')"
+                        >
+                            Buy Now
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            `;
+
+        }).join("");
+
+    }
+
+
+    /* ================= FIND PRODUCT ================= */
+
+    function findProduct(id){
+
+        const plans =
+            plansData[selectedGardenSize] || [];
+
+        const planIndex =
+            id.startsWith("plan_")
+            ? Number(id.split("_")[2])
+            : -1;
+
+
+        if(planIndex >= 0){
+
+            const plan = plans[planIndex];
+
+            return {
+
+                id,
+
+                name:
+                    plan.name +
+                    " — Up to " +
+                    selectedGardenSize +
+                    " Plants",
+
+                price:plan.price,
+
+                icon:plan.icon,
+
+                duration:plan.duration,
+
+                rating:plan.rating,
+
+                reviews:plan.reviews
+
+            };
+
+        }
+
+
+        return services.find(
+            s=>s.id===id
+        );
+
+    }
+
+
+    /* ================= CART ================= */
+
+    function addToCart(id){
+
+        const product =
+            findProduct(id);
+
+        if(!product){
+            return;
+        }
+
+
+        const existing =
+            cart.find(
+                item=>item.id===id
+            );
+
+
+        if(existing){
+
+            existing.qty++;
+
+        }else{
+
+            cart.push({
+
+                id:product.id,
+
+                name:product.name,
+
+                price:product.price,
+
+                icon:product.icon,
+
+                qty:1
+
+            });
+
+        }
+
+
+        saveCart();
+
+        updateCartCount();
+
+        alert(
+            "🛒 " +
+            product.name +
+            " added to cart!"
+        );
+
+    }
+
+
+    function saveCart(){
+
+        localStorage.setItem(
+            "green_angan_cart",
+            JSON.stringify(cart)
+        );
+
+    }
+
+
+    function updateCartCount(){
+
+        const count =
+            cart.reduce(
+                (total,item)=>
+                    total + item.qty,
+                0
+            );
+
+        document.getElementById(
+            "cartCount"
+        ).textContent = count;
+
+    }
+
+
+    function openCart(){
+
+        renderCart();
+
+        document
+            .getElementById("cartOverlay")
+            .classList.add("show");
+
+    }
+
+
+    function closeCart(){
+
+        document
+            .getElementById("cartOverlay")
+            .classList.remove("show");
+
+    }
+
+
+    function closeCartOutside(event){
+
+        if(
+            event.target.id ===
+            "cartOverlay"
+        ){
+
+            closeCart();
+
+        }
+
+    }
+
+
+    function renderCart(){
+
+        const container =
+            document.getElementById("cartItems");
+
+        if(!cart.length){
+
+            container.innerHTML =
+                `<div class="empty">
+                    🛒<br><br>
+                    Your cart is empty.
+                </div>`;
+
+            document.getElementById(
+                "cartTotal"
+            ).textContent = "₹0";
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            cart.map(item=>`
+
+            <div class="cart-item">
+
+                <div class="cart-item-icon">
+                    ${item.icon}
+                </div>
+
+                <div class="cart-item-info">
+
+                    <h4>
+                        ${item.name}
+                    </h4>
+
+                    <p>
+                        ${money(item.price)}
+                        × ${item.qty}
+                    </p>
+
+                    <button
+                        class="remove-cart"
+                        onclick="removeFromCart('${item.id}')"
+                    >
+                        Remove
+                    </button>
+
+                </div>
+
+            </div>
+
+            `).join("");
+
+
+        const total =
+            cart.reduce(
+                (sum,item)=>
+                    sum +
+                    item.price *
+                    item.qty,
+                0
+            );
+
+
+        document.getElementById(
+            "cartTotal"
+        ).textContent = money(total);
+
+    }
+
+
+    function removeFromCart(id){
+
+        cart =
+            cart.filter(
+                item=>item.id !== id
+            );
+
+        saveCart();
+
+        updateCartCount();
+
+        renderCart();
+
+    }
+
+
+    function checkoutCart(){
+
+        if(!cart.length){
+
+            alert(
+                "Your cart is empty."
+            );
+
+            return;
+
+        }
+
+
+        const first = cart[0];
+
+        closeCart();
+
+        openBook(first.id);
+
+    }
+
+
+    /* ================= BUY NOW ================= */
+
+    function buyProduct(id){
+
+        openBook(id);
+
+    }
+
+
+    /* ================= WISHLIST ================= */
+
+    function toggleWishlist(button){
+
+        button.classList.toggle("active");
+
+        button.textContent =
+            button.classList.contains("active")
+            ? "♥"
+            : "♡";
+
+    }
+
+
+    /* ================= BOOKING ================= */
+
+    function openBook(id){
+
+        selected =
+            findProduct(id);
+
+        if(!selected){
+            return;
+        }
+
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            selected.name;
+
+
+        document.getElementById(
+            "modalInfo"
+        ).textContent =
+            "Starting from " +
+            money(selected.price) +
+            " • " +
+            (selected.duration || "Scheduled service");
+
+
+        const customer =
+            JSON.parse(
+                localStorage.getItem(
+                    "current_green_angan_customer"
+                ) || "{}"
+            );
+
+
+        [
+            "name",
+            "phone",
+            "email",
+            "address"
+        ].forEach(key=>{
+
+            const element =
+                document.getElementById(key);
+
+            if(element){
+
+                element.value =
+                    customer[key] || "";
+
+            }
+
+        });
+
+
+        document.getElementById(
+            "modal"
+        ).classList.add("show");
+
+    }
+
+
+    function closeModal(){
+
+        document.getElementById(
+            "modal"
+        ).classList.remove("show");
+
+    }
+
+
+    /* ================= PAYMENT ================= */
+
+    async function bookNow(){
+
+        if(!selected){
+            return;
+        }
+
+
+        const data = {
+
+            name:
+                document
+                .getElementById("name")
+                .value
+                .trim(),
+
+            phone:
+                document
+                .getElementById("phone")
+                .value
+                .trim(),
+
+            email:
+                document
+                .getElementById("email")
+                .value
+                .trim(),
+
+            address:
+                document
+                .getElementById("address")
+                .value
+                .trim(),
+
+            serviceId:
+                selected.id,
+
+            service:
+                selected.name,
+
+            variant:
+                document
+                .getElementById("variant")
+                .value,
+
+            date:
+                document
+                .getElementById("date")
+                .value,
+
+            status:"Pending"
+
+        };
+
+
+        if(
+            !data.name ||
+            !data.phone ||
+            !data.address
+        ){
+
+            alert(
+                "Please fill name, mobile and address."
+            );
+
+            return;
+
+        }
+
+
+        localStorage.setItem(
+            "current_green_angan_customer",
+            JSON.stringify(data)
+        );
+
+
+        const price =
+            data.variant === "monthly" &&
+            selected.monthly
+            ?
+            selected.monthly
+            :
+            selected.price;
+
+
+        const options = {
+
+            key:
+                "rzp_live_T6yhVp368wh7Uc",
+
+            amount:
+                price * 100,
+
+            currency:"INR",
+
+            name:"Green Angan",
+
+            description:
+                selected.name +
+                " - " +
+                data.variant,
+
+            image:"Logo.png",
+
+            prefill:{
+
+                name:data.name,
+
+                email:data.email,
+
+                contact:data.phone
+
+            },
+
+            theme:{
+                color:"#0b4d3a"
+            },
+
+
+            handler:async function(response){
+
+                data.paymentId =
+                    response.razorpay_payment_id;
+
+                data.price =
+                    price;
+
+                data.status =
+                    "Paid";
+
+
+                localStorage.setItem(
+                    "last_green_angan_order",
+                    JSON.stringify(data)
+                );
+
+
+                try{
+
+                    if(window.saveBooking){
+
+                        await window.saveBooking(
+                            data
+                        );
+
+                    }
+
+                }catch(e){
+
+                    console.error(e);
+
+                }
+
+
+                document.getElementById(
+                    "status"
+                ).style.display = "block";
+
+
+                document.getElementById(
+                    "status"
+                ).textContent =
+                    "✓ Booking saved. Payment ID: " +
+                    response.razorpay_payment_id;
+
+
+                setTimeout(
+                    closeModal,
+                    1800
+                );
+
+            }
+
+        };
+
+
+        const razorpay =
+            new Razorpay(options);
+
+
+        razorpay.on(
+            "payment.failed",
+            function(response){
+
+                alert(
+                    "❌ Payment Failed!\n" +
+                    response.error.description
+                );
+
+            }
+        );
+
+
+        razorpay.open();
+
+    }
+
+
+    /* ================= SIZE ================= */
+
+    function selectGardenSize(button){
+
+        document
+            .querySelectorAll(
+                ".plant-size-btn"
+            )
+            .forEach(
+                btn =>
+                btn.classList.remove("active")
+            );
+
+
+        button.classList.add("active");
+
+
+        selectedGardenSize =
+            button.getAttribute(
+                "data-size"
+            );
+
+
+        renderProducts();
+
+    }
+
+
+    /* ================= INITIALIZE ================= */
+
+    renderProducts();
+
+    updateCartCount();
+
+    if(window.loadFirebaseServices){
+
+        window.loadFirebaseServices();
+
+    }
+
+    </script>
+
+    </body>
+    </html>

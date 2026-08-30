@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Green Angan | Organic Shopping</title>
+
+<style>
+:root{
+    --green:#006b4f;
+    --green-dark:#004d3a;
+    --green-light:#0b8060;
+    --green-soft:#e9f7f1;
+    --yellow:#ffd814;
+    --orange:#ffb000;
+    --nav:#063d30;
+    --nav2:#075a45;
+    --bg:#eaeded;
+    --white:#fff;
+    --text:#17202a;
+    --muted:#667085;
+    --border:#d5d9d9;
+    --red:#c40000;
+    --shadow:0 2px 8px rgba(0,0,0,.12);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    padding-bottom:70px;
+}
+
+button,input,textarea,select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* HEADER */
+.header{
+    position:sticky;
+    top:0;
+    z-index:5000;
+    color:white;
+}
+
+.header-main{
+    background:var(--nav);
+    min-height:65px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px 18px;
+}
+
+.logo-area{
+    min-width:170px;
+    display:flex;
+    align-items:center;
+}
+
+.logo-area a{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    text-decoration:none;
+    color:white;
+}
+
+.logo{
+    width:42px;
+    height:42px;
+    object-fit:contain;
+    border-radius:5px;
+    background:white;
+}
+
+.logo-text{
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:-.5px;
+}
+
+.logo-text span{
+    color:#9ff0c9;
+}
+
+.location{
+    min-width:145px;
+    padding:5px;
+    cursor:pointer;
+}
+
+.location small{
+    display:block;
+    font-size:11px;
+    color:#d5e7df;
+}
+
+.location strong{
+    font-size:13px;
+}
+
+.search-area{
+    flex:1;
+    height:42px;
+    display:flex;
+    border-radius:5px;
+    overflow:hidden;
+    background:white;
+}
+
+.search-category{
+    width:58px;
+    border:0;
+    background:#eef1f1;
+    color:#333;
+    padding:0 7px;
+}
+
+.search-input{
+    flex:1;
+    border:0;
+    outline:none;
+    padding:0 13px;
+    font-size:15px;
+    color:#222;
+}
+
+.search-button{
+    width:52px;
+    border:0;
+    background:var(--yellow);
+    color:#111;
+    font-size:20px;
+}
+
+.search-button:hover{
+    background:#f7c500;
+}
+
+.header-account{
+    min-width:105px;
+    cursor:pointer;
+    padding:4px;
+}
+
+.header-account small,
+.header-orders small{
+    display:block;
+    font-size:11px;
+}
+
+.header-account strong,
+.header-orders strong{
+    font-size:13px;
+}
+
+.header-orders{
+    min-width:70px;
+    cursor:pointer;
+}
+
+.cart-header{
+    min-width:72px;
+    position:relative;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:3px;
+}
+
+.cart-icon{
+    font-size:29px;
+}
+
+.cart-count{
+    position:absolute;
+    top:-4px;
+    left:19px;
+    background:#ff9900;
+    color:#111;
+    min-width:19px;
+    height:19px;
+    border-radius:50%;
+    text-align:center;
+    line-height:19px;
+    font-size:11px;
+    font-weight:900;
+}
+
+.cart-label{
+    font-weight:900;
+    font-size:13px;
+}
+
+/* NAV */
+.subnav{
+    background:var(--nav2);
+    display:flex;
+    align-items:center;
+    gap:4px;
+    padding:0 15px;
+    min-height:43px;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+.subnav::-webkit-scrollbar{
+    display:none;
+}
+
+.nav-link{
+    color:white;
+    padding:12px 13px;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    border:1px solid transparent;
+}
+
+.nav-link:hover{
+    border-color:white;
+}
+
+.nav-link.all{
+    font-weight:900;
+}
+
+/* HERO */
+.hero{
+    max-width:1500px;
+    margin:auto;
+    min-height:330px;
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(90deg,
+        rgba(0,61,46,.97) 0%,
+        rgba(0,94,69,.88) 42%,
+        rgba(0,94,69,.15) 100%),
+        linear-gradient(135deg,#075c45,#9ad8b7);
+}
+
+.hero-content{
+    padding:70px 7%;
+    color:white;
+    max-width:650px;
+}
+
+.hero-kicker{
+    color:#9ff0c9;
+    font-weight:900;
+    font-size:14px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+}
+
+.hero h1{
+    font-size:42px;
+    line-height:1.08;
+    margin-bottom:13px;
+}
+
+.hero h1 span{
+    color:#ffe56b;
+}
+
+.hero p{
+    color:#e5f7ef;
+    line-height:1.6;
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.hero-btn{
+    border:0;
+    padding:12px 23px;
+    border-radius:5px;
+    font-weight:900;
+}
+
+.hero-btn.primary{
+    background:var(--yellow);
+    color:#111;
+}
+
+.hero-btn.secondary{
+    background:white;
+    color:var(--green-dark);
+}
+
+/* PAGE */
+.page{
+    max-width:1500px;
+    margin:auto;
+    padding:0 18px;
+    position:relative;
+    z-index:2;
+}
+
+.section{
+    background:white;
+    margin-top:18px;
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:16px;
+}
+
+.section-title h2{
+    font-size:24px;
+    color:#17202a;
+}
+
+.section-title a{
+    color:#007185;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* CATEGORY */
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:14px;
+}
+
+.category-card{
+    border:1px solid var(--border);
+    background:white;
+    min-height:135px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.category-card:hover{
+    border-color:var(--green);
+    box-shadow:0 2px 8px rgba(0,107,79,.18);
+    transform:translateY(-2px);
+}
+
+.category-icon{
+    width:68px;
+    height:68px;
+    border-radius:50%;
+    background:var(--green-soft);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:34px;
+}
+
+.category-card strong{
+    font-size:14px;
+}
+
+/* DEALS */
+.deals-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.deal-box{
+    min-height:120px;
+    padding:18px;
+    color:white;
+    border-radius:3px;
+    background:linear-gradient(135deg,#005f45,#008060);
+}
+
+.deal-box:nth-child(2){
+    background:linear-gradient(135deg,#155d3d,#2d9b62);
+}
+
+.deal-box:nth-child(3){
+    background:linear-gradient(135deg,#8a6200,#d69c00);
+}
+
+.deal-box:nth-child(4){
+    background:linear-gradient(135deg,#704b00,#b77c00);
+}
+
+.deal-box h3{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.deal-box p{
+    font-size:12px;
+}
+
+/* PRODUCTS */
+.products{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    min-width:0;
+    position:relative;
+    transition:.2s;
+    display:flex;
+    flex-direction:column;
+}
+
+.card:hover{
+    box-shadow:0 4px 15px rgba(0,0,0,.16);
+}
+
+.card-img{
+    height:220px;
+    background:#f7f8f8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.card-img img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.card-body{
+    padding:15px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.product-title{
+    font-size:16px;
+    font-weight:700;
+    line-height:1.35;
+    margin-bottom:6px;
+}
+
+.rating-avg{
+    margin:4px 0;
+    color:#e47911;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.price{
+    font-size:20px;
+    font-weight:900;
+}
+
+.old-price{
+    color:#667085;
+    text-decoration:line-through;
+    font-size:12px;
+    margin-left:5px;
+}
+
+.discount{
+    color:#007600;
+    font-size:12px;
+    font-weight:700;
+    margin-left:5px;
+}
+
+.trusted{
+    display:inline-block;
+    margin-top:7px;
+    background:var(--green);
+    color:white;
+    padding:3px 6px;
+    border-radius:2px;
+    font-size:9px;
+    font-weight:900;
+    width:fit-content;
+}
+
+.stock{
+    margin-top:8px;
+    font-size:12px;
+    font-weight:800;
+    min-height:16px;
+}
+
+.stock.in-stock{ color:#007600; }
+.stock.low-stock{ color:#b12704; }
+.stock.out{ color:#c40000; }
+
+.stock-dot{
+    display:inline-block;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    margin-right:4px;
+    background:#067d62;
+}
+
+.stock.low-stock .stock-dot{ background:#e47911; }
+.stock.out .stock-dot{ background:#c40000; }
+
+.card-actions{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+    margin-bottom:15px;
+}
+
+.card-actions button{
+    flex:1;
+    min-height:38px;
+    border:1px solid #888;
+    border-radius:18px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.add-cart-btn{
+    background:#ffd814;
+    border-color:#e7b900 !important;
+}
+
+.buy-btn{
+    background:#ff9900;
+    border-color:#d47f00 !important;
+}
+
+/* REVIEWS SECTION IN CARD */
+.reviews-container{
+    border-top:1px solid var(--border);
+    padding-top:12px;
+    margin-top:auto;
+}
+
+.reviews-title{
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:8px;
+    color:var(--green-dark);
+}
+
+.reviews-list{
+    max-height:110px;
+    overflow-y:auto;
+    background:#f9f9f9;
+    padding:8px;
+    border-radius:4px;
+    font-size:11px;
+    margin-bottom:10px;
+    border:1px solid #eee;
+}
+
+.review-item{
+    margin-bottom:6px;
+    padding-bottom:6px;
+    border-bottom:1px dashed #ddd;
+}
+
+.review-item:last-child{
+    border-bottom:none;
+    margin-bottom:0;
+    padding-bottom:0;
+}
+
+.review-user{
+    font-weight:bold;
+    color:#333;
+}
+
+.review-stars{
+    color:#e47911;
+}
+
+.review-text{
+    color:#555;
+    margin-top:2px;
+}
+
+.add-review-form{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.add-review-form input,
+.add-review-form select,
+.add-review-form textarea{
+    font-size:11px;
+    padding:6px;
+    border:1px solid #ccc;
+    border-radius:3px;
+    width:100%;
+}
+
+.add-review-form button{
+    background:var(--green-light);
+    color:white;
+    border:0;
+    padding:6px;
+    border-radius:3px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+/* CART DRAWER */
+.cart-drawer{
+    position:fixed;
+    top:0;
+    right:-460px;
+    width:440px;
+    max-width:95%;
+    height:100vh;
+    background:white;
+    z-index:10000;
+    box-shadow:-5px 0 25px rgba(0,0,0,.25);
+    transition:.3s;
+    display:flex;
+    flex-direction:column;
+}
+
+.cart-drawer.open{
+    right:0;
+}
+
+.cart-head{
+    background:var(--green-dark);
+    color:white;
+    padding:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.cart-head h2{ font-size:20px; }
+
+.close-cart{
+    background:transparent;
+    border:0;
+    color:white;
+    font-size:28px;
+}
+
+.cart-content{
+    flex:1;
+    overflow-y:auto;
+    padding:15px;
+}
+
+.drawer-item{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:13px 0;
+    border-bottom:1px solid #eee;
+}
+
+.drawer-item-name{ font-size:13px; font-weight:700; }
+.drawer-item-price{ font-weight:900; }
+
+.cart-qty{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:8px;
+}
+
+.cart-qty button{
+    width:28px;
+    height:28px;
+    border:1px solid #aaa;
+    background:#fff;
+    border-radius:4px;
+    font-weight:900;
+}
+
+.cart-qty span{
+    min-width:25px;
+    text-align:center;
+    font-weight:900;
+}
+
+.remove-cart{
+    border:0;
+    background:none;
+    color:#c40000;
+    font-size:11px;
+    font-weight:700;
+    margin-top:6px;
+}
+
+.cart-footer{
+    padding:15px;
+    border-top:1px solid #ddd;
+}
+
+.cart-total{
+    display:flex;
+    justify-content:space-between;
+    font-size:20px;
+    font-weight:900;
+    margin-bottom:12px;
+}
+
+.checkout-btn{
+    width:100%;
+    border:0;
+    background:var(--yellow);
+    padding:14px;
+    border-radius:7px;
+    font-weight:900;
+}
+
+/* ADVANCED CHECKOUT SYSTEM WITH SAVED ADDRESS & EDIT */
+.checkout-section{ display:none; }
+.checkout-section.show{ display:block; }
+
+.checkout-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+}
+
+.checkout-box{
+    border:1px solid var(--border);
+    padding:18px;
+    position:relative;
+    background:white;
+    border-radius:4px;
+}
+
+.checkout-box h3{
+    margin-bottom:15px;
+    color:var(--green-dark);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.address-header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.saved-badge{
+    background:#e6f4ea;
+    color:#137333;
+    font-size:11px;
+    padding:3px 8px;
+    border-radius:12px;
+    font-weight:bold;
+    display:none;
+}
+
+.edit-addr-btn{
+    background:var(--green-soft);
+    color:var(--green-dark);
+    border:1px solid var(--green);
+    padding:4px 10px;
+    border-radius:4px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.checkout-box input,
+.checkout-box textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #aab0b5;
+    margin-bottom:10px;
+    border-radius:4px;
+    outline:none;
+    transition:0.2s;
+}
+
+.checkout-box input:disabled,
+.checkout-box textarea:disabled{
+    background:#f9f9f9;
+    color:#555;
+    border-color:#e0e0e0;
+}
+
+.checkout-box textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.order-summary{ background:#f7fafa; }
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid #ddd;
+    font-size:13px;
+}
+
+.summary-total{
+    font-size:21px;
+    font-weight:900;
+    color:var(--green-dark);
+    padding-top:15px;
+}
+
+.pay-button{
+    width:100%;
+    margin-top:15px;
+    border:0;
+    background:var(--yellow);
+    padding:14px;
+    border-radius:5px;
+    font-weight:900;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    z-index:11000;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.modal.show{ display:flex; }
+
+/* USER ACCOUNT & PROFILE DECORATION SYSTEM */
+.profile-card-modal{
+    width:480px;
+    max-width:100%;
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    position:relative;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+.profile-card-header{
+    text-align:center;
+    padding-bottom:15px;
+    border-bottom:1px solid #eee;
+    margin-bottom:15px;
+}
+
+.dp-container{
+    position:relative;
+    width:100px;
+    height:100px;
+    margin:0 auto 10px;
+}
+
+.dp-image{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid var(--green);
+    background:#f0f0f0;
+}
+
+.dp-upload-btn{
+    position:absolute;
+    bottom:0;
+    right:0;
+    background:var(--yellow);
+    border:1px solid #aaa;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.profile-badge{
+    display:inline-block;
+    background:var(--green-soft);
+    color:var(--green-dark);
+    font-size:11px;
+    font-weight:bold;
+    padding:3px 10px;
+    border-radius:12px;
+    margin-top:4px;
+}
+
+.profile-field-group{
+    margin-bottom:12px;
+}
+
+.profile-field-group label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    color:var(--green-dark);
+    margin-bottom:4px;
+}
+
+.profile-field-group input,
+.profile-field-group textarea,
+.profile-field-group select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:13px;
+}
+
+.gps-btn{
+    background:var(--green-soft);
+    color:var(--green-dark);
+    border:1px solid var(--green);
+    padding:8px 12px;
+    border-radius:4px;
+    font-size:12px;
+    font-weight:bold;
+    width:100%;
+    margin-top:5px;
+}
+
+.profile-decor-options{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.decor-box{
+    flex:1;
+    border:1px solid #ccc;
+    padding:8px;
+    border-radius:5px;
+    text-align:center;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.decor-box.active{
+    border-color:var(--green);
+    background:var(--green-soft);
+}
+
+.logout-btn-account{
+    background:#c40000;
+    color:white;
+    border:0;
+    padding:10px;
+    width:100%;
+    border-radius:5px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+/* LOGIN */
+.login-box{
+    width:380px;
+    max-width:100%;
+    background:white;
+    border-radius:8px;
+    padding:28px;
+    position:relative;
+}
+
+.login-box h2{
+    color:var(--green-dark);
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.login-box input,
+.login-box select{
+    width:100%;
+    padding:12px;
+    border:1px solid #aaa;
+    border-radius:4px;
+    margin-bottom:10px;
+}
+
+.auth-button{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:5px;
+    background:var(--yellow);
+    font-weight:900;
+}
+
+.auth-link{
+    display:block;
+    text-align:center;
+    margin-top:12px;
+    color:#007185;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.close-login{
+    position:absolute;
+    top:8px;
+    right:12px;
+    border:0;
+    background:none;
+    font-size:25px;
+}
+
+/* ADMIN */
+.admin-box{
+    width:450px;
+    max-width:100%;
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:8px;
+    padding:25px;
+    position:relative;
+}
+
+.admin-box h2{ color:var(--green-dark); margin-bottom:15px; }
+
+.admin-box input,
+.admin-box select{
+    width:100%;
+    padding:11px;
+    margin:6px 0;
+    border:1px solid #aaa;
+    border-radius:4px;
+}
+
+.admin-btn{
+    width:100%;
+    border:0;
+    background:var(--green);
+    color:white;
+    padding:12px;
+    margin-top:8px;
+    border-radius:5px;
+    font-weight:900;
+}
+
+.delete-btn{ background:#c40000; }
+
+/* LOCATION */
+.location-section{
+    background:white;
+    margin-top:18px;
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.location-section h2{ color:var(--green-dark); margin-bottom:12px; }
+
+.location-map{
+    width:100%;
+    height:250px;
+    border:0;
+    border-radius:5px;
+}
+
+/* FOOTER */
+.footer{ background:#102a23; color:#ddd; margin-top:25px; }
+
+.footer-top{
+    max-width:1500px;
+    margin:auto;
+    padding:35px 25px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
+.footer-column h3{ color:white; margin-bottom:12px; font-size:16px; }
+
+.footer-column p,
+.footer-column div{ font-size:12px; line-height:2; }
+
+.footer-bottom{
+    border-top:1px solid #3a514a;
+    text-align:center;
+    padding:20px;
+    font-size:12px;
+}
+
+/* WHATSAPP */
+.whatsapp{
+    position:fixed;
+    right:20px;
+    bottom:90px;
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background:#25d366;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    text-decoration:none;
+    box-shadow:0 4px 15px rgba(0,0,0,.25);
+    z-index:4000;
+}
+
+/* MOBILE */
+.mobile-nav{ display:none; }
+
+@media(max-width:1100px){
+    .location{ display:none; }
+    .products{ grid-template-columns:repeat(2,1fr); }
+    .category-grid{ grid-template-columns:repeat(4,1fr); }
+}
+
+@media(max-width:800px){
+    .header-main{ flex-wrap:wrap; padding:8px 10px; }
+    .logo-area{ min-width:auto; }
+    .header-account, .header-orders{ display:none; }
+    .search-area{ order:3; flex-basis:100%; }
+    .hero{ min-height:280px; }
+    .hero-content{ padding:45px 25px; }
+    .hero h1{ font-size:31px; }
+    .category-grid{ grid-template-columns:repeat(3,1fr); }
+    .deals-row{ grid-template-columns:repeat(2,1fr); }
+    .products{ grid-template-columns:repeat(2,1fr); }
+    .checkout-grid{ grid-template-columns:1fr; }
+    .footer-top{ grid-template-columns:repeat(2,1fr); }
+}
+
+@media(max-width:600px){
+    body{ padding-bottom:65px; }
+    .logo-text{ font-size:18px; }
+    .cart-label{ display:none; }
+    .subnav{ min-height:39px; }
+    .nav-link{ padding:11px 9px; font-size:11px; }
+    .hero{ min-height:260px; }
+    .hero-content{ padding:38px 20px; }
+    .hero h1{ font-size:27px; }
+    .hero p{ font-size:13px; }
+    .section{ margin-top:10px; padding:14px; }
+    .section-title h2{ font-size:19px; }
+    .category-grid{ grid-template-columns:repeat(2,1fr); }
+    .deals-row{ grid-template-columns:1fr 1fr; }
+    .products{ grid-template-columns:1fr; gap:12px; }
+    .card-img{ height:165px; }
+    .card-body{ padding:9px; }
+    .product-title{ font-size:14px; }
+    .price{ font-size:17px; }
+    .cart-drawer{ width:100%; max-width:100%; }
+    .footer-top{ grid-template-columns:1fr 1fr; padding:25px 15px; }
+    .mobile-nav{
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:62px;
+        background:white;
+        display:flex;
+        justify-content:space-around;
+        align-items:center;
+        z-index:6000;
+        box-shadow:0 -2px 12px rgba(0,0,0,.15);
+    }
+    .mobile-item{ text-align:center; color:#667085; font-size:10px; font-weight:700; cursor:pointer; }
+    .mobile-item.active{ color:var(--green); }
+    .mobile-icon{ font-size:21px; display:block; }
+    .whatsapp{ bottom:75px; right:15px; width:47px; height:47px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-main">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="Logo.png" class="logo" alt="Green Angan">
+                <div class="logo-text">Green <span>Angan</span></div>
+            </a>
+        </div>
+        <div class="location">
+            <small>📍 Deliver to</small>
+            <strong>Gurgaon, Haryana</strong>
+        </div>
+        <div class="search-area">
+            <select class="search-category" id="searchCategory">
+                <option value="all">All</option>
+                <option value="Seeds">Seeds</option>
+                <option value="Organic Wheat">Wheat</option>
+                <option value="Fertilizers">Fertilizers</option>
+                <option value="Honey">Honey</option>
+            </select>
+            <input id="searchInput" class="search-input" type="text" placeholder="Search Green Angan products">
+            <button class="search-button" id="searchButton">🔎</button>
+        </div>
+        <div class="header-account" id="accountHeader">
+            <small>Hello, sign in</small>
+            <strong>Account & Lists</strong>
+        </div>
+        <div class="header-orders" onclick="goOrders()">
+            <small>Returns</small>
+            <strong>& Orders</strong>
+        </div>
+        <div class="cart-header" id="cartHeader">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-count" id="cartCount">0</span>
+            <span class="cart-label">Cart</span>
+        </div>
+    </div>
+    <nav class="subnav">
+        <div class="nav-link all" onclick="scrollHome()">☰ All</div>
+        <div class="nav-link" onclick="selectCategory('Seeds')">🌱 Seeds</div>
+        <div class="nav-link" onclick="selectCategory('Organic Wheat')">🌾 Organic Wheat</div>
+        <div class="nav-link" onclick="selectCategory('Fertilizers')">🌿 Fertilizers</div>
+        <div class="nav-link" onclick="selectCategory('Honey')">🍯 Honey</div>
+        <div class="nav-link" onclick="scrollToDeals()">🔥 Today's Deals</div>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-kicker">🌿 Green Angan</div>
+        <h1>Fresh & Organic <span>Products</span> for Every Home</h1>
+        <p>Trusted quality, fresh products and convenient delivery — all from Green Angan.</p>
+        <div class="hero-buttons">
+            <button class="hero-btn primary" onclick="scrollProducts()">Shop Now</button>
+            <button class="hero-btn secondary" onclick="window.location.href='subscription.html'">Explore Categories for Plant🌾🌿</button>
+        </div>
+    </div>
+</section>
+
+<main class="page">
+    <section class="section" id="categoriesSection">
+        <div class="section-title">
+            <h2>Shop by Category</h2>
+            <a onclick="scrollProducts()">See all</a>
+        </div>
+        <div class="category-grid">
+            <div class="category-card" onclick="selectCategory('Seeds')">
+                <div class="category-icon">🌱</div>
+                <strong>Seeds</strong>
+            </div>
+            <div class="category-card" onclick="selectCategory('Organic Wheat')">
+                <div class="category-icon">🌾</div>
+                <strong>Organic Wheat</strong>
+            </div>
+            <div class="category-card" onclick="selectCategory('Fertilizers')">
+                <div class="category-icon">🌿</div>
+                <strong>Fertilizers</strong>
+            </div>
+            <div class="category-card" onclick="selectCategory('Honey')">
+                <div class="category-icon">🍯</div>
+                <strong>Honey</strong>
+            </div>
+            <div class="category-card" onclick="selectCategory('All Items')">
+                <div class="category-icon">🛍️</div>
+                <strong>All Products</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="dealsSection">
+        <div class="section-title">
+            <h2>🔥 Today's Deals</h2>
+            <a onclick="scrollProducts()">Shop all deals</a>
+        </div>
+        <div class="deals-row">
+            <div class="deal-box"><h3>Fresh Seeds</h3><p>Quality seeds for your garden.</p></div>
+            <div class="deal-box"><h3>Organic Wheat</h3><p>Naturally sourced & trusted.</p></div>
+            <div class="deal-box"><h3>Natural Honey</h3><p>Pure sweetness from nature.</p></div>
+            <div class="deal-box"><h3>Green Fertilizers</h3><p>Better nutrition for plants.</p></div>
+        </div>
+    </section>
+
+    <section class="section" id="productsSection">
+        <div class="section-title">
+            <h2 id="productsTitle">Recommended for You</h2>
+            <a onclick="selectCategory('All Items')">Clear Filter</a>
+        </div>
+        <div class="products" id="productsContainer"></div>
+    </section>
+
+    <!-- ADVANCED CHECKOUT WITH AUTO SAVED ADDRESS & EDIT OPTION -->
+    <section class="section checkout-section" id="checkoutSection">
+        <div class="section-title">
+            <h2>Checkout</h2>
+            <a onclick="closeCheckout()">Continue Shopping</a>
+        </div>
+        <div class="checkout-grid">
+            <div class="checkout-box">
+                <h3>
+                    <span>🚚 Delivery Address</span>
+                    <div class="address-header-actions">
+                        <span class="saved-badge" id="savedAddrBadge">✓ Saved Address Loaded</span>
+                        <button class="edit-addr-btn" id="editAddrBtn" onclick="toggleEditAddress()">✏️ Edit Address</button>
+                    </div>
+                </h3>
+                <input type="text" id="customerName" placeholder="Full Name" disabled>
+                <input type="tel" id="customerPhone" placeholder="Mobile Number" disabled>
+                <textarea id="customerAddress" placeholder="Complete Delivery Address" disabled></textarea>
+            </div>
+            <div class="checkout-box order-summary">
+                <h3>Order Summary</h3>
+                <div id="checkoutItems"></div>
+                <div class="summary-row">
+                    <strong>Total</strong>
+                    <strong id="checkoutTotal">₹0</strong>
+                </div>
+                <button class="pay-button" id="payNowBtn">Proceed to Payment</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="location-section">
+        <h2>📍 Green Angan Store</h2>
+        <iframe class="location-map" src="https://maps.google.com/maps?q=Emaar+Gurgaon+Green+Sector+102+Gurgaon+122505&t=&z=14&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
+        <p style="margin-top:12px;font-size:13px;font-weight:700">Emaar Gurgaon Green, Sector 102, Gurgaon, Haryana - 122505</p>
+        <p style="margin-top:5px;color:#667085;font-size:12px">📞 +91 9821846004 &nbsp; | &nbsp; ✉ greenangan@gmail.com</p>
+    </section>
+</main>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+    <div class="login-box">
+        <button class="close-login" onclick="closeLogin()">×</button>
+        <h2 id="authTitle">Sign in to Green Angan</h2>
+        <input type="text" id="custName" placeholder="Your Full Name" style="display:none">
+        <input type="tel" id="custPhone" placeholder="Mobile Number">
+        <input type="password" id="custPass" placeholder="Password">
+        <div id="otpSection" style="display:none">
+            <p style="font-size:11px;color:#667085;margin-bottom:5px">Enter the OTP displayed on screen.</p>
+            <input type="number" id="custOtp" placeholder="Enter OTP">
+        </div>
+        <input type="password" id="custNewPass" placeholder="New Password" style="display:none">
+        <button class="auth-button" id="authBtn">Continue</button>
+        <span class="auth-link" id="toggleAuth">New to Green Angan? Create your account</span>
+        <span class="auth-link" id="forgotPassword" style="color:#c40000">Forgot Password?</span>
+    </div>
+</div>
+
+<!-- ADVANCED ACCOUNT PROFILE & DECORATION MODAL -->
+<div class="modal" id="profileModal">
+    <div class="profile-card-modal">
+        <button class="close-login" onclick="closeProfileModal()">×</button>
+        
+        <div class="profile-card-header">
+            <div class="dp-container">
+                <img src="Logo.png" id="userDpImg" class="dp-image" alt="Profile Picture">
+                <label for="dpFileInput" class="dp-upload-btn" title="Upload DP">📷</label>
+                <input type="file" id="dpFileInput" accept="image/*" style="display:none">
+            </div>
+            <h2 id="profAccountName">User Profile</h2>
+            <span class="profile-badge" id="profBadge">🌟 Green Angan Premium Member</span>
+        </div>
+
+        <div class="profile-field-group">
+            <label>Full Name</label>
+            <input type="text" id="profNameInput" placeholder="Enter Full Name">
+        </div>
+
+        <div class="profile-field-group">
+            <label>Mobile Number</label>
+            <input type="tel" id="profPhoneInput" disabled style="background:#f5f5f5;">
+        </div>
+
+        <div class="profile-field-group">
+            <label>Custom Bio / Status</label>
+            <input type="text" id="profBioInput" placeholder="e.g. Organic Food Lover 🌿">
+        </div>
+
+        <div class="profile-field-group">
+            <label>Delivery Address</label>
+            <textarea id="profAddressInput" rows="2" placeholder="Fill your complete address"></textarea>
+            <button class="gps-btn" onclick="detectLiveGPS()">📍 Detect My Live GPS Location</button>
+        </div>
+
+        <div class="profile-field-group">
+            <label>Profile Theme Decoration</label>
+            <div class="profile-decor-options">
+                <div class="decor-box active" onclick="setProfileTheme('green', this)">🌿 Green</div>
+                <div class="decor-box" onclick="setProfileTheme('dark', this)">🌙 Dark</div>
+                <div class="decor-box" onclick="setProfileTheme('gold', this)">⭐ Gold</div>
+            </div>
+        </div>
+
+        <button class="admin-btn" onclick="saveProfileChanges()" style="margin-top:15px;">💾 Save & Decorate Profile</button>
+        <button class="logout-btn-account" onclick="logoutUser()">🚪 Logout</button>
+    </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="modal" id="adminLoginModal">
+    <div class="login-box">
+        <button class="close-login" onclick="closeAdminLogin()">×</button>
+        <h2>🔐 Admin Access</h2>
+        <input type="text" id="adminUserInput" placeholder="Admin Username">
+        <input type="password" id="adminPinInput" placeholder="Admin Password">
+        <button class="auth-button" id="submitAdminPinBtn">Login</button>
+    </div>
+</div>
+
+<!-- STOCK ADMIN -->
+<div class="modal" id="stockModal">
+    <div class="admin-box">
+        <button class="close-login" onclick="closeStockModal()">×</button>
+        <h2>📦 Manage Stock</h2>
+        <input type="text" id="stockProdName" placeholder="Product Name">
+        <input type="text" id="stockProdCat" placeholder="Category">
+        <input type="number" id="stockProdPrice" placeholder="Price ₹">
+        <input type="number" id="stockProdQty" placeholder="Stock Quantity">
+        <select id="stockProdUnit">
+            <option value="kg">KG</option>
+            <option value="Packets">Packets</option>
+            <option value="pc">PC</option>
+            <option value="43KG-PER 1BUNDLE">KG - 1 KATTA</option>
+        </select>
+        <label style="font-size:12px;font-weight:800;color:#006b4f">Product Image</label>
+        <input type="file" id="stockProdImgFile" accept="image/*">
+        <button class="admin-btn" id="saveStockBtn">Save Product</button>
+        <hr style="margin:20px 0;border:0;border-top:1px dashed #ccc">
+        <h3>Delete Product</h3>
+        <select id="deleteProdSelect">
+            <option value="">-- Choose Product --</option>
+        </select>
+        <button class="admin-btn delete-btn" id="deleteStockBtn">Delete Selected Product</button>
+    </div>
+</div>
+
+<!-- CART DRAWER -->
+<aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+        <h2>🛒 Shopping Cart</h2>
+        <button class="close-cart" onclick="closeCart()">×</button>
+    </div>
+    <div class="cart-content" id="cartItems"></div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Total</span>
+            <span id="cartTotal">₹0</span>
+        </div>
+        <button class="checkout-btn" onclick="startCheckout()">Proceed to Checkout</button>
+    </div>
+</aside>
+
+<a class="whatsapp" href="https://wa.me/919821846004" target="_blank" title="Contact Green Angan">💬</a>
+
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-column">
+            <h3>Get to Know Us</h3>
+            <p>About Green Angan</p><p>Our Products</p><p>Quality Promise</p><p>Sustainability</p>
+        </div>
+        <div class="footer-column">
+            <h3>Customer Service</h3>
+            <p>Your Orders</p><p>Delivery Information</p><p>Contact Us</p><p>Help Center</p>
+        </div>
+        <div class="footer-column">
+            <h3>Shop</h3>
+            <p>Seeds</p><p>Organic Wheat</p><p>Fertilizers</p><p>Honey</p>
+        </div>
+        <div class="footer-column">
+            <h3>Green Angan</h3>
+            <p>📍 Gurgaon, Haryana</p><p>📞 +91 9821846004</p><p>✉ greenangan@gmail.com</p><p>🌿 Where Homes Bloom with Life</p>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2026 Green Angan | Where Homes Bloom with Life</div>
+</footer>
+
+<nav class="mobile-nav">
+    <div class="mobile-item active" onclick="scrollHome()"><span class="mobile-icon">🏠</span>Home</div>
+    <div class="mobile-item" onclick="goOrders()"><span class="mobile-icon">📦</span>Orders</div>
+    <div class="mobile-item" onclick="openCart()"><span class="mobile-icon">🛒</span>Cart</div>
+    <div class="mobile-item" onclick="openProfileOrLogin()"><span class="mobile-icon">👤</span>Account</div>
+</nav>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getDatabase, ref, push, set, remove, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+    apiKey: "AIzaSyAwydVIDNYu6n3ze_yaI-Q9r1Ms6MMCcYM",
+    authDomain: "greenangan-7a085.firebaseapp.com",
+    databaseURL: "https://greenangan-7a085-default-rtdb.firebaseio.com/",
+    projectId: "greenangan-7a085",
+    storageBucket: "greenangan-7a085.firebasestorage.app",
+    messagingSenderId: "105971440710",
+    appId: "1:105971440710:web:32e03bcb5cd2fcf8713347",
+    measurementId: "G-L5KCJ9FS2F"
+};
+
+let database = null;
+try {
+    const app = initializeApp(firebaseConfig);
+    database = getDatabase(app);
+} catch(error) {
+    console.error("Firebase initialization failed:", error);
+}
+
+/* VARIABLES */
+let products = [];
+let cart = [];
+let total = 0;
+let selectedCategory = "All Items";
+let authMode = "login";
+let isEditingAddress = false;
+let selectedProfileTheme = "green";
+
+const CART_STORAGE_KEY = "green_angan_cart";
+
+function getCartStorageKey(){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    if(customer && customer.phone){
+        return CART_STORAGE_KEY + "_" + customer.phone;
+    }
+    return CART_STORAGE_KEY + "_guest";
+}
+
+function saveCart(){
+    localStorage.setItem(getCartStorageKey(), JSON.stringify(cart));
+}
+
+function loadCart(){
+    try{
+        cart = JSON.parse(localStorage.getItem(getCartStorageKey())) || [];
+    }catch(error){
+        cart = [];
+    }
+    calculateCartTotal();
+}
+
+function calculateCartTotal(){
+    total = cart.reduce((sum,item) => sum + (Number(item.price || 0) * Number(item.qty || 0)), 0);
+}
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+function getUsers(){
+    return JSON.parse(localStorage.getItem("green_angan_users")) || {};
+}
+
+/* FIREBASE LISTENERS */
+if(database){
+    onValue(ref(database,"products"), snapshot => {
+        const data = snapshot.val();
+        const loaded = [];
+        if(data){
+            Object.keys(data).forEach(key => {
+                loaded.push({
+                    firebaseKey: key,
+                    ...data[key]
+                });
+            });
+        }
+        products = loaded;
+        localStorage.setItem("green_angan_products", JSON.stringify(products));
+        renderProducts();
+        populateDeleteDropdown();
+        updateCart();
+    });
+
+    onValue(ref(database,"users"), snapshot => {
+        if(snapshot.exists()){
+            localStorage.setItem("green_angan_users", JSON.stringify(snapshot.val()));
+        }
+    });
+} else {
+    products = JSON.parse(localStorage.getItem("green_angan_products")) || [];
+}
+
+/* RENDER PRODUCTS & REVIEWS */
+function renderProducts(){
+    const container = document.getElementById("productsContainer");
+    if(!container) return;
+
+    const query = document.getElementById("searchInput").value.toLowerCase().trim();
+    const category = selectedCategory;
+
+    const filtered = products.filter(product => {
+        const categoryMatch = category === "All Items" || String(product.category || "").toLowerCase() === category.toLowerCase();
+        const searchMatch = !query || String(product.name || "").toLowerCase().includes(query) || String(product.category || "").toLowerCase().includes(query);
+        return categoryMatch && searchMatch;
+    });
+
+    document.getElementById("productsTitle").innerText = category === "All Items" ? "Recommended for You" : category;
+
+    if(filtered.length === 0){
+        container.innerHTML = `
+            <div class="empty-products" style="grid-column:1/-1;text-align:center;padding:50px 0;">
+                <div style="font-size:40px;">📦</div>
+                <strong>No products found</strong>
+            </div>`;
+        return;
+    }
+
+    let html = "";
+    filtered.forEach(product => {
+        const index = products.indexOf(product);
+        const price = Number(product.price || 0);
+        const original = Number(product.originalPrice || Math.round(price * 1.4));
+        const discount = original > price ? Math.round(((original-price)/original)*100) : 0;
+        const stock = Number(product.stock || 0);
+
+        let stockHTML = "";
+        if(stock <= 0){
+            stockHTML = `<div class="stock out"><span class="stock-dot"></span>Currently unavailable</div>`;
+        }else if(stock <= 5){
+            stockHTML = `<div class="stock low-stock"><span class="stock-dot"></span>Only ${stock} left in stock</div>`;
+        }else{
+            stockHTML = `<div class="stock in-stock"><span class="stock-dot"></span>In Stock: ${stock} ${escapeHTML(product.unit || "PC")}</div>`;
+        }
+
+        const reviewsArr = product.reviews ? Object.values(product.reviews) : [];
+        let totalStars = 0;
+        let reviewsHTML = "";
+        
+        if(reviewsArr.length > 0){
+            reviewsArr.forEach(r => {
+                totalStars += Number(r.rating || 5);
+                reviewsHTML += `
+                    <div class="review-item">
+                        <div class="review-user">${escapeHTML(r.name)} <span class="review-stars">${'⭐'.repeat(r.rating)}</span></div>
+                        <div class="review-text">${escapeHTML(r.comment)}</div>
+                    </div>`;
+            });
+        } else {
+            reviewsHTML = `<div style="color:#777;font-style:italic;">No reviews yet. Be the first to review!</div>`;
+        }
+
+        const avgRating = reviewsArr.length > 0 ? (totalStars / reviewsArr.length).toFixed(1) : "5.0";
+
+        html += `
+            <article class="card">
+                <div class="card-img">
+                    <img src="${escapeHTML(product.image || "Logo.png")}" alt="${escapeHTML(product.name)}" loading="lazy">
+                </div>
+                <div class="card-body">
+                    <div class="product-title">${escapeHTML(product.name || "Green Angan Product")}</div>
+                    <div class="rating-avg">⭐ ${avgRating} / 5 (${reviewsArr.length} reviews)</div>
+                    <div>
+                        <span class="price">₹${price.toLocaleString("en-IN")}</span>
+                        <span class="old-price">₹${original.toLocaleString("en-IN")}</span>
+                        <span class="discount">${discount}% off</span>
+                    </div>
+                    <span class="trusted">✓ M-Trusted Quality</span>
+                    ${stockHTML}
+
+                    <div class="card-actions">
+                        ${stock > 0 ? `
+                            <button class="add-cart-btn" onclick="directAddToCart(${index})">🛒 Add to Cart</button>
+                            <button class="buy-btn" onclick="directBuyNow(${index})">⚡ Buy Now</button>
+                        ` : `
+                            <button class="add-cart-btn" disabled style="background:#ddd;color:#777;border-color:#ddd!important">Sold Out</button>
+                        `}
+                    </div>
+
+                    <div class="reviews-container">
+                        <div class="reviews-title">💬 Customer Reviews</div>
+                        <div class="reviews-list">${reviewsHTML}</div>
+                        
+                        <div class="add-review-form">
+                            <input type="text" id="rev-name-${index}" placeholder="Your Name">
+                            <select id="rev-rating-${index}">
+                                <option value="5">⭐⭐⭐⭐⭐ (5 Star)</option>
+                                <option value="4">⭐⭐⭐⭐ (4 Star)</option>
+                                <option value="3">⭐⭐⭐ (3 Star)</option>
+                                <option value="2">⭐⭐ (2 Star)</option>
+                                <option value="1">⭐ (1 Star)</option>
+                            </select>
+                            <textarea id="rev-comment-${index}" rows="2" placeholder="Write your review..."></textarea>
+                            <button onclick="submitReview(${index})">Submit Review</button>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+window.submitReview = async function(index){
+    const product = products[index];
+    if(!product) return;
+
+    const nameInput = document.getElementById(`rev-name-${index}`);
+    const ratingInput = document.getElementById(`rev-rating-${index}`);
+    const commentInput = document.getElementById(`rev-comment-${index}`);
+
+    const name = nameInput.value.trim();
+    const rating = Number(ratingInput.value);
+    const comment = commentInput.value.trim();
+
+    if(!name || !comment){
+        alert("Please fill your name and review comment!");
+        return;
+    }
+
+    const reviewData = { name, rating, comment, date: new Date().toISOString() };
+
+    if(database && product.firebaseKey){
+        await push(ref(database, `products/${product.firebaseKey}/reviews`), reviewData);
+    } else {
+        if(!product.reviews) product.reviews = {};
+        const newKey = "rev_" + Date.now();
+        product.reviews[newKey] = reviewData;
+        localStorage.setItem("green_angan_products", JSON.stringify(products));
+        renderProducts();
+    }
+
+    alert("Thank you! Your review has been added.");
+};
+
+window.directAddToCart = async function(index){
+    if(!requireLogin()) return;
+    const product = products[index];
+    if(!product) return;
+    const stock = Number(product.stock || 0);
+    if(stock <= 0) return;
+
+    const productKey = product.firebaseKey || product.name;
+    const existing = cart.find(item => item.productKey === productKey);
+    const currentQty = existing ? Number(existing.qty || 0) : 0;
+
+    if(currentQty >= stock){
+        alert("Cannot add more than available stock!");
+        return;
+    }
+
+    if(existing){
+        existing.qty = currentQty + 1;
+    }else{
+        cart.push({
+            productKey,
+            firebaseKey: product.firebaseKey || "",
+            name: product.name,
+            price: Number(product.price || 0),
+            qty: 1,
+            unit: product.unit || "PC",
+            image: product.image || "Logo.png"
+        });
+    }
+
+    calculateCartTotal();
+    saveCart();
+    updateCart();
+    alert(`✅ ${product.name} added to cart!`);
+};
+
+window.directBuyNow = async function(index){
+    await directAddToCart(index);
+    startCheckout();
+};
+
+window.selectCategory = function(category){
+    selectedCategory = category;
+    renderProducts();
+    document.getElementById("productsSection").scrollIntoView({ behavior:"smooth" });
+};
+
+document.getElementById("searchInput").addEventListener("input", renderProducts);
+document.getElementById("searchButton").onclick = function(){ renderProducts(); scrollProducts(); };
+document.getElementById("searchCategory").onchange = function(){
+    selectedCategory = this.value === "all" ? "All Items" : this.value;
+    renderProducts();
+};
+
+/* ACCOUNT PROFILE & DECORATION SYSTEM */
+window.openProfileOrLogin = function(){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    if(customer){
+        openProfileModal();
+    } else {
+        openLogin();
+    }
+};
+
+window.openProfileModal = function(){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    if(!customer) return;
+
+    document.getElementById("profAccountName").innerText = customer.name || "User";
+    document.getElementById("profNameInput").value = customer.name || "";
+    document.getElementById("profPhoneInput").value = customer.phone || "";
+    document.getElementById("profBioInput").value = customer.bio || "";
+    document.getElementById("profAddressInput").value = customer.savedAddress || "";
+    document.getElementById("userDpImg").src = customer.dp || "Logo.png";
+
+    document.getElementById("profileModal").classList.add("show");
+};
+
+window.closeProfileModal = function(){
+    document.getElementById("profileModal").classList.remove("show");
+};
+
+document.getElementById("dpFileInput").onchange = function(e){
+    const file = e.target.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload = function(evt){
+            document.getElementById("userDpImg").src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
+window.setProfileTheme = function(theme, element){
+    selectedProfileTheme = theme;
+    document.querySelectorAll(".decor-box").forEach(el => el.classList.remove("active"));
+    element.classList.add("active");
+};
+
+window.detectLiveGPS = function(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                document.getElementById("profAddressInput").value = `📍 GPS Location: Lat ${lat.toFixed(4)}, Lon ${lon.toFixed(4)} (Auto-detected)`;
+                alert("📍 Live Location detected successfully!");
+            },
+            () => { alert("Unable to retrieve location. Please grant permission."); }
+        );
+    } else {
+        alert("Geolocation is not supported by your browser.");
+    }
+};
+
+window.saveProfileChanges = function(){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    if(!customer) return;
+
+    customer.name = document.getElementById("profNameInput").value.trim();
+    customer.bio = document.getElementById("profBioInput").value.trim();
+    customer.savedAddress = document.getElementById("profAddressInput").value.trim();
+    customer.dp = document.getElementById("userDpImg").src;
+    customer.theme = selectedProfileTheme;
+
+    localStorage.setItem("current_green_angan_customer", JSON.stringify(customer));
+
+    const users = getUsers();
+    if(users[customer.phone]){
+        users[customer.phone] = { ...users[customer.phone], ...customer };
+        localStorage.setItem("green_angan_users", JSON.stringify(users));
+    }
+
+    if(database){
+        set(ref(database, "users/" + customer.phone), customer);
+    }
+
+    // Save Address Key Sync
+    const savedAddrKey = "saved_address_" + customer.phone;
+    localStorage.setItem(savedAddrKey, JSON.stringify({
+        name: customer.name,
+        phone: customer.phone,
+        address: customer.savedAddress
+    }));
+
+    updateAccountUI();
+    closeProfileModal();
+    alert("🎉 Profile decorated and saved successfully!");
+};
+
+window.logoutUser = function(){
+    if(confirm("Logout from Green Angan?")){
+        localStorage.removeItem("current_green_angan_customer");
+        cart = []; total = 0; updateCart(); location.reload();
+    }
+};
+
+/* AUTHENTICATION */
+window.openLogin = function(){ resetAuth(); document.getElementById("loginModal").classList.add("show"); };
+window.closeLogin = function(){ document.getElementById("loginModal").classList.remove("show"); };
+
+function resetAuth(){
+    authMode = "login";
+    document.getElementById("authTitle").innerText = "Sign in to Green Angan";
+    document.getElementById("custName").style.display = "none";
+    document.getElementById("custPhone").style.display = "block";
+    document.getElementById("custPass").style.display = "block";
+    document.getElementById("otpSection").style.display = "none";
+    document.getElementById("custNewPass").style.display = "none";
+    document.getElementById("authBtn").innerText = "Continue";
+    document.getElementById("toggleAuth").innerText = "New to Green Angan? Create your account";
+}
+
+document.getElementById("accountHeader").onclick = openProfileOrLogin;
+document.getElementById("toggleAuth").onclick = function(){
+    if(authMode !== "signup"){
+        authMode = "signup";
+        document.getElementById("authTitle").innerText = "Create Green Angan Account";
+        document.getElementById("custName").style.display = "block";
+        document.getElementById("authBtn").innerText = "Create Account";
+        document.getElementById("toggleAuth").innerText = "Already have an account? Sign in";
+    }else{
+        resetAuth();
+    }
+};
+
+document.getElementById("authBtn").onclick = async function(){
+    const phone = document.getElementById("custPhone").value.trim();
+    const users = getUsers();
+
+    if(authMode === "login"){
+        const password = document.getElementById("custPass").value.trim();
+        if(!phone || !password){ alert("Please enter mobile number and password."); return; }
+
+        if(users[phone] && users[phone].password === password){
+            localStorage.setItem("current_green_angan_customer", JSON.stringify(users[phone]));
+            closeLogin(); loadCart(); updateCart(); updateAccountUI();
+            alert("✅ Welcome back to Green Angan!");
+        }else{
+            alert("❌ Invalid mobile number or password.");
+        }
+    } else if(authMode === "signup"){
+        const name = document.getElementById("custName").value.trim();
+        const password = document.getElementById("custPass").value.trim();
+        if(!name || !phone || !password){ alert("Please fill all details."); return; }
+
+        if(users[phone]){ alert("This mobile number is already registered."); return; }
+
+        const user = { name, phone, password };
+        if(database){ await set(ref(database, "users/" + phone), user); }
+        users[phone] = user;
+        localStorage.setItem("green_angan_users", JSON.stringify(users));
+        localStorage.setItem("current_green_angan_customer", JSON.stringify(user));
+
+        closeLogin(); loadCart(); updateCart(); updateAccountUI();
+        alert("🎉 Green Angan account created!");
+    }
+};
+
+function updateAccountUI(){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    const account = document.getElementById("accountHeader");
+    if(customer){
+        account.innerHTML = `<small>Hello, ${escapeHTML(customer.name.split(" ")[0])}</small><strong>My Account 👤</strong>`;
+        account.onclick = openProfileOrLogin;
+    } else {
+        account.innerHTML = `<small>Hello, sign in</small><strong>Account & Lists</strong>`;
+        account.onclick = openLogin;
+    }
+}
+
+function requireLogin(){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    if(!customer){
+        openLogin();
+        alert("Please sign in before continuing.");
+        return false;
+    }
+    return true;
+}
+
+/* CART MANAGEMENT */
+function updateCart(){
+    calculateCartTotal();
+    const count = cart.reduce((sum,item) => sum + Number(item.qty || 0), 0);
+    document.getElementById("cartCount").innerText = count;
+    document.getElementById("cartTotal").innerText = "₹" + total.toLocaleString("en-IN");
+
+    const container = document.getElementById("cartItems");
+    if(!container) return;
+
+    if(cart.length === 0){
+        container.innerHTML = `<div style="text-align:center;color:#667085;padding:60px 20px"><div style="font-size:50px">🛒</div><h3>Your cart is empty</h3></div>`;
+        saveCart();
+        return;
+    }
+
+    container.innerHTML = cart.map((item,index) => `
+        <div class="drawer-item">
+            <div style="flex:1">
+                <div class="drawer-item-name">${escapeHTML(item.name)}</div>
+                <div style="color:#667085;font-size:11px;margin-top:4px">₹${Number(item.price || 0).toLocaleString("en-IN")} / ${escapeHTML(item.unit || "PC")}</div>
+                <div class="cart-qty">
+                    <button onclick="changeCartQty(${index}, -1)">−</button>
+                    <span>${item.qty}</span>
+                    <button onclick="changeCartQty(${index}, 1)">+</button>
+                </div>
+                <button class="remove-cart" onclick="removeCartItem(${index})">Remove</button>
+            </div>
+            <div class="drawer-item-price">₹${(Number(item.price || 0) * item.qty).toLocaleString("en-IN")}</div>
+        </div>
+    `).join("");
+
+    saveCart();
+}
+
+window.changeCartQty = function(index, change){
+    const item = cart[index];
+    if(!item) return;
+    const newQty = Number(item.qty || 0) + change;
+    if(newQty <= 0) cart.splice(index, 1);
+    else item.qty = newQty;
+    calculateCartTotal(); saveCart(); updateCart();
+};
+
+window.removeCartItem = function(index){
+    if(!cart[index]) return;
+    cart.splice(index, 1);
+    calculateCartTotal(); saveCart(); updateCart();
+};
+
+window.openCart = function(){ updateCart(); document.getElementById("cartDrawer").classList.add("open"); };
+window.closeCart = function(){ document.getElementById("cartDrawer").classList.remove("open"); };
+document.getElementById("cartHeader").onclick = openCart;
+
+/* SAVED ADDRESS & EDIT LOGIC */
+window.loadSavedAddress = function(){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    if(!customer) return;
+
+    const nameInput = document.getElementById("customerName");
+    const phoneInput = document.getElementById("customerPhone");
+    const addrInput = document.getElementById("customerAddress");
+    const savedBadge = document.getElementById("savedAddrBadge");
+    const editBtn = document.getElementById("editAddrBtn");
+
+    const savedAddrKey = "saved_address_" + (customer.phone || "guest");
+    const savedAddressData = JSON.parse(localStorage.getItem(savedAddrKey));
+
+    if(savedAddressData && savedAddressData.address){
+        nameInput.value = savedAddressData.name || customer.name || "";
+        phoneInput.value = savedAddressData.phone || customer.phone || "";
+        addrInput.value = savedAddressData.address || "";
+        
+        nameInput.disabled = true;
+        phoneInput.disabled = true;
+        addrInput.disabled = true;
+        
+        isEditingAddress = false;
+        editBtn.innerText = "✏️ Edit Address";
+        savedBadge.style.display = "inline-block";
+    } else {
+        nameInput.value = customer.name || "";
+        phoneInput.value = customer.phone || "";
+        addrInput.value = "";
+        
+        nameInput.disabled = false;
+        phoneInput.disabled = false;
+        addrInput.disabled = false;
+        
+        isEditingAddress = true;
+        editBtn.innerText = "💾 Save Address";
+        savedBadge.style.display = "none";
+    }
+};
+
+window.toggleEditAddress = function(){
+    const nameInput = document.getElementById("customerName");
+    const phoneInput = document.getElementById("customerPhone");
+    const addrInput = document.getElementById("customerAddress");
+    const editBtn = document.getElementById("editAddrBtn");
+    const savedBadge = document.getElementById("savedAddrBadge");
+
+    if(!isEditingAddress){
+        nameInput.disabled = false;
+        phoneInput.disabled = false;
+        addrInput.disabled = false;
+        addrInput.focus();
+        editBtn.innerText = "💾 Save Address";
+        isEditingAddress = true;
+    } else {
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const address = addrInput.value.trim();
+
+        if(!name || !phone || !address){
+            alert("Please fill all address fields before saving!");
+            return;
+        }
+
+        saveUserAddress(name, phone, address);
+        
+        nameInput.disabled = true;
+        phoneInput.disabled = true;
+        addrInput.disabled = true;
+        
+        editBtn.innerText = "✏️ Edit Address";
+        savedBadge.style.display = "inline-block";
+        isEditingAddress = false;
+        alert("✅ Address saved successfully!");
+    }
+};
+
+function saveUserAddress(name, phone, address){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    const phoneKey = customer ? customer.phone : phone;
+    const savedAddrKey = "saved_address_" + phoneKey;
+
+    const addressObject = { name, phone, address, timestamp: new Date().toISOString() };
+    localStorage.setItem(savedAddrKey, JSON.stringify(addressObject));
+
+    if(customer){
+        customer.savedAddress = address;
+        localStorage.setItem("current_green_angan_customer", JSON.stringify(customer));
+        
+        const users = getUsers();
+        if(users[customer.phone]){
+            users[customer.phone].savedAddress = address;
+            localStorage.setItem("green_angan_users", JSON.stringify(users));
+        }
+
+        if(database){
+            set(ref(database, "users/" + customer.phone + "/address"), addressObject);
+        }
+    }
+}
+
+/* CHECKOUT INITIALIZATION */
+window.startCheckout = function(){
+    if(!requireLogin()) return;
+    if(cart.length === 0){ alert("Your cart is empty."); return; }
+    closeCart();
+    const section = document.getElementById("checkoutSection");
+    section.classList.add("show");
+    
+    loadSavedAddress();
+    renderCheckout();
+    section.scrollIntoView({ behavior:"smooth" });
+};
+
+function renderCheckout(){
+    const container = document.getElementById("checkoutItems");
+    container.innerHTML = cart.map(item => `
+        <div class="summary-row">
+            <span>${escapeHTML(item.name)} ×${item.qty}</span>
+            <strong>₹${(item.price * item.qty).toLocaleString("en-IN")}</strong>
+        </div>
+    `).join("");
+    document.getElementById("checkoutTotal").innerText = "₹" + total.toLocaleString("en-IN");
+}
+
+window.closeCheckout = function(){ document.getElementById("checkoutSection").classList.remove("show"); };
+
+/* PAYMENT */
+document.getElementById("payNowBtn").onclick = function(){
+    if(cart.length === 0){ alert("Cart is empty."); return; }
+    
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    const address = document.getElementById("customerAddress").value.trim();
+
+    if(!name || !phone || !address){ 
+        alert("Please complete your delivery address before proceeding."); 
+        if(!isEditingAddress) toggleEditAddress();
+        return; 
+    }
+
+    saveUserAddress(name, phone, address);
+
+    const options = {
+        key: "rzp_live_T6yhVp368wh7Uc",
+        amount: Math.round(total * 100),
+        currency: "INR",
+        name: "Green Angan",
+        description: "Green Angan Order",
+        handler: async function(response){
+            alert("🎉 Payment Successful! Order Placed.");
+            cart = []; total = 0; saveCart(); updateCart(); closeCheckout();
+        }
+    };
+    const razorpay = new Razorpay(options);
+    razorpay.open();
+};
+
+/* ADMIN & NAVIGATION */
+window.openAdminLogin = function(){ document.getElementById("adminLoginModal").classList.add("show"); };
+window.closeAdminLogin = function(){ document.getElementById("adminLoginModal").classList.remove("show"); };
+document.getElementById("submitAdminPinBtn").onclick = function(){
+    const username = document.getElementById("adminUserInput").value.trim();
+    const password = document.getElementById("adminPinInput").value;
+    if(username === "admin" && password === "2026"){
+        closeAdminLogin();
+        document.getElementById("stockModal").classList.add("show");
+        populateDeleteDropdown();
+    }else{ alert("❌ Access Denied!"); }
+};
+window.closeStockModal = function(){ document.getElementById("stockModal").classList.remove("show"); };
+
+function populateDeleteDropdown(){
+    const select = document.getElementById("deleteProdSelect");
+    if(!select) return;
+    select.innerHTML = `<option value="">-- Choose Product --</option>`;
+    products.forEach((product,index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = `${product.name} — ₹${product.price}`;
+        select.appendChild(option);
+    });
+}
+
+window.scrollHome = function(){ window.scrollTo({ top:0, behavior:"smooth" }); };
+window.scrollProducts = function(){ document.getElementById("productsSection").scrollIntoView({ behavior:"smooth" }); };
+window.scrollToDeals = function(){ document.getElementById("dealsSection").scrollIntoView({ behavior:"smooth" }); };
+
+/* INITIALIZE */
+updateAccountUI();
+loadCart();
+renderProducts();
+updateCart();
+</script>
+
+</body>
+</html>

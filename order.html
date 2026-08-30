@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Orders - Green Angan</title>
+
+<style>
+
+/* =========================================================
+   GREEN ANGAN PREMIUM DESIGN SYSTEM
+========================================================= */
+
+:root{
+    --green:#075e45;
+    --green-dark:#043b2c;
+    --green-deep:#022d22;
+    --green-light:#0b8060;
+
+    --green-soft:#e9f6f1;
+    --green-soft-2:#f1faf6;
+
+    --gold:#f5a800;
+    --gold-soft:#fff7df;
+
+    --blue:#2563eb;
+    --blue-soft:#eff6ff;
+
+    --red:#dc3545;
+    --red-soft:#fff0f2;
+
+    --bg:#f4f7f5;
+    --white:#fff;
+
+    --text:#17231f;
+    --text-2:#43524c;
+    --muted:#71817b;
+
+    --border:#e2ebe7;
+
+    --shadow-sm: 0 2px 8px rgba(5,55,40,.05);
+    --shadow: 0 7px 22px rgba(5,55,40,.08);
+    --shadow-lg: 0 18px 50px rgba(5,55,40,.14);
+
+    --radius:14px;
+}
+
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+    background: linear-gradient(180deg, #f8faf9 0%, #f2f6f4 100%);
+    color:var(--text);
+    padding-bottom:100px;
+    min-height:100vh;
+}
+
+/* NAVBAR */
+.navbar{
+    height:66px;
+    background: rgba(255,255,255,.96);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 3px 16px rgba(4,45,34,.07);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 20px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-icon{
+    width:40px; height:40px;
+    display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, var(--green-soft), #dff1e9);
+    border:1px solid #d4e9df; border-radius:10px; font-size:21px;
+}
+.brand-text h1{ color:var(--green-dark); font-size:18px; font-weight:850; letter-spacing:-.3px; }
+.brand-text span{ display:block; color:var(--muted); font-size:9px; margin-top:1px; }
+
+.back-btn{
+    border:0; color:white;
+    background: linear-gradient(135deg, var(--green-light), var(--green));
+    padding:9px 14px; border-radius:8px; font-size:11px; font-weight:800;
+    cursor:pointer; box-shadow: 0 5px 13px rgba(7,94,69,.18); transition:.2s ease;
+}
+.back-btn:hover{ transform:translateY(-1px); box-shadow: 0 8px 18px rgba(7,94,69,.24); }
+
+/* MAIN */
+.container{ width:100%; max-width:820px; margin:24px auto; padding:0 16px; }
+
+/* PAGE HEADER */
+.page-head{ margin-bottom:16px; }
+.page-head-top{ display:flex; justify-content:space-between; align-items:flex-end; gap:10px; }
+.title{ color:var(--green-dark); font-size:23px; font-weight:850; letter-spacing:-.5px; }
+.subtitle{ color:var(--muted); font-size:11px; margin-top:4px; }
+
+.live-status{
+    display:flex; align-items:center; gap:5px; color:#16803c;
+    background:#eaf8ef; border:1px solid #d4eddd; padding:5px 8px;
+    border-radius:999px; font-size:9px; font-weight:800; white-space:nowrap;
+}
+.live-dot{
+    width:6px; height:6px; background:#16a34a; border-radius:50%;
+    box-shadow: 0 0 0 4px rgba(22,163,74,.10); animation:pulse 1.8s infinite;
+}
+@keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.45; } }
+
+/* SEARCH */
+.search-box{
+    margin-top:15px; background:white; border:1px solid var(--border);
+    border-radius:12px; padding:10px; box-shadow:var(--shadow-sm);
+    display:flex; align-items:center; gap:8px;
+}
+.search-icon{
+    width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+    background:var(--green-soft); border-radius:8px; font-size:16px;
+}
+#orderSearch{ flex:1; min-width:0; border:0; outline:none; background:transparent; color:var(--text); font-size:13px; }
+#orderSearch::placeholder{ color:#9aa7a2; }
+
+/* FILTERS */
+.filters{ display:flex; gap:7px; overflow-x:auto; padding:3px 1px 6px; margin-top:10px; scrollbar-width:none; }
+.filters::-webkit-scrollbar{ display:none; }
+.filter-btn{
+    flex:0 0 auto; border:1px solid var(--border); background:white;
+    color:#68766f; padding:7px 11px; border-radius:999px; font-size:10px;
+    font-weight:800; cursor:pointer; transition:.18s ease;
+}
+.filter-btn:hover{ border-color:#bcd8cd; color:var(--green); }
+.filter-btn.active{
+    color:white; background: linear-gradient(135deg, var(--green-light), var(--green));
+    border-color:var(--green); box-shadow: 0 4px 10px rgba(7,94,69,.15);
+}
+
+.results-info{ color:var(--muted); font-size:10px; margin:3px 2px 12px; }
+
+/* ORDER CARD */
+.order-card{
+    background:white; border:1px solid var(--border); border-radius:var(--radius);
+    margin-bottom:15px; overflow:hidden; box-shadow:var(--shadow-sm);
+    position:relative; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    animation:cardIn .35s ease both;
+}
+@keyframes cardIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+.order-card:hover{ transform:translateY(-2px); border-color:#cddfd8; box-shadow:var(--shadow); }
+
+/* ORDER TOP */
+.order-top{ padding:15px 16px 13px; background: linear-gradient(135deg, #ffffff, #fbfdfc); border-bottom:1px solid #edf2ef; }
+.order-meta{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.order-number{ color:var(--green-dark); font-size:13px; font-weight:850; }
+.order-date{ color:var(--muted); font-size:9px; margin-top:4px; }
+
+/* STATUS BADGES */
+.status{ display:inline-flex; align-items:center; justify-content:center; padding:6px 9px; border-radius:999px; font-size:9px; font-weight:850; white-space:nowrap; border:1px solid transparent; }
+.status-processing{ color:#9a6800; background:var(--gold-soft); border-color:#f3df9e; }
+.status-shipped{ color:#1d4ed8; background:var(--blue-soft); border-color:#d7e4ff; }
+.status-delivered{ color:#16803c; background:#e9f8ef; border-color:#d2ecd9; }
+.status-cancelled{ color:#c53030; background:var(--red-soft); border-color:#f3d2d7; }
+
+/* BANNERS */
+.order-banner{ padding:9px 16px; font-size:10px; font-weight:750; border-bottom:1px solid rgba(0,0,0,.04); }
+.order-banner.success{ background: linear-gradient(90deg, #e9f8ef, #f7fcf9); color:#16803c; }
+.order-banner.cancelled{ background: linear-gradient(90deg, #fff0f2, #fffafb); color:#c53030; }
+
+/* TIMELINE */
+.timeline{ display:grid; grid-template-columns: repeat(3,1fr); padding:16px 18px; border-bottom:1px solid #edf2ef; position:relative; }
+.timeline::before{ content:""; position:absolute; left:17%; right:17%; top:28px; height:2px; background:#dfe8e4; z-index:0; }
+.timeline-progress{ position:absolute; left:17%; top:28px; height:2px; background:var(--green-light); z-index:1; transition:.4s ease; }
+.timeline-step{ display:flex; flex-direction:column; align-items:center; position:relative; z-index:2; gap:6px; }
+.timeline-icon{ width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#eef2f0; border:2px solid white; box-shadow: 0 0 0 1px #dfe8e4; font-size:11px; }
+.timeline-step.done .timeline-icon{ background:var(--green-light); color:white; box-shadow: 0 0 0 1px var(--green-light); }
+.timeline-step.current .timeline-icon{ background:white; color:var(--green); box-shadow: 0 0 0 2px var(--green-light); }
+.timeline-label{ color:#8a9691; font-size:8px; font-weight:750; text-align:center; }
+.timeline-step.done .timeline-label{ color:var(--green-dark); }
+
+/* ORDER BODY */
+.order-body{ padding:15px 16px; }
+
+/* ITEMS */
+.items-card{ background: linear-gradient(135deg, #f2faf7, #edf7f3); border:1px solid #dcece5; border-left:4px solid var(--green); border-radius:999px; border-radius:9px; padding:12px; margin-bottom:14px; }
+.section-label{ color:var(--muted); font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.4px; margin-bottom:5px; }
+.items-text{ color:var(--green-dark); font-size:12px; font-weight:750; line-height:1.55; }
+
+/* DELIVERY BOY / RIDER STYLES (NEW FEATURE) */
+.rider-card{
+    background: linear-gradient(135deg, #eff6ff, #f8fafc);
+    border: 1px solid #bfdbfe;
+    border-left: 4px solid var(--blue);
+    border-radius: 9px;
+    padding: 12px;
+    margin-bottom: 14px;
+}
+.rider-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.rider-name{ color:#1e3a8a; font-size:12px; font-weight:800; }
+.rider-call-btn{
+    display:inline-flex; align-items:center; gap:4px;
+    background:var(--blue); color:white; text-decoration:none;
+    padding:6px 12px; border-radius:6px; font-size:10px; font-weight:800;
+}
+.tracking-badge{
+    display:inline-block; margin-top:6px; padding:4px 8px;
+    background:#dbeafe; color:#1e40af; border-radius:6px; font-size:9px; font-weight:700;
+}
+
+/* OTP CARD (NEW FEATURE) */
+.otp-card{
+    background: #fffbeb;
+    border: 1px dashed #f59e0b;
+    border-radius: 9px;
+    padding: 10px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.otp-title{ color:#92400e; font-size:10px; font-weight:800; }
+.otp-code{ color:#b45309; font-size:16px; font-weight:900; letter-spacing:2px; background:#fef3c7; padding:2px 8px; border-radius:6px; }
+
+/* INFO GRID */
+.info-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:9px; margin-bottom:13px; }
+.info-card{ background:#fafcfb; border:1px solid #e8efec; border-radius:9px; padding:10px; }
+.info-card.full{ grid-column:1/-1; }
+.info-title{ color:var(--muted); font-size:8px; font-weight:800; text-transform:uppercase; letter-spacing:.35px; margin-bottom:4px; }
+.info-value{ color:var(--text-2); font-size:11px; font-weight:650; line-height:1.45; word-break:break-word; }
+
+/* ADDRESS */
+.address-card{ background: linear-gradient(135deg, #fffdf7, #fffaf0); border:1px solid #f0e5c7; border-radius:9px; padding:11px; margin-bottom:13px; }
+.address-top{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.address-title{ color:#8c6500; font-size:10px; font-weight:850; }
+.address-text{ color:#625735; font-size:11px; line-height:1.5; margin-top:5px; }
+
+/* MAP CONTROLS */
+.map-actions{ display:flex; gap:7px; margin-top:9px; }
+.map-btn, .map-toggle{ flex:1; display:flex; align-items:center; justify-content:center; padding:8px; border-radius:7px; font-size:9px; font-weight:800; cursor:pointer; text-decoration:none; transition:.18s ease; }
+.map-btn{ color:white; background: linear-gradient(135deg, var(--green-light), var(--green)); }
+.map-toggle{ color:var(--green-dark); background:white; border:1px solid #d5e5de; }
+.map-btn:hover, .map-toggle:hover{ transform:translateY(-1px); }
+.map-container{ display:none; margin-top:10px; }
+.map-container.open{ display:block; animation:mapIn .25s ease; }
+@keyframes mapIn{ from{ opacity:0; transform:translateY(-4px); } to{ opacity:1; transform:translateY(0); } }
+.map-container iframe{ width:100%; height:190px; border:1px solid var(--border); border-radius:9px; display:block; }
+
+/* TOTAL */
+.total-section{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding-top:13px; margin-top:2px; border-top:1px solid #edf2ef; }
+.total-label{ color:var(--muted); font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.4px; }
+.total-amount{ color:var(--green-dark); font-size:20px; font-weight:900; letter-spacing:-.4px; }
+
+/* PAYMENT DETAILS */
+.payment-toggle{ margin-top:11px; color:#899690; font-size:9px; font-weight:750; cursor:pointer; display:inline-flex; align-items:center; gap:4px; }
+.payment-details{ display:none; margin-top:7px; padding:9px; background:#f8faf9; border:1px solid #e9efec; border-radius:7px; font-size:9px; color:#8a9691; word-break:break-all; }
+.payment-details.open{ display:block; }
+
+/* EMPTY STATE */
+.empty{ background:white; border:1px solid var(--border); border-radius:14px; padding:48px 20px; text-align:center; box-shadow:var(--shadow-sm); color:var(--muted); font-size:12px; line-height:1.7; }
+.empty-icon{ width:65px; height:65px; margin:0 auto 13px; display:flex; align-items:center; justify-content:center; background:var(--green-soft); border-radius:50%; font-size:30px; }
+.shop-btn{ margin-top:15px; border:0; background: linear-gradient(135deg, var(--green-light), var(--green)); color:white; padding:10px 17px; border-radius:8px; font-size:11px; font-weight:800; cursor:pointer; box-shadow: 0 5px 13px rgba(7,94,69,.17); }
+
+/* LOADING */
+.loading-card{ background:white; border:1px solid var(--border); border-radius:14px; padding:18px; box-shadow:var(--shadow-sm); }
+.skeleton{ background: linear-gradient(90deg, #edf2f0 25%, #f7f9f8 50%, #edf2f0 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; border-radius:7px; }
+.skeleton.line{ height:11px; margin-bottom:10px; }
+.skeleton.big{ height:45px; margin-bottom:13px; }
+@keyframes shimmer{ from{ background-position:200% 0; } to{ background-position:-200% 0; } }
+
+/* NO SEARCH RESULT */
+.no-result{ background:white; border:1px solid var(--border); border-radius:12px; padding:30px; text-align:center; color:var(--muted); font-size:11px; box-shadow:var(--shadow-sm); }
+
+/* BOTTOM NAV */
+.bottom-nav{ position:fixed; left:0; right:0; bottom:0; height:67px; background: rgba(255,255,255,.97); backdrop-filter:blur(13px); -webkit-backdrop-filter:blur(13px); border-top:1px solid var(--border); box-shadow: 0 -5px 20px rgba(4,45,34,.08); display:flex; justify-content:space-around; align-items:center; z-index:1000; }
+.nav-item{ min-width:90px; height:50px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:10px; color:#7a8782; font-size:9px; font-weight:750; cursor:pointer; transition:.18s ease; }
+.nav-item:hover{ background:#f1f7f4; color:var(--green); }
+.nav-item.active{ background: linear-gradient(135deg, #edf8f3, #e3f3ec); color:var(--green-dark); }
+.nav-icon{ font-size:20px; line-height:1; margin-bottom:4px; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar{ width:7px; height:7px; }
+::-webkit-scrollbar-track{ background:#edf2f0; }
+::-webkit-scrollbar-thumb{ background:#aac6bb; border-radius:10px; }
+::-webkit-scrollbar-thumb:hover{ background:var(--green-light); }
+
+/* MOBILE RESPONSIVE */
+@media(max-width:600px){
+    .navbar{ height:60px; padding: 9px 12px; }
+    .brand-icon{ width:36px; height:36px; font-size:18px; }
+    .brand-text h1{ font-size:15px; }
+    .brand-text span{ display:none; }
+    .back-btn{ padding:8px 10px; font-size:9px; }
+    .container{ margin:18px auto; padding: 0 10px; }
+    .page-head-top{ align-items:flex-start; }
+    .title{ font-size:20px; }
+    .live-status{ font-size:8px; padding: 4px 7px; }
+    .search-box{ padding:8px; }
+    .search-icon{ width:31px; height:31px; }
+    .filter-btn{ font-size:9px; padding: 7px 10px; }
+    .order-top{ padding: 13px 13px 11px; }
+    .order-body{ padding: 13px; }
+    .order-meta{ gap:7px; }
+    .order-number{ font-size:12px; }
+    .order-date{ font-size:8px; }
+    .status{ font-size:8px; padding: 5px 7px; max-width:48%; white-space:normal; text-align:center; }
+    .timeline{ padding: 14px 10px; }
+    .timeline::before{ left:17%; right:17%; top:27px; }
+    .timeline-progress{ left:17%; top:27px; }
+    .timeline-icon{ width:25px; height:25px; }
+    .timeline-label{ font-size:7px; }
+    .info-grid{ gap:7px; }
+    .info-card{ padding:9px; }
+    .info-value{ font-size:10px; }
+    .address-text{ font-size:10px; }
+    .map-actions{ flex-direction:column; }
+    .map-container iframe{ height:170px; }
+    .total-amount{ font-size:19px; }
+    .bottom-nav{ height:63px; }
+    .nav-item{ min-width:70px; height:47px; font-size:8px; }
+    .nav-icon{ font-size:18px; }
+}
+
+@media(max-width:380px){
+    .title{ font-size:18px; }
+    .live-status{ display:none; }
+    .order-meta{ flex-direction:column; align-items:flex-start; }
+    .status{ max-width:100%; }
+    .info-grid{ grid-template-columns:1fr; }
+    .info-card.full{ grid-column:auto; }
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible{
+    outline: 2px solid var(--green-light);
+    outline-offset:2px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="brand">
+        <div class="brand-icon">🌿</div>
+        <div class="brand-text">
+            <h1>Green Angan</h1>
+            <span>Fresh • Natural • Trusted</span>
+        </div>
+    </div>
+    <button class="back-btn" onclick="window.location.href='index.html'">🛒 Shop</button>
+</div>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-head">
+        <div class="page-head-top">
+            <div>
+                <div class="title">📦 Your Orders</div>
+                <div class="subtitle">Track and manage your Green Angan purchases</div>
+            </div>
+            <div class="live-status">
+                <span class="live-dot"></span> Live
+            </div>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="search-box">
+            <div class="search-icon">🔎</div>
+            <input type="search" id="orderSearch" placeholder="Search by order ID, product or status..." autocomplete="off">
+        </div>
+
+        <!-- FILTERS -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Orders</button>
+            <button class="filter-btn" data-filter="processing">🕐 Processing</button>
+            <button class="filter-btn" data-filter="shipped">🚚 Shipped</button>
+            <button class="filter-btn" data-filter="delivered">✅ Delivered</button>
+            <button class="filter-btn" data-filter="cancelled">❌ Cancelled</button>
+        </div>
+    </div>
+
+    <!-- RESULT COUNT -->
+    <div class="results-info" id="resultsInfo">Loading orders...</div>
+
+    <!-- ORDERS LIST CONTAINER -->
+    <div id="ordersContainer">
+        <div class="loading-card">
+            <div class="skeleton big"></div>
+            <div class="skeleton line"></div>
+            <div class="skeleton line"></div>
+            <div class="skeleton line"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='index.html'">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+    </div>
+    <div class="nav-item active">
+        <span class="nav-icon">📦</span>
+        <span>Orders</span>
+    </div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAwydVIDNYu6n3ze_yaI-Q9r1Ms6MMCcYM",
+    authDomain: "greenangan-7a085.firebaseapp.com",
+    databaseURL: "https://greenangan-7a085-default-rtdb.firebaseio.com/",
+    projectId: "greenangan-7a085",
+    storageBucket: "greenangan-7a085.firebasestorage.app",
+    messagingSenderId: "105971440710",
+    appId: "1:105971440710:web:32e03bcb5cd2fcf8713347",
+    measurementId: "G-L5KCJ9FS2F"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+const container = document.getElementById("ordersContainer");
+const searchInput = document.getElementById("orderSearch");
+const resultsInfo = document.getElementById("resultsInfo");
+
+let allOrders = [];
+let activeFilter = "all";
+let searchTerm = "";
+
+if(!customer){
+    container.innerHTML = `
+        <div class="empty">
+            <div class="empty-icon">🔐</div>
+            <b>Please login first</b><br>
+            Login from the <b>Green Angan Home</b> to view your orders.<br>
+            <button class="shop-btn" onclick="window.location.href='index.html'">Go To Login</button>
+        </div>
+    `;
+    resultsInfo.innerText = "Login required";
+} else {
+    /* LIVE FIREBASE ORDERS */
+    onValue(ref(database,"orders"), snapshot => {
+        const data = snapshot.val();
+        allOrders = [];
+
+        if(data){
+            Object.keys(data).forEach(key => {
+                const order = { firebaseKey:key, ...data[key] };
+                const orderPhone = String(order.customerPhone || "").trim();
+                const customerPhone = String(customer.phone || "").trim();
+
+                if(orderPhone === customerPhone){
+                    allOrders.push(order);
+                }
+            });
+        }
+
+        allOrders.sort((a,b) => new Date(b.date) - new Date(a.date));
+        renderFilteredOrders();
+    });
+}
+
+searchInput.addEventListener("input", function(){
+    searchTerm = this.value.trim().toLowerCase();
+    renderFilteredOrders();
+});
+
+document.querySelectorAll(".filter-btn").forEach(button => {
+    button.addEventListener("click", function(){
+        document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+        this.classList.add("active");
+        activeFilter = this.dataset.filter;
+        renderFilteredOrders();
+    });
+});
+
+function renderFilteredOrders(){
+    let filtered = [...allOrders];
+
+    if(activeFilter !== "all"){
+        filtered = filtered.filter(order => getStatusType(order.status) === activeFilter);
+    }
+
+    if(searchTerm){
+        filtered = filtered.filter(order => {
+            const searchable = [
+                order.orderId, order.firebaseKey, order.items, order.status,
+                order.customerName, order.customerPhone, order.deliveryBoyName, order.courierPartner
+            ].join(" ").toLowerCase();
+            return searchable.includes(searchTerm);
+        });
+    }
+
+    resultsInfo.innerText = filtered.length === 1 ? "1 order found" : `${filtered.length} orders found`;
+    renderOrders(filtered);
+}
+
+function getStatusType(status){
+    const value = String(status || "").toLowerCase();
+    if(value.includes("cancel")) return "cancelled";
+    if(value.includes("deliver")) return "delivered";
+    if(value.includes("ship") || value.includes("out")) return "shipped";
+    return "processing";
+}
+
+function renderOrders(orders){
+    if(orders.length === 0){
+        if(allOrders.length === 0){
+            container.innerHTML = `
+                <div class="empty">
+                    <div class="empty-icon">📦</div>
+                    <b>No orders yet</b><br>
+                    Your Green Angan orders will appear here.<br>
+                    <button class="shop-btn" onclick="window.location.href='index.html'">🛒 Start Shopping</button>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="no-result">
+                    🔎<br><br>No orders match your search/filter.<br>
+                    Try another search or select <b>All Orders</b>.
+                </div>
+            `;
+        }
+        return;
+    }
+
+    let html = "";
+
+    orders.forEach((order, index) => {
+        const statusType = getStatusType(order.status);
+        const statusText = order.status || "Order Placed / Processing";
+        const address = order.customerAddress || "Address unavailable";
+        const mapQuery = encodeURIComponent(address);
+        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+        const embedUrl = `https://maps.google.com/maps?q=${mapQuery}&output=embed`;
+        const timelineProgress = getTimelineProgress(statusType);
+
+        const banner = statusType === "delivered"
+            ? `<div class="order-banner success">✅ Your order has been delivered successfully.</div>`
+            : statusType === "cancelled"
+            ? `<div class="order-banner cancelled">❌ This order has been cancelled.</div>`
+            : "";
+
+        /* NEW: RIDER & COURIER DETAILS SECTION */
+        let riderHTML = "";
+        if(order.deliveryBoyName || order.courierPartner || order.trackingId){
+            riderHTML = `
+                <div class="rider-card">
+                    <div class="section-label">🛵 Delivery & Logistics Details</div>
+                    <div class="rider-top">
+                        <div class="rider-name">
+                            ${order.deliveryBoyName ? `👤 Rider: ${escapeHTML(order.deliveryBoyName)}` : '🚚 Courier Service'}
+                        </div>
+                        ${order.deliveryBoyPhone ? `
+                            <a href="tel:${escapeHTML(order.deliveryBoyPhone)}" class="rider-call-btn">
+                                📞 Call Rider
+                            </a>
+                        ` : ''}
+                    </div>
+                    ${order.courierPartner ? `<div style="font-size:11px; color:#334155;"><strong>Courier:</strong> ${escapeHTML(order.courierPartner)}</div>` : ''}
+                    ${order.trackingId ? `
+                        <div class="tracking-badge">
+                            Tracking ID: ${escapeHTML(order.trackingId)}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        /* NEW: DELIVERY OTP DISPLAY */
+        let otpHMTL = "";
+        if(order.deliveryOtp && statusType !== "delivered" && statusType !== "cancelled"){
+            otpHMTL = `
+                <div class="otp-card">
+                    <div>
+                        <div class="otp-title">🔑 Delivery OTP</div>
+                        <div style="font-size:9px; color:#a16207;">Share this OTP with the delivery boy</div>
+                    </div>
+                    <div class="otp-code">${escapeHTML(order.deliveryOtp)}</div>
+                </div>
+            `;
+        }
+
+        html += `
+        <div class="order-card" data-order-index="${index}">
+
+            <!-- ORDER HEADER -->
+            <div class="order-top">
+                <div class="order-meta">
+                    <div>
+                        <div class="order-number">Order #${escapeHTML(order.orderId || order.firebaseKey)}</div>
+                        <div class="order-date">Placed on ${formatDate(order.date)}</div>
+                    </div>
+                    <span class="status status-${statusType}">
+                        ${getStatusIcon(statusType)} ${escapeHTML(statusText)}
+                    </span>
+                </div>
+            </div>
+
+            ${banner}
+
+            <!-- TIMELINE -->
+            <div class="timeline">
+                <div class="timeline-progress" style="width:${timelineProgress}%;"></div>
+                <div class="timeline-step ${timelineProgress >= 0 ? "done" : ""} ${statusType === "processing" ? "current" : ""}">
+                    <div class="timeline-icon">🧾</div>
+                    <div class="timeline-label">Ordered</div>
+                </div>
+                <div class="timeline-step ${timelineProgress >= 50 ? "done" : ""} ${statusType === "shipped" ? "current" : ""}">
+                    <div class="timeline-icon">🚚</div>
+                    <div class="timeline-label">Shipped</div>
+                </div>
+                <div class="timeline-step ${timelineProgress >= 100 ? "done" : ""} ${statusType === "delivered" ? "current" : ""}">
+                    <div class="timeline-icon">✓</div>
+                    <div class="timeline-label">Delivered</div>
+                </div>
+            </div>
+
+            <!-- BODY -->
+            <div class="order-body">
+
+                ${otpHMTL}
+
+                <!-- ITEMS -->
+                <div class="items-card">
+                    <div class="section-label">Items in this order</div>
+                    <div class="items-text">📦 ${escapeHTML(order.items || "Items unavailable")}</div>
+                </div>
+
+                ${riderHTML}
+
+                <!-- CUSTOMER INFO -->
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-title">Customer</div>
+                        <div class="info-value">👤 ${escapeHTML(order.customerName || customer.name || "-")}</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-title">Phone</div>
+                        <div class="info-value">📞 ${escapeHTML(order.customerPhone || customer.phone || "-")}</div>
+                    </div>
+                </div>
+
+                <!-- ADDRESS -->
+                <div class="address-card">
+                    <div class="address-top">
+                        <div class="address-title">📍 Delivery Address</div>
+                    </div>
+                    <div class="address-text">${escapeHTML(address)}</div>
+                    <div class="map-actions">
+                        <a class="map-btn" href="${mapUrl}" target="_blank">📍 Open in Maps</a>
+                        <button class="map-toggle" onclick="toggleMap(this)">🗺️ View Map</button>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="${embedUrl}" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- TOTAL -->
+                <div class="total-section">
+                    <div class="total-label">Order Total</div>
+                    <div class="total-amount">₹${Number(order.totalAmount || 0).toLocaleString("en-IN")}</div>
+                </div>
+
+                <!-- PAYMENT -->
+                <div class="payment-toggle" onclick="togglePayment(this)">
+                    💳 View payment details <span>⌄</span>
+                </div>
+                <div class="payment-details">
+                    <b>Payment ID:</b><br>${escapeHTML(order.paymentId || "-")}
+                </div>
+
+            </div>
+        </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function getTimelineProgress(type){
+    if(type === "cancelled" || type === "processing") return 0;
+    if(type === "shipped") return 50;
+    if(type === "delivered") return 100;
+    return 0;
+}
+
+function getStatusIcon(type){
+    if(type === "delivered") return "✓";
+    if(type === "shipped") return "🚚";
+    if(type === "cancelled") return "✕";
+    return "⏳";
+}
+
+window.toggleMap = function(button){
+    const box = button.closest(".address-card").querySelector(".map-container");
+    box.classList.toggle("open");
+    button.innerHTML = box.classList.contains("open") ? "🗺️ Hide Map" : "🗺️ View Map";
+};
+
+window.togglePayment = function(button){
+    const box = button.nextElementSibling;
+    box.classList.toggle("open");
+    button.innerHTML = box.classList.contains("open") ? "💳 Hide payment details ↑" : "💳 View payment details ⌄";
+};
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function formatDate(date){
+    if(!date) return "-";
+    const d = new Date(date);
+    if(isNaN(d.getTime())) return escapeHTML(date);
+    return d.toLocaleString("en-IN", { dateStyle:"medium", timeStyle:"short" });
+}
+
+</script>
+</body>
+</html>

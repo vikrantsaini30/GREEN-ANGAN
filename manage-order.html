@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Green Angan • Admin Orders & Delivery Tracking</title>
+
+<style>
+
+/* =========================================================
+   GREEN ANGAN • CLASSIC ADMIN ORDERS & TRACKING
+========================================================= */
+
+:root{
+    --bg:#f5f7fa;
+    --bg2:#ffffff;
+    --card:#ffffff;
+    --card2:#f8fafc;
+
+    --green:#b89b5e;
+    --green2:#8f743d;
+    --green-dark:#6f592d;
+
+    --cyan:#5f7896;
+    --yellow:#c59b3c;
+    --blue:#527da8;
+    --red:#c94b5c;
+
+    --white:#ffffff;
+    --text:#252525;
+    --muted:#737373;
+
+    --border:rgba(184,155,94,.22);
+
+    --shadow:
+        0 12px 35px rgba(30,35,40,.10);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(145deg, #f4f6f8, #ffffff 45%, #f1f3f5);
+    color:var(--text);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    overflow-x:hidden;
+}
+
+/* =========================================================
+   PIN LOCK
+========================================================= */
+
+#pinLock{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background: radial-gradient(circle at 50% 10%, rgba(184,155,94,.14), transparent 32%), linear-gradient(135deg, #eef1f4, #ffffff, #e9edf1);
+}
+
+.pin-box{
+    width:100%;
+    max-width:410px;
+    padding:38px 28px;
+    text-align:center;
+    border-radius:24px;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    border:1px solid rgba(184,155,94,.28);
+    box-shadow: 0 30px 100px rgba(30,35,40,.18), 0 0 35px rgba(184,155,94,.08);
+    animation:pinIn .4s ease;
+}
+
+@keyframes pinIn{
+    from{ opacity:0; transform:translateY(25px) scale(.95); }
+    to{ opacity:1; transform:none; }
+}
+
+.pin-logo{
+    width:76px;
+    height:76px;
+    object-fit:contain;
+    border-radius:18px;
+    padding:5px;
+    background:#fff;
+    margin-bottom:15px;
+    box-shadow: 0 8px 25px rgba(30,35,40,.10);
+}
+
+.pin-icon{
+    width:60px;
+    height:60px;
+    margin:0 auto 14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:18px;
+    background: linear-gradient(135deg, rgba(184,155,94,.13), rgba(184,155,94,.04));
+    border: 1px solid rgba(184,155,94,.25);
+    color:var(--green-dark);
+    font-size:27px;
+}
+
+.pin-box h2{ color:#202020; font-size:24px; margin-bottom:6px; }
+.pin-box p{ color:var(--muted); font-size:12px; margin-bottom:20px; }
+
+#pinInput{
+    width:100%;
+    padding:15px;
+    border-radius:12px;
+    border: 1px solid rgba(30,35,40,.13);
+    outline:none;
+    background:#f7f8fa;
+    color:#202020;
+    text-align:center;
+    font-size:23px;
+    letter-spacing:9px;
+}
+
+#pinInput:focus{
+    border-color:var(--green);
+    box-shadow: 0 0 0 3px rgba(184,155,94,.10);
+}
+
+.pin-btn{
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    background: linear-gradient(135deg, var(--green), var(--green2));
+    color:#fff;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow: 0 8px 22px rgba(184,155,94,.18);
+}
+
+.pin-error{
+    min-height:18px;
+    margin-top:11px;
+    color:#c94b5c;
+    font-size:12px;
+    font-weight:800;
+}
+
+/* =========================================================
+   MAIN PAGE & HEADER
+========================================================= */
+
+#mainPage{ display:none; }
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    min-height:70px;
+    padding:11px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    background: rgba(255,255,255,.96);
+    border-bottom: 1px solid rgba(184,155,94,.20);
+    backdrop-filter:blur(15px);
+    box-shadow: 0 5px 25px rgba(30,35,40,.06);
+}
+
+.brand{ display:flex; align-items:center; gap:11px; }
+.logo{ width:44px; height:44px; object-fit:contain; border-radius:12px; padding:3px; background:#fff; box-shadow: 0 5px 18px rgba(30,35,40,.10); }
+.header-title h1{ color:#222; font-size:18px; font-weight:900; }
+.header-title span{ display:block; color:var(--muted); font-size:9px; margin-top:3px; text-transform:uppercase; letter-spacing:.7px; }
+
+.header-buttons{ display:flex; gap:7px; }
+.header-btn{ padding:9px 13px; border-radius:10px; font-size:11px; font-weight:900; cursor:pointer; background:transparent; }
+.lock-btn{ color:#c94b5c; border: 1px solid rgba(201,75,92,.25); background: rgba(201,75,92,.05); }
+.store-btn{ color:var(--green-dark); border: 1px solid rgba(184,155,94,.30); background: rgba(184,155,94,.07); }
+
+.container{ width:94%; max-width:1180px; margin:22px auto 60px; }
+
+/* =========================================================
+   ADMIN NAV & HERO
+========================================================= */
+
+.admin-nav{
+    display:flex; gap:7px; overflow-x:auto; padding:6px; margin-bottom:18px;
+    background:#ffffff; border: 1px solid rgba(30,35,40,.08); border-radius:13px;
+    box-shadow: 0 5px 20px rgba(30,35,40,.05);
+}
+.admin-nav::-webkit-scrollbar{ height:0; }
+
+.nav-btn{
+    flex:0 0 auto; padding:10px 14px; border:0; border-radius:9px; background:transparent;
+    color:#777; font-size:11px; font-weight:900; cursor:pointer; white-space:nowrap; transition:.2s;
+}
+.nav-btn:hover{ color:#222; background: rgba(184,155,94,.08); }
+.nav-btn.active{ color:#fff; background: linear-gradient(135deg, var(--green), var(--green2)); box-shadow: 0 5px 18px rgba(184,155,94,.18); }
+
+.dashboard-hero{
+    padding:21px; margin-bottom:15px; border-radius:17px; background: linear-gradient(135deg, #ffffff, #f7f8fa);
+    border: 1px solid rgba(184,155,94,.20); box-shadow:var(--shadow);
+}
+.dashboard-hero h2{ color:#222; font-size:21px; margin-bottom:5px; }
+.dashboard-hero p{ color:var(--muted); font-size:12px; }
+.live{ display:inline-flex; align-items:center; gap:6px; margin-top:11px; padding:6px 10px; border-radius:20px; color:var(--green-dark); background: rgba(184,155,94,.08); border: 1px solid rgba(184,155,94,.22); font-size:9px; font-weight:900; text-transform:uppercase; }
+.live-dot{ width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow: 0 0 10px rgba(184,155,94,.45); }
+
+/* MESSAGE */
+#message{ display:none; padding:12px 15px; margin-bottom:15px; border-radius:11px; font-size:12px; font-weight:800; }
+.message-success{ display:block!important; color:#587345; background: rgba(112,150,82,.08); border: 1px solid rgba(112,150,82,.22); }
+.message-error{ display:block!important; color:#c94b5c; background: rgba(201,75,92,.07); border: 1px solid rgba(201,75,92,.20); }
+
+/* STATS */
+.stats{ display:grid; grid-template-columns: repeat(4,1fr); gap:11px; margin-bottom:17px; }
+.stat{ padding:16px; border-radius:14px; background:#ffffff; border: 1px solid rgba(30,35,40,.08); box-shadow:var(--shadow); transition:.2s; }
+.stat:hover{ transform:translateY(-2px); border-color: rgba(184,155,94,.25); }
+.stat-icon{ font-size:18px; margin-bottom:9px; }
+.stat strong{ display:block; color:#222; font-size:26px; line-height:1; }
+.stat span{ display:block; color:var(--muted); font-size:9px; margin-top:7px; font-weight:900; text-transform:uppercase; }
+
+/* SEARCH */
+.controls{ padding:14px; margin-bottom:17px; border-radius:14px; background:#ffffff; border: 1px solid rgba(30,35,40,.08); box-shadow: 0 8px 25px rgba(30,35,40,.06); }
+.control-title{ color:#222; font-size:12px; font-weight:900; margin-bottom:9px; }
+.control-row{ display:flex; gap:8px; }
+.controls input, .controls select{ width:100%; padding:11px 12px; border-radius:10px; outline:none; color:#333; background:#f7f8fa; border: 1px solid rgba(30,35,40,.10); font-size:11px; }
+.controls input{ flex:2; }
+.controls select{ flex:1; }
+
+.section-title{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.section-title h3{ color:#222; font-size:15px; }
+.section-title span{ color:var(--muted); font-size:10px; }
+
+/* =========================================================
+   ORDER CARD & TRACKING FEATURES
+========================================================= */
+
+.order-card{ position:relative; overflow:hidden; padding:17px; margin-bottom:13px; border-radius:16px; background:#ffffff; border: 1px solid rgba(30,35,40,.08); box-shadow:var(--shadow); transition:.2s; }
+.order-card::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background: linear-gradient(to bottom, var(--green), var(--green2)); }
+
+.order-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding-bottom:13px; border-bottom: 1px solid rgba(30,35,40,.08); }
+.order-number{ color:var(--green-dark); font-size:14px; font-weight:900; }
+.order-date{ color:#8a8a8a; font-size:10px; margin-top:4px; }
+
+/* STATUS BADGES */
+.status-badge{ padding:7px 10px; border-radius:20px; font-size:9px; font-weight:900; white-space:nowrap; }
+.status-processing{ color:#9b751d; background: rgba(197,155,60,.10); border: 1px solid rgba(197,155,60,.25); }
+.status-shipped{ color:#527da8; background: rgba(82,125,168,.08); border: 1px solid rgba(82,125,168,.22); }
+.status-out{ color:#d97706; background: rgba(217,119,6,.10); border: 1px solid rgba(217,119,6,.25); }
+.status-delivered{ color:#668c4f; background: rgba(102,140,79,.09); border: 1px solid rgba(102,140,79,.22); }
+.status-cancelled{ color:#c94b5c; background: rgba(201,75,92,.07); border: 1px solid rgba(201,75,92,.20); }
+
+.customer-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap:9px; margin-top:13px; }
+.info-box{ padding:11px; border-radius:10px; background:#f8f9fa; border: 1px solid rgba(30,35,40,.07); }
+.info-label{ display:block; color:#8a8a8a; font-size:8px; font-weight:900; margin-bottom:5px; text-transform:uppercase; letter-spacing:.7px; }
+.info-value{ color:#333; font-size:11px; font-weight:650; line-height:1.45; word-break:break-word; }
+.full{ grid-column:1/-1; }
+
+.items-box{ margin-top:11px; padding:12px; border-radius:11px; background: linear-gradient(135deg, rgba(184,155,94,.08), rgba(184,155,94,.035)); border: 1px solid rgba(184,155,94,.16); border-left: 3px solid var(--green); }
+.items-title{ color:var(--green-dark); font-size:8px; font-weight:900; margin-bottom:5px; letter-spacing:.8px; }
+.items-text{ color:#666; font-size:11px; line-height:1.55; }
+
+.total-row{ display:flex; align-items:center; justify-content:space-between; margin-top:13px; padding-top:13px; border-top: 1px dashed rgba(30,35,40,.12); }
+.total-label{ color:#777; font-size:10px; font-weight:900; text-transform:uppercase; }
+.total{ color:var(--green-dark); font-size:23px; font-weight:950; }
+
+/* DELIVERY BOY & TRACKING SECTION */
+.delivery-assign-box{
+    margin-top:12px;
+    padding:12px;
+    background:#f0f4f8;
+    border-radius:11px;
+    border: 1px solid rgba(82,125,168,.25);
+}
+.delivery-title{
+    font-size:10px;
+    font-weight:900;
+    color:#3a5a78;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+.delivery-inputs{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:8px;
+    margin-bottom:8px;
+}
+.delivery-inputs input, .delivery-inputs select{
+    padding:8px 10px;
+    border-radius:8px;
+    border: 1px solid #ccc;
+    font-size:10px;
+    outline:none;
+}
+.save-delivery-btn{
+    padding:8px 12px;
+    background:#527da8;
+    color:#fff;
+    border:0;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:900;
+    cursor:pointer;
+    width:100%;
+}
+.save-delivery-btn:hover{ background:#3b5f82; }
+
+/* MAP & LOCATION */
+.map-section{ margin-top:13px; }
+.map-link{ display:inline-flex; align-items:center; gap:6px; padding:8px 11px; color:var(--green-dark); text-decoration:none; border-radius:9px; background: rgba(184,155,94,.07); border: 1px solid rgba(184,155,94,.22); font-size:9px; font-weight:900; }
+.whatsapp-share{ display:inline-flex; align-items:center; gap:6px; padding:8px 11px; color:#128c7e; text-decoration:none; border-radius:9px; background: rgba(18,140,126,.08); border: 1px solid rgba(18,140,126,.25); font-size:9px; font-weight:900; margin-left:6px; }
+
+.map-frame{ width:100%; height:165px; margin-top:8px; border: 1px solid rgba(30,35,40,.10); border-radius:11px; }
+
+.payment{ margin-top:9px; color:#999; font-size:8px; word-break:break-all; }
+
+/* MANAGE ACTIONS */
+.manage{ display:flex; gap:8px; margin-top:13px; padding-top:13px; border-top: 1px solid rgba(30,35,40,.08); }
+.manage select{ flex:1; padding:10px; border-radius:10px; outline:none; color:#444; background:#f7f8fa; border: 1px solid rgba(30,35,40,.10); font-size:10px; font-weight:800; cursor:pointer; }
+.delete-btn{ padding:10px 14px; border-radius:10px; color:#c94b5c; background: rgba(201,75,92,.05); border: 1px solid rgba(201,75,92,.20); font-size:10px; font-weight:900; cursor:pointer; }
+.delete-btn:hover{ color:#fff; background:#c94b5c; }
+
+.empty{ padding:50px 20px; text-align:center; border-radius:16px; background:#ffffff; border: 1px solid rgba(30,35,40,.08); box-shadow:var(--shadow); }
+
+/* MOBILE RESPONSIVE */
+@media(max-width:700px){
+    .header{ padding:9px 11px; }
+    .header-title h1{ font-size:14px; }
+    .stats{ grid-template-columns: repeat(2,1fr); gap:8px; }
+    .control-row{ flex-direction:column; }
+    .customer-grid{ grid-template-columns:1fr; }
+    .delivery-inputs{ grid-template-columns: 1fr; }
+    .manage{ flex-direction:column; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PIN LOCK -->
+<div id="pinLock">
+    <div class="pin-box">
+        <img src="Logo.png" class="pin-logo" alt="Green Angan">
+        <div class="pin-icon">🔐</div>
+        <h2>Manager Command</h2>
+        <p>Secure access to Green Angan orders</p>
+        <input type="password" id="pinInput" inputmode="numeric" maxlength="10" placeholder="••••" autocomplete="off">
+        <button class="pin-btn" id="unlockBtn">⚡ Enter Command Center</button>
+        <div class="pin-error" id="pinError"></div>
+    </div>
+</div>
+
+<!-- MAIN PAGE -->
+<div id="mainPage">
+
+<header class="header">
+    <div class="brand">
+        <img src="Logo.png" class="logo" alt="Green Angan">
+        <div class="header-title">
+            <h1>⚡ Green Angan Admin</h1>
+            <span>Order & Delivery Control Hub</span>
+        </div>
+    </div>
+    <div class="header-buttons">
+        <button class="header-btn lock-btn" id="lockBtn">🔒 Lock</button>
+        <button class="header-btn store-btn" onclick="window.location.href='index.html'">← Store</button>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- NAVIGATION -->
+    <div class="admin-nav">
+        <button class="nav-btn active" data-filter="all">📊 Dashboard</button>
+        <button class="nav-btn" data-filter="all">📦 All Orders</button>
+        <button class="nav-btn" data-filter="Order Placed / Processing">⏳ Processing</button>
+        <button class="nav-btn" data-filter="Shipped Out">🚚 Shipped</button>
+        <button class="nav-btn" data-filter="Out For Delivery">🛵 Out For Delivery</button>
+        <button class="nav-btn" data-filter="Delivered Successfully">✅ Delivered</button>
+        <button class="nav-btn" data-filter="Cancelled">🔴 Cancelled</button>
+    </div>
+
+    <!-- HERO -->
+    <div class="dashboard-hero">
+        <h2>👋 Welcome, Manager</h2>
+        <p>Track Live Orders & Delivery Partners in Real-time.</p>
+        <div class="live"><span class="live-dot"></span> Firebase Live Connected</div>
+    </div>
+
+    <div id="message"></div>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat"><div class="stat-icon">📦</div><strong id="totalOrders">0</strong><span>Total Orders</span></div>
+        <div class="stat"><div class="stat-icon">⏳</div><strong id="processingOrders">0</strong><span>Processing</span></div>
+        <div class="stat"><div class="stat-icon">🛵</div><strong id="outOrders">0</strong><span>On The Way</span></div>
+        <div class="stat"><div class="stat-icon">✅</div><strong id="deliveredOrders">0</strong><span>Delivered</span></div>
+    </div>
+
+    <!-- SEARCH & CONTROLS -->
+    <div class="controls">
+        <div class="control-title">🔎 Find & Filter Orders</div>
+        <div class="control-row">
+            <input type="search" id="search" placeholder="Search customer, delivery boy, tracking ID, phone...">
+            <select id="statusFilter">
+                <option value="all">🟢 All Orders</option>
+                <option value="Order Placed / Processing">🟡 Processing</option>
+                <option value="Shipped Out">🔵 Shipped</option>
+                <option value="Out For Delivery">🛵 Out For Delivery</option>
+                <option value="Delivered Successfully">🟢 Delivered</option>
+                <option value="Cancelled">🔴 Cancelled</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- SECTION TITLE -->
+    <div class="section-title">
+        <h3 id="sectionTitle">📦 All Orders</h3>
+        <span id="visibleCount">0 orders</span>
+    </div>
+
+    <!-- ORDERS CONTAINER -->
+    <div id="ordersContainer">
+        <div class="empty">
+            <div class="empty-icon">⚡</div>
+            <strong>Loading Orders...</strong>
+            <span>Connecting to Firebase.</span>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- FIREBASE MODULE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getDatabase, ref, onValue, set, update, remove } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+const ACCESS_PIN = "2026";
+const SESSION_KEY = "green_angan_manage_orders_unlocked";
+
+const pinLock = document.getElementById("pinLock");
+const mainPage = document.getElementById("mainPage");
+const pinInput = document.getElementById("pinInput");
+const pinError = document.getElementById("pinError");
+
+function unlockPage(){
+    if(pinInput.value.trim() === ACCESS_PIN){
+        sessionStorage.setItem(SESSION_KEY, "yes");
+        pinLock.style.display = "none";
+        mainPage.style.display = "block";
+        pinInput.value = "";
+        pinError.innerText = "";
+        startFirebase();
+    }else{
+        pinError.innerText = "❌ Access denied • Wrong PIN";
+        pinInput.value = "";
+        pinInput.focus();
+    }
+}
+
+document.getElementById("unlockBtn").addEventListener("click", unlockPage);
+pinInput.addEventListener("keydown", e => { if(e.key === "Enter") unlockPage(); });
+
+document.getElementById("lockBtn").addEventListener("click", () => {
+    sessionStorage.removeItem(SESSION_KEY);
+    mainPage.style.display = "none";
+    pinLock.style.display = "flex";
+    pinInput.focus();
+});
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+    apiKey: "AIzaSyAwydVIDNYu6n3ze_yaI-Q9r1Ms6MMCcYM",
+    authDomain: "greenangan-7a085.firebaseapp.com",
+    databaseURL: "https://greenangan-7a085-default-rtdb.firebaseio.com/",
+    projectId: "greenangan-7a085",
+    storageBucket: "greenangan-7a085.firebasestorage.app",
+    messagingSenderId: "105971440710",
+    appId: "1:105971440710:web:32e03bcb5cd2fcf8713347",
+    measurementId: "G-L5KCJ9FS2F"
+};
+
+let firebaseStarted = false;
+let orders = [];
+let activeNavigation = "all";
+
+function showMessage(text, type = "success"){
+    const box = document.getElementById("message");
+    box.innerText = text;
+    box.className = type === "error" ? "message-error" : "message-success";
+    setTimeout(() => { box.className = ""; box.style.display = "none"; }, 3500);
+}
+
+function startFirebase(){
+    if(firebaseStarted) return;
+    firebaseStarted = true;
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    /* LIVE ORDERS FETCH */
+    onValue(ref(database, "orders"), snapshot => {
+        const data = snapshot.val();
+        orders = [];
+
+        if(data){
+            Object.keys(data).forEach(key => {
+                orders.push({
+                    firebaseKey: key,
+                    ...data[key]
+                });
+            });
+        }
+
+        orders.sort((a,b) => getTime(b.date) - getTime(a.date));
+        updateStats();
+        render();
+    }, error => {
+        console.error(error);
+        document.getElementById("ordersContainer").innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div><strong>Connection Error</strong><span>Unable to connect to Firebase.</span></div>`;
+    });
+
+    /* CHANGE STATUS */
+    window.changeStatus = async function(key, status){
+        try{
+            await update(ref(database, `orders/${key}`), { status: status });
+            showMessage("✅ Order status updated to: " + status);
+        }catch(error){
+            showMessage("❌ Unable to update status.", "error");
+        }
+    };
+
+    /* ASSIGN DELIVERY BOY & TRACKING DETAILS */
+    window.saveDeliveryDetails = async function(key){
+        const boyName = document.getElementById(`boyName_${key}`).value.trim();
+        const boyPhone = document.getElementById(`boyPhone_${key}`).value.trim();
+        const courierPartner = document.getElementById(`courier_${key}`).value.trim();
+        const trackingId = document.getElementById(`trackId_${key}`).value.trim();
+
+        try{
+            await update(ref(database, `orders/${key}`), {
+                deliveryBoyName: boyName,
+                deliveryBoyPhone: boyPhone,
+                courierPartner: courierPartner,
+                trackingId: trackingId
+            });
+            showMessage("🛵 Delivery Boy / Tracking Details Saved!");
+        }catch(err){
+            showMessage("❌ Failed to update delivery details.", "error");
+        }
+    };
+
+    /* DELETE ORDER */
+    window.deleteOrder = async function(key){
+        if(confirm("Delete order permanently?")){
+            try{
+                await remove(ref(database, `orders/${key}`));
+                showMessage("🗑️ Order deleted successfully.");
+            }catch(error){
+                showMessage("❌ Unable to delete order.", "error");
+            }
+        }
+    };
+}
+
+function updateStats(){
+    document.getElementById("totalOrders").innerText = orders.length;
+    document.getElementById("processingOrders").innerText = orders.filter(o => o.status === "Order Placed / Processing").length;
+    document.getElementById("outOrders").innerText = orders.filter(o => o.status === "Out For Delivery" || o.status === "Shipped Out").length;
+    document.getElementById("deliveredOrders").innerText = orders.filter(o => o.status === "Delivered Successfully").length;
+}
+
+document.getElementById("search").addEventListener("input", render);
+document.getElementById("statusFilter").addEventListener("change", () => {
+    activeNavigation = document.getElementById("statusFilter").value;
+    render();
+});
+
+document.querySelectorAll(".nav-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        activeNavigation = button.dataset.filter;
+        document.getElementById("statusFilter").value = activeNavigation === "all" ? "all" : activeNavigation;
+        render();
+    });
+});
+
+function render(){
+    const query = document.getElementById("search").value.toLowerCase().trim();
+    const selectedStatus = document.getElementById("statusFilter").value;
+
+    let filtered = orders.filter(order => {
+        const searchable = `
+            ${order.orderId || ""}
+            ${order.customerName || ""}
+            ${order.customerPhone || ""}
+            ${order.customerAddress || ""}
+            ${order.deliveryBoyName || ""}
+            ${order.deliveryBoyPhone || ""}
+            ${order.trackingId || ""}
+            ${order.items || ""}
+        `.toLowerCase();
+
+        const searchMatch = !query || searchable.includes(query);
+        const statusMatch = selectedStatus === "all" || order.status === selectedStatus;
+        return searchMatch && statusMatch;
+    });
+
+    const container = document.getElementById("ordersContainer");
+    document.getElementById("visibleCount").innerText = `${filtered.length} order(s)`;
+
+    if(filtered.length === 0){
+        container.innerHTML = `<div class="empty"><div class="empty-icon">📦</div><strong>No Orders Found</strong><span>Try changing filters or search terms.</span></div>`;
+        return;
+    }
+
+    container.innerHTML = filtered.map(order => orderHTML(order)).join("");
+}
+
+function orderHTML(order){
+    const address = order.customerAddress || "-";
+    const mapQuery = encodeURIComponent(address);
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+    const embedUrl = `https://maps.google.com/maps?q=${mapQuery}&output=embed`;
+
+    const status = order.status || "Order Placed / Processing";
+
+    let statusClass = "status-processing";
+    let statusIcon = "⏳";
+
+    if(status === "Shipped Out"){ statusClass = "status-shipped"; statusIcon = "🚚"; }
+    if(status === "Out For Delivery"){ statusClass = "status-out"; statusIcon = "🛵"; }
+    if(status === "Delivered Successfully"){ statusClass = "status-delivered"; statusIcon = "✅"; }
+    if(status === "Cancelled"){ statusClass = "status-cancelled"; statusIcon = "❌"; }
+
+    const safeKey = escapeAttribute(order.firebaseKey);
+    const boyPhone = order.deliveryBoyPhone || "";
+    const customerPhone = order.customerPhone || "";
+
+    // WhatsApp Direct Link to Share Address with Delivery Boy
+    const waText = encodeURIComponent(`Hello ${order.deliveryBoyName || "Rider"}, deliver this order:\nCustomer: ${order.customerName}\nPhone: ${customerPhone}\nAddress: ${address}\nLocation: ${mapUrl}`);
+    const waShareUrl = boyPhone ? `https://wa.me/91${boyPhone}?text=${waText}` : '#';
+
+    return `
+    <div class="order-card">
+
+        <div class="order-top">
+            <div>
+                <div class="order-number">#${escapeHTML(order.orderId || order.firebaseKey)}</div>
+                <div class="order-date">📅 ${formatDate(order.date)}</div>
+            </div>
+            <span class="status-badge ${statusClass}">${statusIcon} ${escapeHTML(status)}</span>
+        </div>
+
+        <div class="customer-grid">
+            <div class="info-box">
+                <span class="info-label">Customer</span>
+                <div class="info-value">👤 ${escapeHTML(order.customerName || "-")}</div>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">Phone</span>
+                <div class="info-value">📞 ${escapeHTML(customerPhone || "-")}</div>
+            </div>
+
+            <div class="info-box full">
+                <span class="info-label">Delivery Address</span>
+                <div class="info-value">📍 ${escapeHTML(address)}</div>
+            </div>
+        </div>
+
+        <!-- DELIVERY BOY & TRACKING ASSIGNMENT -->
+        <div class="delivery-assign-box">
+            <div class="delivery-title">🛵 Delivery Partner & Tracking Assignment</div>
+            <div class="delivery-inputs">
+                <input type="text" id="boyName_${safeKey}" placeholder="Delivery Boy Name" value="${escapeHTML(order.deliveryBoyName || '')}">
+                <input type="tel" id="boyPhone_${safeKey}" placeholder="Boy Phone No." value="${escapeHTML(order.deliveryBoyPhone || '')}">
+            </div>
+            <div class="delivery-inputs">
+                <select id="courier_${safeKey}">
+                    <option value="Self Delivery" ${order.courierPartner === 'Self Delivery' ? 'selected':''}>🛵 Local Delivery Boy</option>
+                    <option value="Delhivery" ${order.courierPartner === 'Delhivery' ? 'selected':''}>📦 Delhivery</option>
+                    <option value="India Post" ${order.courierPartner === 'India Post' ? 'selected':''}>📮 Speed Post / India Post</option>
+                    <option value="Shiprocket" ${order.courierPartner === 'Shiprocket' ? 'selected':''}>🚀 Shiprocket</option>
+                </select>
+                <input type="text" id="trackId_${safeKey}" placeholder="Tracking ID / AWB" value="${escapeHTML(order.trackingId || '')}">
+            </div>
+            <button class="save-delivery-btn" onclick="saveDeliveryDetails('${safeKey}')">💾 Assign / Update Tracking</button>
+        </div>
+
+        <div class="items-box">
+            <div class="items-title">📦 ORDER ITEMS</div>
+            <div class="items-text">${escapeHTML(order.items || order.productName || order.product || "-")}</div>
+        </div>
+
+        <div class="total-row">
+            <span class="total-label">Order Total</span>
+            <span class="total">₹${Number(order.totalAmount || 0).toLocaleString("en-IN")}</span>
+        </div>
+
+        ${address !== "-" ? `
+        <div class="map-section">
+            <a class="map-link" href="${mapUrl}" target="_blank">📍 Live Map Location</a>
+            ${boyPhone ? `<a class="whatsapp-share" href="${waShareUrl}" target="_blank">💬 Send Address to Delivery Boy</a>` : ''}
+            <iframe class="map-frame" src="${embedUrl}" loading="lazy" title="Customer Location"></iframe>
+        </div>
+        ` : ""}
+
+        <div class="payment">💳 Payment ID: ${escapeHTML(order.paymentId || "-")}</div>
+
+        <div class="manage">
+            <select onchange="changeStatus('${safeKey}', this.value)">
+                <option value="Order Placed / Processing" ${status === "Order Placed / Processing" ? "selected" : ""}>⏳ Processing</option>
+                <option value="Shipped Out" ${status === "Shipped Out" ? "selected" : ""}>🚚 Shipped</option>
+                <option value="Out For Delivery" ${status === "Out For Delivery" ? "selected" : ""}>🛵 Out For Delivery</option>
+                <option value="Delivered Successfully" ${status === "Delivered Successfully" ? "selected" : ""}>✅ Delivered</option>
+                <option value="Cancelled" ${status === "Cancelled" ? "selected" : ""}>❌ Cancelled</option>
+            </select>
+
+            <button class="delete-btn" onclick="deleteOrder('${safeKey}')">🗑️ Delete</button>
+        </div>
+
+    </div>
+    `;
+}
+
+function escapeHTML(value){
+    return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+}
+
+function escapeAttribute(value){
+    return String(value).replaceAll("\\", "\\\\").replaceAll("'", "\\'");
+}
+
+function getTime(date){
+    if(!date) return 0;
+    const time = new Date(date).getTime();
+    return isNaN(time) ? 0 : time;
+}
+
+function formatDate(date){
+    if(!date) return "-";
+    const d = new Date(date);
+    if(isNaN(d.getTime())) return escapeHTML(date);
+    return d.toLocaleString("en-IN", { dateStyle:"medium", timeStyle:"short" });
+}
+
+if(sessionStorage.getItem(SESSION_KEY) === "yes"){
+    pinLock.style.display = "none";
+    mainPage.style.display = "block";
+    startFirebase();
+}else{
+    pinLock.style.display = "flex";
+    mainPage.style.display = "none";
+    setTimeout(() => { pinInput.focus(); }, 150);
+}
+
+</script>
+
+</body>
+</html>
