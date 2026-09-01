@@ -536,7 +536,7 @@ button{
     display:flex;
     gap:10px;
     margin-top:12px;
-    margin-bottom:15px;
+    margin-bottom:10px;
 }
 
 .card-actions button{
@@ -558,34 +558,62 @@ button{
     border-color:#d47f00 !important;
 }
 
-/* REVIEWS SECTION IN CARD */
-.reviews-container{
-    border-top:1px solid var(--border);
-    padding-top:12px;
-    margin-top:auto;
-}
-
-.reviews-title{
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:8px;
+.open-review-modal-btn{
+    width:100%;
+    margin-top:5px;
+    background:var(--green-soft);
     color:var(--green-dark);
+    border:1px solid var(--green);
+    padding:8px;
+    border-radius:18px;
+    font-size:12px;
+    font-weight:bold;
+    transition:.2s;
 }
 
-.reviews-list{
-    max-height:110px;
+.open-review-modal-btn:hover{
+    background:var(--green);
+    color:white;
+}
+
+/* REVIEWS MODAL STYLING */
+.review-modal-box{
+    width:480px;
+    max-width:100%;
+    max-height:85vh;
+    background:white;
+    border-radius:8px;
+    padding:20px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+}
+
+.review-modal-header{
+    border-bottom:1px solid #ddd;
+    padding-bottom:10px;
+    margin-bottom:12px;
+}
+
+.review-modal-header h3{
+    color:var(--green-dark);
+    font-size:18px;
+}
+
+.reviews-list-modal{
+    max-height:200px;
     overflow-y:auto;
     background:#f9f9f9;
-    padding:8px;
+    padding:10px;
     border-radius:4px;
-    font-size:11px;
-    margin-bottom:10px;
+    font-size:12px;
+    margin-bottom:15px;
     border:1px solid #eee;
 }
 
 .review-item{
-    margin-bottom:6px;
-    padding-bottom:6px;
+    margin-bottom:10px;
+    padding-bottom:8px;
     border-bottom:1px dashed #ddd;
 }
 
@@ -609,19 +637,28 @@ button{
     margin-top:2px;
 }
 
+.review-photo{
+    width:75px;
+    height:75px;
+    object-fit:cover;
+    border-radius:4px;
+    margin-top:5px;
+    border:1px solid #ccc;
+}
+
 .add-review-form{
     display:flex;
     flex-direction:column;
-    gap:6px;
+    gap:8px;
 }
 
 .add-review-form input,
 .add-review-form select,
 .add-review-form textarea{
-    font-size:11px;
-    padding:6px;
+    font-size:12px;
+    padding:8px;
     border:1px solid #ccc;
-    border-radius:3px;
+    border-radius:4px;
     width:100%;
 }
 
@@ -629,9 +666,9 @@ button{
     background:var(--green-light);
     color:white;
     border:0;
-    padding:6px;
-    border-radius:3px;
-    font-size:11px;
+    padding:9px;
+    border-radius:4px;
+    font-size:12px;
     font-weight:bold;
 }
 
@@ -1196,7 +1233,7 @@ button{
         z-index:6000;
         box-shadow:0 -2px 12px rgba(0,0,0,.15);
     }
-    .mobile-item{ text-align:center; color:#667085; font-size:10px; font-weight:700; cursor:pointer; }
+    .mobile-item{ text-align:center; color:#667085; font-size:10px; font-weight:700; cursor:pointer; flex:1; }
     .mobile-item.active{ color:var(--green); }
     .mobile-icon{ font-size:21px; display:block; }
     .whatsapp{ bottom:75px; right:15px; width:47px; height:47px; }
@@ -1354,6 +1391,30 @@ button{
         <p style="margin-top:5px;color:#667085;font-size:12px">📞 +91 9821846004 &nbsp; | &nbsp; ✉ greenangan@gmail.com</p>
     </section>
 </main>
+
+<!-- PRODUCT REVIEWS MODAL (HIDDEN BY DEFAULT) -->
+<div class="modal" id="reviewModal">
+    <div class="review-modal-box">
+        <button class="close-login" onclick="closeReviewModal()">×</button>
+        <div class="review-modal-header">
+            <h3 id="modalProductTitle">Product Reviews</h3>
+        </div>
+        <div class="reviews-list-modal" id="modalReviewsList"></div>
+        <div class="add-review-form">
+            <input type="text" id="modalRevName" placeholder="Your Name">
+            <select id="modalRevRating">
+                <option value="5">⭐⭐⭐⭐⭐ (5 Star)</option>
+                <option value="4">⭐⭐⭐⭐ (4 Star)</option>
+                <option value="3">⭐⭐⭐ (3 Star)</option>
+                <option value="2">⭐⭐ (2 Star)</option>
+                <option value="1">⭐ (1 Star)</option>
+            </select>
+            <input type="file" id="modalRevFile" accept="image/*" style="font-size:10px;">
+            <textarea id="modalRevComment" rows="2" placeholder="Write your review..."></textarea>
+            <button id="modalSubmitReviewBtn">Submit Review</button>
+        </div>
+    </div>
+</div>
 
 <!-- LOGIN MODAL -->
 <div class="modal" id="loginModal">
@@ -1515,6 +1576,10 @@ button{
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getDatabase, ref, push, set, remove, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
+/* NAVIGATION FUNCTIONS FOR HOME AND ORDERS */
+window.scrollHome = function(){ window.scrollTo({ top:0, behavior:"smooth" }); };
+window.goOrders = function(){ window.location.href = "order.html"; };
+
 /* FIREBASE */
 const firebaseConfig = {
     apiKey: "AIzaSyAwydVIDNYu6n3ze_yaI-Q9r1Ms6MMCcYM",
@@ -1543,6 +1608,7 @@ let selectedCategory = "All Items";
 let authMode = "login";
 let isEditingAddress = false;
 let selectedProfileTheme = "green";
+let currentActiveProductIndex = null;
 
 const CART_STORAGE_KEY = "green_angan_cart";
 
@@ -1613,7 +1679,7 @@ if(database){
     products = JSON.parse(localStorage.getItem("green_angan_products")) || [];
 }
 
-/* RENDER PRODUCTS & REVIEWS */
+/* RENDER PRODUCTS */
 function renderProducts(){
     const container = document.getElementById("productsContainer");
     if(!container) return;
@@ -1657,21 +1723,9 @@ function renderProducts(){
 
         const reviewsArr = product.reviews ? Object.values(product.reviews) : [];
         let totalStars = 0;
-        let reviewsHTML = "";
-        
         if(reviewsArr.length > 0){
-            reviewsArr.forEach(r => {
-                totalStars += Number(r.rating || 5);
-                reviewsHTML += `
-                    <div class="review-item">
-                        <div class="review-user">${escapeHTML(r.name)} <span class="review-stars">${'⭐'.repeat(r.rating)}</span></div>
-                        <div class="review-text">${escapeHTML(r.comment)}</div>
-                    </div>`;
-            });
-        } else {
-            reviewsHTML = `<div style="color:#777;font-style:italic;">No reviews yet. Be the first to review!</div>`;
+            reviewsArr.forEach(r => totalStars += Number(r.rating || 5));
         }
-
         const avgRating = reviewsArr.length > 0 ? (totalStars / reviewsArr.length).toFixed(1) : "5.0";
 
         html += `
@@ -1699,23 +1753,7 @@ function renderProducts(){
                         `}
                     </div>
 
-                    <div class="reviews-container">
-                        <div class="reviews-title">💬 Customer Reviews</div>
-                        <div class="reviews-list">${reviewsHTML}</div>
-                        
-                        <div class="add-review-form">
-                            <input type="text" id="rev-name-${index}" placeholder="Your Name">
-                            <select id="rev-rating-${index}">
-                                <option value="5">⭐⭐⭐⭐⭐ (5 Star)</option>
-                                <option value="4">⭐⭐⭐⭐ (4 Star)</option>
-                                <option value="3">⭐⭐⭐ (3 Star)</option>
-                                <option value="2">⭐⭐ (2 Star)</option>
-                                <option value="1">⭐ (1 Star)</option>
-                            </select>
-                            <textarea id="rev-comment-${index}" rows="2" placeholder="Write your review..."></textarea>
-                            <button onclick="submitReview(${index})">Submit Review</button>
-                        </div>
-                    </div>
+                    <button class="open-review-modal-btn" onclick="openReviewModal(${index})">💬 Customer Reviews (${reviewsArr.length})</button>
 
                 </div>
             </article>
@@ -1725,36 +1763,91 @@ function renderProducts(){
     container.innerHTML = html;
 }
 
-window.submitReview = async function(index){
+/* REVIEWS MODAL FUNCTIONS */
+window.openReviewModal = function(index){
+    currentActiveProductIndex = index;
     const product = products[index];
     if(!product) return;
 
-    const nameInput = document.getElementById(`rev-name-${index}`);
-    const ratingInput = document.getElementById(`rev-rating-${index}`);
-    const commentInput = document.getElementById(`rev-comment-${index}`);
+    document.getElementById("modalProductTitle").innerText = "Reviews for " + product.name;
 
-    const name = nameInput.value.trim();
-    const rating = Number(ratingInput.value);
-    const comment = commentInput.value.trim();
+    const currentCustomer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    document.getElementById("modalRevName").value = currentCustomer ? currentCustomer.name : "";
+    document.getElementById("modalRevComment").value = "";
+    document.getElementById("modalRevFile").value = "";
+
+    const reviewsArr = product.reviews ? Object.values(product.reviews) : [];
+    const listContainer = document.getElementById("modalReviewsList");
+    
+    if(reviewsArr.length > 0){
+        let reviewsHTML = "";
+        reviewsArr.forEach(r => {
+            reviewsHTML += `
+                <div class="review-item">
+                    <div class="review-user">${escapeHTML(r.name)} <span class="review-stars">${'⭐'.repeat(r.rating)}</span></div>
+                    <div class="review-text">${escapeHTML(r.comment)}</div>
+                    ${r.photo ? `<img src="${escapeHTML(r.photo)}" class="review-photo" alt="Review Photo">` : ''}
+                </div>`;
+        });
+        listContainer.innerHTML = reviewsHTML;
+    } else {
+        listContainer.innerHTML = `<div style="color:#777;font-style:italic;text-align:center;">No reviews yet. Be the first to review!</div>`;
+    }
+
+    document.getElementById("reviewModal").classList.add("show");
+};
+
+window.closeReviewModal = function(){
+    document.getElementById("reviewModal").classList.remove("show");
+    currentActiveProductIndex = null;
+};
+
+document.getElementById("modalSubmitReviewBtn").onclick = async function(){
+    if(currentActiveProductIndex === null) return;
+    const product = products[currentActiveProductIndex];
+    if(!product) return;
+
+    const name = document.getElementById("modalRevName").value.trim();
+    const rating = Number(document.getElementById("modalRevRating").value);
+    const comment = document.getElementById("modalRevComment").value.trim();
+    const fileInput = document.getElementById("modalRevFile");
 
     if(!name || !comment){
-        alert("Please fill your name and review comment!");
+        alert("Kripya apna naam aur review comment zaroor bharein!");
         return;
     }
 
-    const reviewData = { name, rating, comment, date: new Date().toISOString() };
+    const processAndSaveReview = async (photoBase64) => {
+        const reviewData = { 
+            name, 
+            rating, 
+            comment, 
+            photo: photoBase64 || "",
+            date: new Date().toISOString() 
+        };
 
-    if(database && product.firebaseKey){
-        await push(ref(database, `products/${product.firebaseKey}/reviews`), reviewData);
+        if(database && product.firebaseKey){
+            await push(ref(database, `products/${product.firebaseKey}/reviews`), reviewData);
+        } else {
+            if(!product.reviews) product.reviews = {};
+            const newKey = "rev_" + Date.now();
+            product.reviews[newKey] = reviewData;
+            localStorage.setItem("green_angan_products", JSON.stringify(products));
+            renderProducts();
+        }
+        alert("Dhanyawad! Aapka review add ho chuka hai.");
+        openReviewModal(currentActiveProductIndex);
+    };
+
+    if(fileInput && fileInput.files && fileInput.files[0]){
+        const reader = new FileReader();
+        reader.onload = function(e){
+            processAndSaveReview(e.target.result);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
     } else {
-        if(!product.reviews) product.reviews = {};
-        const newKey = "rev_" + Date.now();
-        product.reviews[newKey] = reviewData;
-        localStorage.setItem("green_angan_products", JSON.stringify(products));
-        renderProducts();
+        processAndSaveReview("");
     }
-
-    alert("Thank you! Your review has been added.");
 };
 
 window.directAddToCart = async function(index){
@@ -1894,7 +1987,6 @@ window.saveProfileChanges = function(){
         set(ref(database, "users/" + customer.phone), customer);
     }
 
-    // Save Address Key Sync
     const savedAddrKey = "saved_address_" + customer.phone;
     localStorage.setItem(savedAddrKey, JSON.stringify({
         name: customer.name,
@@ -1953,7 +2045,7 @@ document.getElementById("authBtn").onclick = async function(){
 
         if(users[phone] && users[phone].password === password){
             localStorage.setItem("current_green_angan_customer", JSON.stringify(users[phone]));
-            closeLogin(); loadCart(); updateCart(); updateAccountUI();
+            closeLogin(); loadCart(); updateCart(); updateAccountUI(); renderProducts();
             alert("✅ Welcome back to Green Angan!");
         }else{
             alert("❌ Invalid mobile number or password.");
@@ -1971,7 +2063,7 @@ document.getElementById("authBtn").onclick = async function(){
         localStorage.setItem("green_angan_users", JSON.stringify(users));
         localStorage.setItem("current_green_angan_customer", JSON.stringify(user));
 
-        closeLogin(); loadCart(); updateCart(); updateAccountUI();
+        closeLogin(); loadCart(); updateCart(); updateAccountUI(); renderProducts();
         alert("🎉 Green Angan account created!");
     }
 };
@@ -2237,7 +2329,6 @@ function populateDeleteDropdown(){
     });
 }
 
-window.scrollHome = function(){ window.scrollTo({ top:0, behavior:"smooth" }); };
 window.scrollProducts = function(){ document.getElementById("productsSection").scrollIntoView({ behavior:"smooth" }); };
 window.scrollToDeals = function(){ document.getElementById("dealsSection").scrollIntoView({ behavior:"smooth" }); };
 
