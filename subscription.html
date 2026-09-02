@@ -580,12 +580,18 @@ body{
 .add-review-form button {
     background: #0b8060;
     color: white;
-    border: 0;
-    padding: 7px;
-    border-radius: 3px;
+    border: 1px solid #075c45;
+    padding: 9px 14px;
+    border-radius: 5px;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 800;
     cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,.08);
+}
+.add-review-form button:hover {
+    background: #147a5b;
+    transform: translateY(-1px);
 }
 
 /* Global Review Section */
@@ -671,6 +677,41 @@ body{
 .rev-author {
     font-weight: 800;
     font-size: 14px;
+}
+
+/* ================= AMAZON-STYLE ADDRESS MODAL / PAGE ================= */
+.amazon-address-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 2px;
+    display: block;
+}
+.amazon-input {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #888c8c;
+    border-radius: 4px;
+    font-size: 13px;
+    outline: none;
+}
+.amazon-input:focus {
+    border-color: #e77600;
+    box-shadow: 0 0 3px 2px rgba(228,121,17,.5);
+}
+.amazon-yellow-btn {
+    background: #ffd814;
+    border: 1px solid #fcd200;
+    border-radius: 8px;
+    padding: 11px;
+    font-weight: 700;
+    color: #0f1111;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(213,217,217,.5);
+    width: 100%;
+}
+.amazon-yellow-btn:hover {
+    background: #f7ca00;
 }
 
 /* ================= EMPTY ================= */
@@ -1336,14 +1377,14 @@ body{
 </div>
 
 
-<!-- ================= BOOKING MODAL ================= -->
+<!-- ================= BOOKING MODAL & AMAZON ADDRESS PAGE ================= -->
 
 <div
     class="modal"
     id="modal"
 >
 
-    <div class="box">
+    <div class="box" style="border: 1px solid #d5d9d9;">
 
         <button
             class="close"
@@ -1352,67 +1393,85 @@ body{
             ×
         </button>
 
-        <h2 id="modalTitle">
-            Book Service
+        <h2 id="modalTitle" style="font-size: 22px; color: #0f1111; margin-bottom: 5px;">
+            Enter Delivery & Service Address
         </h2>
 
         <div
             class="notice"
             id="modalInfo"
+            style="margin-bottom: 15px; border-left: 3px solid #e77600;"
         ></div>
 
-        <div
-            class="form"
-            style="margin-top:14px"
-        >
+        <!-- AMAZON PROFESSIONAL STYLE ADDRESS FORM -->
+        <div class="form">
+
+            <div>
+                <label class="amazon-address-label">Full Name</label>
+                <input id="name" class="amazon-input" placeholder="First and last name">
+            </div>
 
             <div class="row">
 
-                <input
-                    id="name"
-                    placeholder="Full name"
-                >
+                <div>
+                    <label class="amazon-address-label">Mobile Number</label>
+                    <input id="phone" class="amazon-input" placeholder="10-digit mobile number">
+                </div>
 
-                <input
-                    id="phone"
-                    placeholder="Mobile number"
-                >
+                <div>
+                    <label class="amazon-address-label">Pincode</label>
+                    <input id="pincode" class="amazon-input" placeholder="6 digits [0-9] PIN code">
+                </div>
 
             </div>
 
-            <input
-                id="email"
-                type="email"
-                placeholder="Email address"
-            >
+            <div>
+                <label class="amazon-address-label">Email Address</label>
+                <input id="email" type="email" class="amazon-input" placeholder="For order details & updates">
+            </div>
 
-            <input
-                id="address"
-                placeholder="Service address"
-            >
+            <div>
+                <label class="amazon-address-label">Flat, House no., Building, Company, Apartment</label>
+                <input id="address" class="amazon-input" placeholder="House / Flat / Block No.">
+            </div>
 
-            <select id="variant">
+            <div>
+                <label class="amazon-address-label">Area, Street, Sector, Village</label>
+                <input id="street" class="amazon-input" placeholder="Street Name, Area or Landmark">
+            </div>
 
-                <option value="one-time">
-                    One Time
-                </option>
+            <div class="row">
+                <div>
+                    <label class="amazon-address-label">Town/City</label>
+                    <input id="city" class="amazon-input" placeholder="City">
+                </div>
+                <div>
+                    <label class="amazon-address-label">State</label>
+                    <input id="state" class="amazon-input" placeholder="State">
+                </div>
+            </div>
 
-                <option value="monthly">
-                    Monthly
-                </option>
+            <div class="row">
+                <div>
+                    <label class="amazon-address-label">Service Plan Variant</label>
+                    <select id="variant" class="amazon-input">
+                        <option value="one-time">One Time Visit</option>
+                        <option value="monthly">Monthly Subscription</option>
+                    </select>
+                </div>
 
-            </select>
-
-            <input
-                id="date"
-                type="date"
-            >
+                <div>
+                    <label class="amazon-address-label">Preferred Date</label>
+                    <input id="date" type="date" class="amazon-input">
+                </div>
+            </div>
 
             <button
-                class="checkout-btn"
+                class="amazon-yellow-btn"
+                style="margin-top: 10px;"
                 onclick="bookNow()"
             >
-                Continue to Payment
+                Use this Address & Proceed to Payment
             </button>
 
         </div>
@@ -1446,8 +1505,16 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+import {
+    getDatabase,
+    ref as rtdbRef,
+    push as rtdbPush,
+    set as rtdbSet
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
 
 let db = null;
+let rtdb = null;
 
 try{
 
@@ -1456,11 +1523,12 @@ try{
         !window.GREEN_ANGAN_FIREBASE_CONFIG.apiKey.startsWith("YOUR_")
     ){
 
-        db = getFirestore(
-            initializeApp(
-                window.GREEN_ANGAN_FIREBASE_CONFIG
-            )
+        const firebaseApp = initializeApp(
+            window.GREEN_ANGAN_FIREBASE_CONFIG
         );
+
+        db = getFirestore(firebaseApp);
+        rtdb = getDatabase(firebaseApp);
 
     }
 
@@ -1470,49 +1538,83 @@ try{
 
 }
 
-
 window.db = db;
-
+window.rtdb = rtdb;
 
 window.saveBooking = async function(data){
 
-    if(!db){
-        return false;
+    let saved = false;
+
+    /* Save Address Details & Order into Firestore */
+    if(db){
+        await addDoc(
+            collection(db,"orders"),
+            {
+                ...data,
+                createdAt:serverTimestamp(),
+                source:"services-page"
+            }
+        );
+
+        const key = (
+            data.phone ||
+            data.email ||
+            "guest"
+        ).replace(/\//g,"_");
+
+        await setDoc(
+            doc(db,"customers",key),
+            {
+                name:data.name,
+                phone:data.phone,
+                email:data.email,
+                address:data.address,
+                street:data.street || "",
+                city:data.city || "",
+                state:data.state || "",
+                pincode:data.pincode || "",
+                fullAddress:`${data.address}, ${data.street || ''}, ${data.city || ''}, ${data.state || ''} - ${data.pincode || ''}`,
+                updatedAt:serverTimestamp()
+            },
+            { merge:true }
+        );
+        saved = true;
     }
 
-    await addDoc(
-        collection(db,"orders"),
-        {
+    /* Save Address & Order into Realtime Database */
+    if(rtdb){
+        const orderRef = rtdbPush(rtdbRef(rtdb,"orders"));
+        await rtdbSet(orderRef,{
             ...data,
-            createdAt:serverTimestamp(),
-            source:"services-page"
-        }
-    );
+            source:"subscription-page",
+            createdAt:new Date().toISOString()
+        });
 
-    const key = (
-        data.phone ||
-        data.email ||
-        "guest"
-    ).replace(/\//g,"_");
+        const phoneKey = String(data.phone || data.email || "guest").replace(/[.#$\[\]/]/g,"_");
+        await rtdbSet(
+            rtdbRef(rtdb,"users/"+phoneKey+"/lastSubscriptionOrder"),
+            data
+        );
+        
+        // Save detailed address node in RTDB
+        await rtdbSet(
+            rtdbRef(rtdb,"addresses/"+phoneKey),
+            {
+                name:data.name,
+                phone:data.phone,
+                pincode:data.pincode || "",
+                houseAddress:data.address,
+                street:data.street || "",
+                city:data.city || "",
+                state:data.state || "",
+                updatedAt:new Date().toISOString()
+            }
+        );
+        saved = true;
+    }
 
-    await setDoc(
-        doc(db,"customers",key),
-        {
-            name:data.name,
-            phone:data.phone,
-            email:data.email,
-            address:data.address,
-            updatedAt:serverTimestamp()
-        },
-        {
-            merge:true
-        }
-    );
-
-    return true;
-
+    return saved;
 };
-
 
 window.loadFirebaseServices = async function(){
 
@@ -2087,15 +2189,37 @@ function addCustomerReview(e) {
     const comment = document.getElementById("revComment").value;
     const fileInput = document.getElementById("revImage");
 
-    const saveAndRender = (imgUrl) => {
-        userReviews.unshift({
+    const saveAndRender = async (imgUrl) => {
+        const reviewData = {
             name,
             stars: starsVal,
             type,
             comment,
-            img: imgUrl
-        });
+            img: imgUrl || "",
+            date: new Date().toISOString()
+        };
+
+        userReviews.unshift(reviewData);
         localStorage.setItem("ga_user_reviews", JSON.stringify(userReviews));
+
+        try{
+            if(db){
+                await addDoc(collection(db,"subscriptionReviews"), {
+                    ...reviewData,
+                    createdAt:serverTimestamp(),
+                    source:"subscription-page"
+                });
+            }
+            if(rtdb){
+                await rtdbSet(
+                    rtdbRef(rtdb,"subscriptionReviews/" + Date.now()),
+                    reviewData
+                );
+            }
+        }catch(error){
+            console.error("Review database save failed:",error);
+        }
+
         renderCustomerReviews();
         e.target.reset();
         alert("Thank you! Your review has been submitted.");
@@ -2147,7 +2271,7 @@ window.submitInCardReview = function(productId) {
         return;
     }
 
-    const saveReview = (photoBase64) => {
+    const saveReview = async (photoBase64) => {
         const reviewData = {
             name,
             rating,
@@ -2160,9 +2284,27 @@ window.submitInCardReview = function(productId) {
         reviews.unshift(reviewData);
         localStorage.setItem(`product_reviews_${productId}`, JSON.stringify(reviews));
 
+        try{
+            if(db){
+                await addDoc(collection(db,"subscriptionProductReviews"), {
+                    ...reviewData,
+                    productId,
+                    createdAt:serverTimestamp(),
+                    source:"subscription-page"
+                });
+            }
+            if(rtdb){
+                await rtdbSet(
+                    rtdbRef(rtdb,"subscriptionProductReviews/" + productId + "/" + Date.now()),
+                    reviewData
+                );
+            }
+        }catch(error){
+            console.error("Product review database save failed:",error);
+        }
+
         alert("Dhanyawad! Aapka review aur photo add ho chuka hai.");
         renderInCardReviews(productId);
-        
         nameInput.value = "";
         commentInput.value = "";
         if(fileInput) fileInput.value = "";
@@ -2893,7 +3035,7 @@ function toggleWishlist(button){
 }
 
 
-/* ================= BOOKING ================= */
+/* ================= BOOKING & ADDRESS PAGE SETUP ================= */
 
 function openBook(id){
 
@@ -2908,13 +3050,13 @@ function openBook(id){
     document.getElementById(
         "modalTitle"
     ).textContent =
-        selected.name;
+        "Enter Delivery Address for " + selected.name;
 
 
     document.getElementById(
         "modalInfo"
     ).textContent =
-        "Starting from " +
+        "Price: " +
         money(selected.price) +
         " • " +
         (selected.duration || "Scheduled service");
@@ -2932,7 +3074,11 @@ function openBook(id){
         "name",
         "phone",
         "email",
-        "address"
+        "address",
+        "street",
+        "city",
+        "state",
+        "pincode"
     ].forEach(key=>{
 
         const element =
@@ -2964,7 +3110,7 @@ function closeModal(){
 }
 
 
-/* ================= PAYMENT ================= */
+/* ================= PAYMENT & DB SAVING ================= */
 
 async function bookNow(){
 
@@ -2972,6 +3118,14 @@ async function bookNow(){
         return;
     }
 
+    const houseAddress = document.getElementById("address").value.trim();
+    const street = document.getElementById("street") ? document.getElementById("street").value.trim() : "";
+    const city = document.getElementById("city") ? document.getElementById("city").value.trim() : "";
+    const state = document.getElementById("state") ? document.getElementById("state").value.trim() : "";
+    const pincode = document.getElementById("pincode") ? document.getElementById("pincode").value.trim() : "";
+
+    // Concatenated Full Address
+    const fullCombinedAddress = `${houseAddress}${street ? ', ' + street : ''}${city ? ', ' + city : ''}${state ? ', ' + state : ''}${pincode ? ' - ' + pincode : ''}`;
 
     const data = {
 
@@ -2993,11 +3147,12 @@ async function bookNow(){
             .value
             .trim(),
 
-        address:
-            document
-            .getElementById("address")
-            .value
-            .trim(),
+        address: houseAddress,
+        street: street,
+        city: city,
+        state: state,
+        pincode: pincode,
+        fullAddress: fullCombinedAddress,
 
         serviceId:
             selected.id,
@@ -3023,11 +3178,12 @@ async function bookNow(){
     if(
         !data.name ||
         !data.phone ||
-        !data.address
+        !data.address ||
+        !data.pincode
     ){
 
         alert(
-            "Please fill name, mobile and address."
+            "Please fill in Name, Mobile, House Address and Pincode."
         );
 
         return;
@@ -3086,55 +3242,46 @@ async function bookNow(){
 
         handler:async function(response){
 
-            data.paymentId =
-                response.razorpay_payment_id;
-
-            data.price =
-                price;
-
-            data.status =
-                "Paid";
-
+            data.paymentId = response.razorpay_payment_id;
+            data.orderId = response.razorpay_payment_id;
+            data.price = price;
+            data.totalAmount = price;
+            data.amount = price;
+            data.paymentStatus = "Paid";
+            data.status = "Order Placed / Processing";
+            data.paymentMethod = "Razorpay";
+            data.orderType = "Subscription / Plant Care Service";
+            data.createdAt = new Date().toISOString();
 
             localStorage.setItem(
                 "last_green_angan_order",
                 JSON.stringify(data)
             );
 
-
             try{
+                const saved = window.saveBooking
+                    ? await window.saveBooking(data)
+                    : false;
 
-                if(window.saveBooking){
-
-                    await window.saveBooking(
-                        data
-                    );
-
+                if(!saved){
+                    throw new Error("Database unavailable");
                 }
 
+                document.getElementById("status").style.display = "block";
+                document.getElementById("status").textContent =
+                    "✓ Order placed successfully. Payment ID: " + response.razorpay_payment_id;
+
+                setTimeout(()=>{
+                    window.location.href = "order.html";
+                },1200);
+
             }catch(e){
-
-                console.error(e);
-
+                console.error("Order save failed:",e);
+                document.getElementById("status").style.display = "block";
+                document.getElementById("status").textContent =
+                    "Payment successful. Payment ID: " + response.razorpay_payment_id;
+                alert("Payment successful, but order database save failed. Payment ID: " + response.razorpay_payment_id);
             }
-
-
-            document.getElementById(
-                "status"
-            ).style.display = "block";
-
-
-            document.getElementById(
-                "status"
-            ).textContent =
-                "✓ Booking saved. Payment ID: " +
-                response.razorpay_payment_id;
-
-
-            setTimeout(
-                closeModal,
-                1800
-            );
 
         }
 
