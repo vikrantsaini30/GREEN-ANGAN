@@ -2250,13 +2250,9 @@ function saveUserAddress(name, phone, address){
 window.startCheckout = function(){
     if(!requireLogin()) return;
     if(cart.length === 0){ alert("Your cart is empty."); return; }
-    closeCart();
-    const section = document.getElementById("checkoutSection");
-    section.classList.add("show");
-    
-    loadSavedAddress();
-    renderCheckout();
-    section.scrollIntoView({ behavior:"smooth" });
+
+    /* New separate professional address page. Existing storefront remains unchanged. */
+    window.location.href = "address.html";
 };
 
 function renderCheckout(){
