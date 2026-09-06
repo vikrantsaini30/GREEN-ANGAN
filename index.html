@@ -421,99 +421,155 @@ button{
     font-size:12px;
 }
 
-/* PRODUCTS */
+/* AMAZON STYLE PRODUCT VIEW */
 .products{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
+    grid-template-columns:repeat(1, 1fr);
+    gap:25px;
 }
 
 .card{
     background:white;
     border:1px solid var(--border);
-    min-width:0;
+    padding: 20px;
     position:relative;
     transition:.2s;
-    display:flex;
-    flex-direction:column;
+    display:grid;
+    grid-template-columns: 420px 1fr;
+    gap: 20px;
+    align-items: start;
 }
 
 .card:hover{
-    box-shadow:0 4px 15px rgba(0,0,0,.16);
+    box-shadow:0 4px 15px rgba(0,0,0,.12);
 }
 
-.card-img{
-    height:220px;
-    background:#f7f8f8;
+.card-media-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+/* LEFT TO RIGHT SCROLLING THUMBNAILS SYSTEM */
+.card-gallery-side {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    width: 100%;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-gallery-side::-webkit-scrollbar {
+    height: 6px;
+}
+
+.card-gallery-side::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.card-gallery-side::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+.card-img-main{
+    height:380px;
+    width: 100%;
+    background:#fff;
+    border: 1px solid var(--border);
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:15px;
+    padding:10px;
 }
 
-.card-img img{
-    width:100%;
-    height:100%;
+.card-img-main img{
+    max-width:100%;
+    max-height:100%;
     object-fit:contain;
 }
 
+.thumb-img {
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+    object-fit: contain;
+    border: 1px solid #d5d9d9;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 3px;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.thumb-img:hover {
+    border-color: #e77600;
+}
+
+.thumb-img.active {
+    border-color: #e77600;
+    box-shadow: 0 0 5px rgba(231, 118, 0, 0.5);
+}
+
 .card-body{
-    padding:15px;
-    flex:1;
     display:flex;
     flex-direction:column;
+    height: 100%;
 }
 
 .product-title{
-    font-size:16px;
+    font-size:20px;
     font-weight:700;
-    line-height:1.35;
-    margin-bottom:6px;
+    line-height:1.3;
+    margin-bottom:8px;
 }
 
 .rating-avg{
-    margin:4px 0;
+    margin:4px 0 12px 0;
     color:#e47911;
-    font-size:13px;
+    font-size:14px;
     font-weight:bold;
 }
 
 .price{
-    font-size:20px;
+    font-size:26px;
     font-weight:900;
 }
 
 .old-price{
     color:#667085;
     text-decoration:line-through;
-    font-size:12px;
-    margin-left:5px;
+    font-size:14px;
+    margin-left:8px;
 }
 
 .discount{
-    color:#007600;
-    font-size:12px;
+    color:#c40000;
+    font-size:14px;
     font-weight:700;
-    margin-left:5px;
+    margin-left:8px;
 }
 
 .trusted{
     display:inline-block;
-    margin-top:7px;
+    margin-top:10px;
     background:var(--green);
     color:white;
-    padding:3px 6px;
+    padding:4px 8px;
     border-radius:2px;
-    font-size:9px;
+    font-size:10px;
     font-weight:900;
     width:fit-content;
 }
 
 .stock{
-    margin-top:8px;
-    font-size:12px;
+    margin-top:12px;
+    font-size:14px;
     font-weight:800;
-    min-height:16px;
 }
 
 .stock.in-stock{ color:#007600; }
@@ -522,10 +578,10 @@ button{
 
 .stock-dot{
     display:inline-block;
-    width:7px;
-    height:7px;
+    width:8px;
+    height:8px;
     border-radius:50%;
-    margin-right:4px;
+    margin-right:6px;
     background:#067d62;
 }
 
@@ -534,17 +590,17 @@ button{
 
 .card-actions{
     display:flex;
-    gap:10px;
-    margin-top:12px;
-    margin-bottom:10px;
+    gap:12px;
+    margin-top:20px;
+    max-width: 350px;
 }
 
 .card-actions button{
     flex:1;
-    min-height:38px;
+    min-height:42px;
     border:1px solid #888;
-    border-radius:18px;
-    font-size:12px;
+    border-radius:20px;
+    font-size:13px;
     font-weight:800;
 }
 
@@ -559,14 +615,14 @@ button{
 }
 
 .open-review-modal-btn{
-    width:100%;
-    margin-top:5px;
+    max-width: 350px;
+    margin-top:12px;
     background:var(--green-soft);
     color:var(--green-dark);
     border:1px solid var(--green);
-    padding:8px;
-    border-radius:18px;
-    font-size:12px;
+    padding:10px;
+    border-radius:20px;
+    font-size:13px;
     font-weight:bold;
     transition:.2s;
 }
@@ -1180,7 +1236,7 @@ button{
 
 @media(max-width:1100px){
     .location{ display:none; }
-    .products{ grid-template-columns:repeat(2,1fr); }
+    .card { grid-template-columns: 320px 1fr; }
     .category-grid{ grid-template-columns:repeat(4,1fr); }
 }
 
@@ -1194,7 +1250,9 @@ button{
     .hero h1{ font-size:31px; }
     .category-grid{ grid-template-columns:repeat(3,1fr); }
     .deals-row{ grid-template-columns:repeat(2,1fr); }
-    .products{ grid-template-columns:repeat(2,1fr); }
+    .card{ grid-template-columns: 1fr; gap: 10px; }
+    .thumb-img { width: 55px; height: 55px; }
+    .card-img-main{ height: 260px; }
     .checkout-grid{ grid-template-columns:1fr; }
     .footer-top{ grid-template-columns:repeat(2,1fr); }
 }
@@ -1213,11 +1271,9 @@ button{
     .section-title h2{ font-size:19px; }
     .category-grid{ grid-template-columns:repeat(2,1fr); }
     .deals-row{ grid-template-columns:1fr 1fr; }
-    .products{ grid-template-columns:1fr; gap:12px; }
-    .card-img{ height:165px; }
-    .card-body{ padding:9px; }
-    .product-title{ font-size:14px; }
-    .price{ font-size:17px; }
+    .card-body{ padding:0; }
+    .product-title{ font-size:16px; }
+    .price{ font-size:20px; }
     .cart-drawer{ width:100%; max-width:100%; }
     .footer-top{ grid-template-columns:1fr 1fr; padding:25px 15px; }
     .mobile-nav{
@@ -1383,13 +1439,6 @@ button{
             </div>
         </div>
     </section>
-
-    <section class="location-section">
-        <h2>📍 Green Angan Store</h2>
-        <iframe class="location-map" src="https://maps.google.com/maps?q=Emaar+Gurgaon+Green+Sector+102+Gurgaon+122505&t=&z=14&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
-        <p style="margin-top:12px;font-size:13px;font-weight:700">Emaar Gurgaon Green, Sector 102, Gurgaon, Haryana - 122505</p>
-        <p style="margin-top:5px;color:#667085;font-size:12px">📞 +91 9821846004 &nbsp; | &nbsp; ✉ greenangan@gmail.com</p>
-    </section>
 </main>
 
 <!-- PRODUCT REVIEWS MODAL (HIDDEN BY DEFAULT) -->
@@ -1468,7 +1517,6 @@ button{
         <div class="profile-field-group">
             <label>Delivery Address</label>
             <textarea id="profAddressInput" rows="2" placeholder="Fill your complete address"></textarea>
-            <button class="gps-btn" onclick="detectLiveGPS()">📍 Detect My Live GPS Location</button>
         </div>
 
         <div class="profile-field-group">
@@ -1574,7 +1622,7 @@ button{
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getDatabase, ref, push, set, remove, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+import { getDatabase, ref, push, set, remove, onValue, get, update } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
 /* NAVIGATION FUNCTIONS FOR HOME AND ORDERS */
 window.scrollHome = function(){ window.scrollTo({ top:0, behavior:"smooth" }); };
@@ -1600,6 +1648,17 @@ try {
     console.error("Firebase initialization failed:", error);
 }
 
+/* GLOBAL CHANGE MAIN IMAGE FUNCTION */
+window.changeMainImage = function(cardIndex, newSrc, element) {
+    const mainImg = document.getElementById(`main-img-${cardIndex}`);
+    if (mainImg) {
+        mainImg.src = newSrc;
+    }
+    const thumbnails = element.parentElement.querySelectorAll('.thumb-img');
+    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+    element.classList.add('active');
+};
+
 /* VARIABLES */
 let products = [];
 let cart = [];
@@ -1620,17 +1679,45 @@ function getCartStorageKey(){
     return CART_STORAGE_KEY + "_guest";
 }
 
-function saveCart(){
+async function saveCart(){
     localStorage.setItem(getCartStorageKey(), JSON.stringify(cart));
+
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    if(database && customer && customer.phone){
+        try{
+            await set(ref(database, "carts/" + customer.phone), {
+                items: cart,
+                updatedAt: new Date().toISOString()
+            });
+        }catch(error){
+            console.error("Cart database save failed:", error);
+        }
+    }
 }
 
-function loadCart(){
+async function loadCart(){
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+
     try{
-        cart = JSON.parse(localStorage.getItem(getCartStorageKey())) || [];
+        if(database && customer && customer.phone){
+            const snapshot = await get(ref(database, "carts/" + customer.phone));
+            const data = snapshot.val();
+            if(data && Array.isArray(data.items)){
+                cart = data.items;
+                localStorage.setItem(getCartStorageKey(), JSON.stringify(cart));
+            }else{
+                cart = JSON.parse(localStorage.getItem(getCartStorageKey())) || [];
+            }
+        }else{
+            cart = JSON.parse(localStorage.getItem(getCartStorageKey())) || [];
+        }
     }catch(error){
-        cart = [];
+        console.error("Cart load failed:", error);
+        cart = JSON.parse(localStorage.getItem(getCartStorageKey())) || [];
     }
+
     calculateCartTotal();
+    updateCart();
 }
 
 function calculateCartTotal(){
@@ -1679,7 +1766,7 @@ if(database){
     products = JSON.parse(localStorage.getItem("green_angan_products")) || [];
 }
 
-/* RENDER PRODUCTS */
+/* RENDER PRODUCTS IN AMAZON STYLE WITH LEFT-TO-RIGHT SCROLLING THUMBNAILS */
 function renderProducts(){
     const container = document.getElementById("productsContainer");
     if(!container) return;
@@ -1712,6 +1799,31 @@ function renderProducts(){
         const discount = original > price ? Math.round(((original-price)/original)*100) : 0;
         const stock = Number(product.stock || 0);
 
+        // Safe check for images array
+        let imgList = [];
+        if (Array.isArray(product.images) && product.images.length > 0) {
+            imgList = product.images.slice(0, 8);
+        } else if (product.image) {
+            imgList = [product.image];
+        } else {
+            imgList = ["Logo.png"];
+        }
+
+        const mainImageSrc = imgList[0];
+
+        // Horizontal Left-to-Right Scrolling Thumbnails
+        let thumbnailsHtml = `<div class="card-gallery-side">`;
+        imgList.forEach((imgUrl, thumbIdx) => {
+            const activeClass = thumbIdx === 0 ? "active" : "";
+            thumbnailsHtml += `
+                <img src="${escapeHTML(imgUrl)}" 
+                     class="thumb-img ${activeClass}" 
+                     onclick="changeMainImage(${index}, '${escapeHTML(imgUrl)}', this)" 
+                     alt="Thumbnail ${thumbIdx + 1}">
+            `;
+        });
+        thumbnailsHtml += `</div>`;
+
         let stockHTML = "";
         if(stock <= 0){
             stockHTML = `<div class="stock out"><span class="stock-dot"></span>Currently unavailable</div>`;
@@ -1730,9 +1842,13 @@ function renderProducts(){
 
         html += `
             <article class="card">
-                <div class="card-img">
-                    <img src="${escapeHTML(product.image || "Logo.png")}" alt="${escapeHTML(product.name)}" loading="lazy">
+                <div class="card-media-wrapper">
+                    <div class="card-img-main">
+                        <img id="main-img-${index}" src="${escapeHTML(mainImageSrc)}" alt="${escapeHTML(product.name)}" loading="lazy">
+                    </div>
+                    ${thumbnailsHtml}
                 </div>
+
                 <div class="card-body">
                     <div class="product-title">${escapeHTML(product.name || "Green Angan Product")}</div>
                     <div class="rating-avg">⭐ ${avgRating} / 5 (${reviewsArr.length} reviews)</div>
@@ -1866,6 +1982,8 @@ window.directAddToCart = async function(index){
         return;
     }
 
+    const firstImage = (Array.isArray(product.images) && product.images.length > 0) ? product.images[0] : (product.image || "Logo.png");
+
     if(existing){
         existing.qty = currentQty + 1;
     }else{
@@ -1876,7 +1994,7 @@ window.directAddToCart = async function(index){
             price: Number(product.price || 0),
             qty: 1,
             unit: product.unit || "PC",
-            image: product.image || "Logo.png"
+            image: firstImage
         });
     }
 
@@ -2251,7 +2369,6 @@ window.startCheckout = function(){
     if(!requireLogin()) return;
     if(cart.length === 0){ alert("Your cart is empty."); return; }
 
-    /* New separate professional address page. Existing storefront remains unchanged. */
     window.location.href = "address.html";
 };
 
@@ -2324,6 +2441,76 @@ function populateDeleteDropdown(){
         select.appendChild(option);
     });
 }
+
+document.getElementById("saveStockBtn").onclick = async function(){
+    const name = document.getElementById("stockProdName").value.trim();
+    const category = document.getElementById("stockProdCat").value.trim();
+    const price = Number(document.getElementById("stockProdPrice").value);
+    const stock = Number(document.getElementById("stockProdQty").value);
+    const unit = document.getElementById("stockProdUnit").value;
+    const imageFile = document.getElementById("stockProdImgFile").files[0];
+
+    if(!name || !category || !price || stock < 0){
+        alert("Please fill product name, category, price and stock correctly.");
+        return;
+    }
+
+    const saveProduct = async (image) => {
+        const productData = {
+            name, category, price, stock, unit,
+            image: image || "Logo.png",
+            createdAt: new Date().toISOString()
+        };
+
+        try{
+            if(database){
+                await push(ref(database, "products"), productData);
+            }else{
+                products.push({firebaseKey:"local_" + Date.now(), ...productData});
+                localStorage.setItem("green_angan_products", JSON.stringify(products));
+                renderProducts();
+            }
+
+            ["stockProdName","stockProdCat","stockProdPrice","stockProdQty"].forEach(id => document.getElementById(id).value = "");
+            document.getElementById("stockProdImgFile").value = "";
+            alert("✅ Product saved successfully!");
+        }catch(error){
+            console.error(error);
+            alert("Product could not be saved. Please try again.");
+        }
+    };
+
+    if(imageFile){
+        const reader = new FileReader();
+        reader.onload = e => saveProduct(e.target.result);
+        reader.readAsDataURL(imageFile);
+    }else{
+        saveProduct("");
+    }
+};
+
+document.getElementById("deleteStockBtn").onclick = async function(){
+    const index = Number(document.getElementById("deleteProdSelect").value);
+    const product = products[index];
+    if(!product) return alert("Please select a product.");
+
+    if(!confirm("Delete this product permanently?")) return;
+
+    try{
+        if(database && product.firebaseKey){
+            await remove(ref(database, "products/" + product.firebaseKey));
+        }else{
+            products.splice(index, 1);
+            localStorage.setItem("green_angan_products", JSON.stringify(products));
+            renderProducts();
+            populateDeleteDropdown();
+        }
+        alert("Product deleted successfully.");
+    }catch(error){
+        console.error(error);
+        alert("Could not delete product.");
+    }
+};
 
 window.scrollProducts = function(){ document.getElementById("productsSection").scrollIntoView({ behavior:"smooth" }); };
 window.scrollToDeals = function(){ document.getElementById("dealsSection").scrollIntoView({ behavior:"smooth" }); };
