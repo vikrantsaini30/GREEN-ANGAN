@@ -286,6 +286,14 @@ body{
 .nav-item.active{ background: linear-gradient(135deg, #edf8f3, #e3f3ec); color:var(--green-dark); }
 .nav-icon{ font-size:20px; line-height:1; margin-bottom:4px; }
 
+/* MOBILE NAV - SAME STYLE AS HOME */
+.mobile-nav{position:fixed;left:0;right:0;bottom:0;height:67px;background:rgba(255,255,255,.97);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);border-top:1px solid var(--border);box-shadow:0 -5px 20px rgba(4,45,34,.08);display:flex;justify-content:space-around;align-items:center;z-index:1000;}
+.mobile-item{min-width:70px;height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;color:#7a8782;font-size:9px;font-weight:750;cursor:pointer;transition:.18s ease;user-select:none;}
+.mobile-item:hover{background:#f1f7f4;color:var(--green);}
+.mobile-item.active{background:linear-gradient(135deg,#edf8f3,#e3f3ec);color:var(--green-dark);}
+.mobile-icon{font-size:20px;line-height:1;margin-bottom:4px;}
+@media(max-width:600px){.mobile-nav{height:63px;}.mobile-item{min-width:60px;height:47px;font-size:8px;}.mobile-icon{font-size:18px;}}
+
 /* SCROLLBAR */
 ::-webkit-scrollbar{ width:7px; height:7px; }
 ::-webkit-scrollbar-track{ background:#edf2f0; }
@@ -407,16 +415,12 @@ button:focus-visible, a:focus-visible, input:focus-visible{
 </div>
 
 <!-- BOTTOM NAV -->
-<div class="bottom-nav">
-    <div class="nav-item" onclick="window.location.href='index.html'">
-        <span class="nav-icon">🏠</span>
-        <span>Home</span>
-    </div>
-    <div class="nav-item active">
-        <span class="nav-icon">📦</span>
-        <span>Orders</span>
-    </div>
-</div>
+<nav class="mobile-nav">
+    <div class="mobile-item" onclick="scrollHome()"><span class="mobile-icon">🏠</span>Home</div>
+    <div class="mobile-item active" onclick="goOrders()"><span class="mobile-icon">📦</span>Orders</div>
+    <div class="mobile-item" onclick="openCart()"><span class="mobile-icon">🛒</span>Cart</div>
+    <div class="mobile-item" onclick="openProfileOrLogin()"><span class="mobile-icon">👤</span>Account</div>
+</nav>
 
 <script type="module">
 
@@ -739,6 +743,12 @@ function formatDate(date){
     if(isNaN(d.getTime())) return escapeHTML(date);
     return d.toLocaleString("en-IN", { dateStyle:"medium", timeStyle:"short" });
 }
+
+/* BOTTOM MOBILE NAVIGATION */
+window.scrollHome=function(){window.location.href="index.html";};
+window.goOrders=function(){window.scrollTo({top:0,behavior:"smooth"});};
+window.openCart=function(){window.location.href="index.html#cart";};
+window.openProfileOrLogin=function(){window.location.href="index.html#account";};
 
 </script>
 </body>
