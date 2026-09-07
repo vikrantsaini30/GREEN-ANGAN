@@ -120,7 +120,7 @@ window.openOtherProduct=(id)=>{if(!id)return; location.href="product.html?id="+e
 window.changeImage=(src,el)=>{document.getElementById("mainImage").src=src;document.querySelectorAll(".thumb").forEach(x=>x.classList.remove("active"));el.classList.add("active")}
 function cartKey(){const c=JSON.parse(localStorage.getItem("current_green_angan_customer")||"null");return "green_angan_cart_"+(c?.phone||"guest")}
 window.addToCart=()=>{const p=window.currentProduct;if(!p)return;let c=JSON.parse(localStorage.getItem(cartKey())||"[]");const found=c.find(x=>(x.firebaseKey||x.name)===(p.firebaseKey||p.name));if(found)found.qty=Number(found.qty||0)+1;else c.push({...p,qty:1});localStorage.setItem(cartKey(),JSON.stringify(c));alert("✓ Added to Cart");}
-window.buyNow=()=>{addToCart();location.href="index.html#productsSection";}
+window.buyNow=()=>{const p=window.currentProduct;if(!p)return;const c=JSON.parse(localStorage.getItem(cartKey())||"[]");const found=c.find(x=>(x.firebaseKey||x.name)===(p.firebaseKey||p.name));if(found)found.qty=1;else c.push({...p,qty:1});localStorage.setItem(cartKey(),JSON.stringify(c));location.href="address.html?buyNow=1";}
 loadProduct();
 </script>
 </body></html>
