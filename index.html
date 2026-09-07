@@ -953,11 +953,11 @@ button{
 
 .modal.show{ display:flex; }
 
-/* USER PROFILE MODAL */
+/* ADVANCED E-COMMERCE USER PROFILE MODAL */
 .profile-card-modal{
-    width:480px;
+    width:520px;
     max-width:100%;
-    max-height:90vh;
+    max-height:92vh;
     overflow-y:auto;
     background:white;
     border-radius:12px;
@@ -980,13 +980,27 @@ button{
     margin:0 auto 10px;
 }
 
-.dp-image{
+.dp-image-wrapper{
     width:100%;
     height:100%;
     border-radius:50%;
-    object-fit:cover;
     border:3px solid var(--green);
-    background:#f0f0f0;
+    background:#eef5f2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.dp-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.dp-avatar-icon{
+    font-size:52px;
+    line-height:1;
 }
 
 .dp-upload-btn{
@@ -1005,15 +1019,91 @@ button{
     font-size:16px;
 }
 
+.profile-badge-group{
+    display:flex;
+    gap:6px;
+    justify-content:center;
+    align-items:center;
+    margin-top:6px;
+}
+
 .profile-badge{
     display:inline-block;
     background:var(--green-soft);
     color:var(--green-dark);
     font-size:11px;
     font-weight:bold;
-    padding:3px 10px;
+    padding:4px 10px;
     border-radius:12px;
-    margin-top:4px;
+}
+
+.profile-badge.gold{
+    background:#fff8e1;
+    color:#b78103;
+    border:1px solid #ffe082;
+}
+
+/* E-COMMERCE ACCOUNT STATS DASHBOARD */
+.account-stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:8px;
+    margin:15px 0 20px 0;
+    text-align:center;
+}
+
+.stat-card-box{
+    background:#f8faf9;
+    border:1px solid #e0e6e3;
+    border-radius:8px;
+    padding:10px 4px;
+    cursor:pointer;
+    transition:all 0.2s;
+}
+
+.stat-card-box:hover{
+    border-color:var(--green);
+    background:var(--green-soft);
+}
+
+.stat-card-box strong{
+    display:block;
+    font-size:16px;
+    color:var(--green-dark);
+}
+
+.stat-card-box small{
+    font-size:10px;
+    color:#667085;
+    font-weight:bold;
+}
+
+.account-quick-links{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:18px;
+}
+
+.quick-link-btn{
+    background:#f4f6f6;
+    border:1px solid #d5d9d9;
+    padding:10px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:bold;
+    color:#333;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.quick-link-btn:hover{
+    background:var(--green-soft);
+    border-color:var(--green);
+    color:var(--green-dark);
 }
 
 .profile-field-group{
@@ -1598,19 +1688,53 @@ button{
     </div>
 </div>
 
-<!-- ACCOUNT PROFILE MODAL -->
+<!-- ADVANCED ACCOUNT PROFILE MODAL -->
 <div class="modal" id="profileModal">
     <div class="profile-card-modal">
         <button class="close-login" onclick="closeProfileModal()">×</button>
         
         <div class="profile-card-header">
             <div class="dp-container">
-                <img src="Logo.png" id="userDpImg" class="dp-image" alt="Profile Picture">
+                <div class="dp-image-wrapper" id="dpWrapper">
+                    <span class="dp-avatar-icon" id="dpAvatarIcon">👤</span>
+                    <img src="" id="userDpImg" class="dp-image" alt="Profile Picture" style="display:none;">
+                </div>
                 <label for="dpFileInput" class="dp-upload-btn" title="Upload DP">📷</label>
                 <input type="file" id="dpFileInput" accept="image/*" style="display:none">
             </div>
             <h2 id="profAccountName">User Profile</h2>
-            <span class="profile-badge" id="profBadge">🌟 Green Angan Premium Member</span>
+            <div class="profile-badge-group">
+                <span class="profile-badge" id="profBadge">🌟 Green Angan Member</span>
+                <span class="profile-badge gold">🏅 VIP Gold Loyalty</span>
+            </div>
+        </div>
+
+        <!-- E-COMMERCE ACCOUNT STATUS OVERVIEW -->
+        <div class="account-stats-grid">
+            <div class="stat-card-box" onclick="goOrders()">
+                <strong id="statOrdersCount">0</strong>
+                <small>Orders</small>
+            </div>
+            <div class="stat-card-box" onclick="goOrders()">
+                <strong id="statActiveShip">0</strong>
+                <small>Active</small>
+            </div>
+            <div class="stat-card-box">
+                <strong>450</strong>
+                <small>Reward Pts</small>
+            </div>
+            <div class="stat-card-box">
+                <strong>₹0.00</strong>
+                <small>Pay Wallet</small>
+            </div>
+        </div>
+
+        <!-- ACCOUNT QUICK ACTIONS NAV -->
+        <div class="account-quick-links">
+            <div class="quick-link-btn" onclick="goOrders()">📦 My Orders & Returns</div>
+            <div class="quick-link-btn" onclick="openCart()">🛒 Saved Items / Cart</div>
+            <div class="quick-link-btn" onclick="alert('💳 Wallet & Saved Cards are Active!')">💳 Payment Methods</div>
+            <div class="quick-link-btn" onclick="alert('🎁 Rewards & Coupons Balance: ₹100 Off')">🎁 Coupons & Rewards</div>
         </div>
 
         <div class="profile-field-group">
@@ -2066,7 +2190,6 @@ window.openProductDetail=function(index){
  const productId = product.firebaseKey || index;
  window.location.href = "product.html?id=" + encodeURIComponent(productId);
  return;
-/* OLD INLINE PRODUCT PAGE CODE KEPT BELOW UNCHANGED FOR BACKWARD COMPATIBILITY */
  const price=Number(product.price||0),original=Number(product.originalPrice||Math.round(price*1.4));
  const discount=original>price?Math.round(((original-price)/original)*100):0,stock=Number(product.stock||0);
  const images=Array.isArray(product.images)&&product.images.length?product.images.slice(0,10):[product.image||"Logo.png"];
@@ -2283,7 +2406,24 @@ window.openProfileModal = function(){
     document.getElementById("profPhoneInput").value = customer.phone || "";
     document.getElementById("profBioInput").value = customer.bio || "";
     document.getElementById("profAddressInput").value = customer.savedAddress || "";
-    document.getElementById("userDpImg").src = customer.dp || "Logo.png";
+
+    const userDpImg = document.getElementById("userDpImg");
+    const avatarIcon = document.getElementById("dpAvatarIcon");
+    
+    if(customer.dp && customer.dp !== "" && customer.dp !== "Logo.png"){
+        userDpImg.src = customer.dp;
+        userDpImg.style.display = "block";
+        avatarIcon.style.display = "none";
+    } else {
+        userDpImg.style.display = "none";
+        avatarIcon.style.display = "block";
+    }
+
+    // Load account order stats
+    const allOrders = JSON.parse(localStorage.getItem("green_angan_orders") || "[]");
+    const userOrders = allOrders.filter(o => o.customerPhone === customer.phone);
+    document.getElementById("statOrdersCount").innerText = userOrders.length;
+    document.getElementById("statActiveShip").innerText = userOrders.filter(o => o.status !== "Delivered").length;
 
     document.getElementById("profileModal").classList.add("show");
 };
@@ -2297,7 +2437,11 @@ document.getElementById("dpFileInput").onchange = function(e){
     if(file){
         const reader = new FileReader();
         reader.onload = function(evt){
-            document.getElementById("userDpImg").src = evt.target.result;
+            const userDpImg = document.getElementById("userDpImg");
+            const avatarIcon = document.getElementById("dpAvatarIcon");
+            userDpImg.src = evt.target.result;
+            userDpImg.style.display = "block";
+            avatarIcon.style.display = "none";
         };
         reader.readAsDataURL(file);
     }
@@ -2316,7 +2460,14 @@ window.saveProfileChanges = function(){
     customer.name = document.getElementById("profNameInput").value.trim();
     customer.bio = document.getElementById("profBioInput").value.trim();
     customer.savedAddress = document.getElementById("profAddressInput").value.trim();
-    customer.dp = document.getElementById("userDpImg").src;
+    
+    const userDpImg = document.getElementById("userDpImg");
+    if(userDpImg.style.display !== "none"){
+        customer.dp = userDpImg.src;
+    } else {
+        customer.dp = "";
+    }
+    
     customer.theme = selectedProfileTheme;
 
     localStorage.setItem("current_green_angan_customer", JSON.stringify(customer));
@@ -2475,213 +2626,74 @@ window.changeCartQty = function(index, change){
     const newQty = Number(item.qty || 0) + change;
     if(newQty <= 0) cart.splice(index, 1);
     else item.qty = newQty;
-    calculateCartTotal(); saveCart(); updateCart();
+    saveCart();
+    updateCart();
 };
 
 window.removeCartItem = function(index){
-    if(!cart[index]) return;
     cart.splice(index, 1);
-    calculateCartTotal(); saveCart(); updateCart();
+    saveCart();
+    updateCart();
 };
 
-window.openCart = function(){ updateCart(); document.getElementById("cartDrawer").classList.add("open"); };
-window.closeCart = function(){ document.getElementById("cartDrawer").classList.remove("open"); };
+window.openCart = function(){
+    document.getElementById("cartDrawer").classList.add("open");
+};
+
+window.closeCart = function(){
+    document.getElementById("cartDrawer").classList.remove("open");
+};
+
 document.getElementById("cartHeader").onclick = openCart;
 
-/* CHECKOUT INITIALIZATION */
+/* CHECKOUT */
 window.startCheckout = function(){
     if(!requireLogin()) return;
-    if(cart.length === 0){ alert("Your cart is empty."); return; }
-    window.location.href = "address.html";
-};
-
-window.closeCheckout = function(){ document.getElementById("checkoutSection").classList.remove("show"); };
-
-/* E-COMMERCE ADMIN DASHBOARD */
-let dashboardEditingIndex=null;
-window.openAdminDashboard=function(){
- document.getElementById("adminDashboardModal").classList.add("show");
- resetDashboardForm();updateDashboardStats();renderAdminProductTable();
-};
-window.closeAdminDashboard=function(){document.getElementById("adminDashboardModal").classList.remove("show")};
-window.addFeatureInput=function(){
- const box=document.getElementById("dashFeatureInputs"),row=document.createElement("div");
- row.className="feature-input-row";
- row.innerHTML='<input class="dash-feature" placeholder="Product feature"><button type="button" onclick="this.parentElement.remove()">−</button>';
- box.appendChild(row);
-};
-window.resetDashboardForm=function(){
- dashboardEditingIndex=null;
- document.getElementById("adminFormTitle").innerText="➕ Add Product";
- document.getElementById("dashSaveProductBtn").innerText="Save Product";
- ["dashProdName","dashProdBrand","dashProdCategory","dashProdPrice","dashProdOriginal","dashProdStock","dashProdDescription"].forEach(id=>document.getElementById(id).value="");
- document.getElementById("dashProdUnit").value="PC";document.getElementById("dashProdImage").value="";
- document.getElementById("dashFeatureInputs").innerHTML='<div class="feature-input-row"><input class="dash-feature" placeholder="Feature 1"><button type="button" onclick="addFeatureInput()">+</button></div>';
-};
-window.updateDashboardStats=function(){
- document.getElementById("dashProductCount").innerText=products.length;
- document.getElementById("dashStockCount").innerText=products.reduce((a,p)=>a+Number(p.stock||0),0).toLocaleString("en-IN");
- document.getElementById("dashCategoryCount").innerText=new Set(products.map(p=>String(p.category||"").trim()).filter(Boolean)).size;
- document.getElementById("dashCartCount").innerText=cart.reduce((a,p)=>a+Number(p.qty||0),0);
-};
-window.renderAdminProductTable=function(){
- const body=document.getElementById("adminProductTableBody");if(!body)return;
- const q=(document.getElementById("dashProductSearch").value||"").toLowerCase().trim();
- const rows=products.map((p,i)=>({p,i})).filter(({p})=>!q||[p.name,p.brand,p.category,p.description].join(" ").toLowerCase().includes(q));
- body.innerHTML=rows.length?rows.map(({p,i})=>{
-  const img=(Array.isArray(p.images)&&p.images.length?p.images[0]:p.image)||"Logo.png";
-  return `<tr><td><div style="display:flex;gap:8px;align-items:center"><img class="admin-product-img" src="${escapeHTML(img)}"><div><strong>${escapeHTML(p.name||"Unnamed")}</strong><br><span style="color:#667085">${escapeHTML(p.brand||"")}</span></div></div></td><td>${escapeHTML(p.category||"")}</td><td>₹${Number(p.price||0).toLocaleString("en-IN")}</td><td>${Number(p.stock||0)} ${escapeHTML(p.unit||"PC")}</td><td class="admin-table-actions"><button onclick="editDashboardProduct(${i})">✏️ Edit</button><button class="danger" onclick="deleteDashboardProduct(${i})">🗑️ Delete</button></td></tr>`;
- }).join(""):`<tr><td colspan="5" style="text-align:center;padding:30px;color:#667085">No products found.</td></tr>`;
-};
-window.editDashboardProduct=function(index){
- const p=products[index];if(!p)return;dashboardEditingIndex=index;
- document.getElementById("adminFormTitle").innerText="✏️ Edit Product";document.getElementById("dashSaveProductBtn").innerText="Update Product";
- document.getElementById("dashProdName").value=p.name||"";document.getElementById("dashProdBrand").value=p.brand||"";
- document.getElementById("dashProdCategory").value=p.category||"";document.getElementById("dashProdPrice").value=p.price||"";
- document.getElementById("dashProdOriginal").value=p.originalPrice||"";document.getElementById("dashProdStock").value=p.stock||"";
- document.getElementById("dashProdUnit").value=p.unit||"PC";document.getElementById("dashProdDescription").value=p.description||"";
- const features=Array.isArray(p.features)&&p.features.length?p.features:[""];
- document.getElementById("dashFeatureInputs").innerHTML=features.map((f,i)=>`<div class="feature-input-row"><input class="dash-feature" value="${escapeHTML(f)}" placeholder="Product feature"><button type="button" onclick="${i===0?"addFeatureInput()":"this.parentElement.remove()"}">${i===0?"+":"−"}</button></div>`).join("");
-};
-window.saveDashboardProduct=async function(){
- const name=document.getElementById("dashProdName").value.trim(),brand=document.getElementById("dashProdBrand").value.trim();
- const category=document.getElementById("dashProdCategory").value.trim(),price=Number(document.getElementById("dashProdPrice").value);
- const originalPrice=Number(document.getElementById("dashProdOriginal").value)||Math.round(price*1.4),stock=Number(document.getElementById("dashProdStock").value);
- const unit=document.getElementById("dashProdUnit").value,description=document.getElementById("dashProdDescription").value.trim();
- const features=[...document.querySelectorAll(".dash-feature")].map(x=>x.value.trim()).filter(Boolean),file=document.getElementById("dashProdImage").files[0];
- if(!name||!category||!price||stock<0){alert("Please fill product name, category, selling price and stock correctly.");return}
- const finish=async(image)=>{
-  const base=dashboardEditingIndex!==null?{...products[dashboardEditingIndex]}:{};
-  const data={...base,name,brand,category,price,originalPrice,stock,unit,description,features,createdAt:base.createdAt||new Date().toISOString()};
-  if(image){data.image=image;data.images=[image]}else if(!data.image&&!(Array.isArray(data.images)&&data.images.length))data.image="Logo.png";
-  try{
-   if(database){
-    if(dashboardEditingIndex!==null&&data.firebaseKey){const key=data.firebaseKey;delete data.firebaseKey;await set(ref(database,"products/"+key),data)}
-    else await push(ref(database,"products"),data);
-   }else{
-    if(dashboardEditingIndex!==null)products[dashboardEditingIndex]={...data,firebaseKey:products[dashboardEditingIndex].firebaseKey};
-    else products.push({firebaseKey:"local_"+Date.now(),...data});
-    localStorage.setItem("green_angan_products",JSON.stringify(products));renderProducts();
-   }
-   alert(dashboardEditingIndex!==null?"✅ Product updated successfully!":"✅ Product added successfully!");
-   resetDashboardForm();updateDashboardStats();renderAdminProductTable();
-  }catch(err){console.error(err);alert("Product could not be saved.")}
- };
- if(file){const reader=new FileReader();reader.onload=e=>finish(e.target.result);reader.readAsDataURL(file)}else finish("");
-};
-window.deleteDashboardProduct=async function(index){
- const p=products[index];if(!p||!confirm(`Delete "${p.name}" permanently?`))return;
- try{
-  if(database&&p.firebaseKey)await remove(ref(database,"products/"+p.firebaseKey));
-  else{products.splice(index,1);localStorage.setItem("green_angan_products",JSON.stringify(products));renderProducts()}
-  updateDashboardStats();renderAdminProductTable();alert("Product deleted successfully.");
- }catch(err){console.error(err);alert("Could not delete product.")}
-};
-
-/* ADMIN FUNCTIONS */
-window.openAdminLogin = function(){ document.getElementById("adminLoginModal").classList.add("show"); };
-window.closeAdminLogin = function(){ document.getElementById("adminLoginModal").classList.remove("show"); };
-document.getElementById("submitAdminPinBtn").onclick = function(){
-    const username = document.getElementById("adminUserInput").value.trim();
-    const password = document.getElementById("adminPinInput").value;
-    if(username === "admin" && password === "2026"){
-        closeAdminLogin();
-        openAdminDashboard();
-    }else{ alert("❌ Access Denied!"); }
-};
-window.closeStockModal = function(){ document.getElementById("stockModal").classList.remove("show"); };
-
-function populateDeleteDropdown(){
-    const select = document.getElementById("deleteProdSelect");
-    if(!select) return;
-    select.innerHTML = `<option value="">-- Choose Product --</option>`;
-    products.forEach((product,index) => {
-        const option = document.createElement("option");
-        option.value = index;
-        option.textContent = `${product.name} — ₹${product.price}`;
-        select.appendChild(option);
-    });
-}
-
-document.getElementById("saveStockBtn").onclick = async function(){
-    const name = document.getElementById("stockProdName").value.trim();
-    const category = document.getElementById("stockProdCat").value.trim();
-    const price = Number(document.getElementById("stockProdPrice").value);
-    const stock = Number(document.getElementById("stockProdQty").value);
-    const unit = document.getElementById("stockProdUnit").value;
-    const imageFile = document.getElementById("stockProdImgFile").files[0];
-
-    if(!name || !category || !price || stock < 0){
-        alert("Please fill product name, category, price and stock correctly.");
+    if(cart.length === 0){
+        alert("Your cart is empty!");
         return;
     }
+    closeCart();
+    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    document.getElementById("customerName").value = customer.name || "";
+    document.getElementById("customerPhone").value = customer.phone || "";
+    document.getElementById("customerAddress").value = customer.savedAddress || "";
 
-    const saveProduct = async (image) => {
-        const productData = {
-            name, category, price, stock, unit,
-            image: image || "Logo.png",
-            createdAt: new Date().toISOString()
-        };
+    const checkoutItems = document.getElementById("checkoutItems");
+    checkoutItems.innerHTML = cart.map(i => `
+        <div class="summary-row">
+            <span>${escapeHTML(i.name)} × ${i.qty}</span>
+            <span>₹${(Number(i.price || 0) * i.qty).toLocaleString("en-IN")}</span>
+        </div>
+    `).join("");
 
-        try{
-            if(database){
-                await push(ref(database, "products"), productData);
-            }else{
-                products.push({firebaseKey:"local_" + Date.now(), ...productData});
-                localStorage.setItem("green_angan_products", JSON.stringify(products));
-                renderProducts();
-            }
-
-            ["stockProdName","stockProdCat","stockProdPrice","stockProdQty"].forEach(id => document.getElementById(id).value = "");
-            document.getElementById("stockProdImgFile").value = "";
-            alert("✅ Product saved successfully!");
-        }catch(error){
-            console.error(error);
-            alert("Product could not be saved.");
-        }
-    };
-
-    if(imageFile){
-        const reader = new FileReader();
-        reader.onload = e => saveProduct(e.target.result);
-        reader.readAsDataURL(imageFile);
-    }else{
-        saveProduct("");
-    }
+    document.getElementById("checkoutTotal").innerText = "₹" + total.toLocaleString("en-IN");
+    document.getElementById("checkoutSection").classList.add("show");
+    document.getElementById("checkoutSection").scrollIntoView({ behavior: "smooth" });
 };
 
-document.getElementById("deleteStockBtn").onclick = async function(){
-    const index = Number(document.getElementById("deleteProdSelect").value);
-    const product = products[index];
-    if(!product) return alert("Please select a product.");
-
-    if(!confirm("Delete this product permanently?")) return;
-
-    try{
-        if(database && product.firebaseKey){
-            await remove(ref(database, "products/" + product.firebaseKey));
-        }else{
-            products.splice(index, 1);
-            localStorage.setItem("green_angan_products", JSON.stringify(products));
-            renderProducts();
-            populateDeleteDropdown();
-        }
-        alert("Product deleted successfully.");
-    }catch(error){
-        console.error(error);
-        alert("Could not delete product.");
-    }
+window.closeCheckout = function(){
+    document.getElementById("checkoutSection").classList.remove("show");
 };
 
-window.scrollProducts = function(){ document.getElementById("productsSection").scrollIntoView({ behavior:"smooth" }); };
-window.scrollToDeals = function(){ document.getElementById("dealsSection").scrollIntoView({ behavior:"smooth" }); };
+window.toggleEditAddress = function(){
+    isEditingAddress = !isEditingAddress;
+    document.getElementById("customerName").disabled = !isEditingAddress;
+    document.getElementById("customerAddress").disabled = !isEditingAddress;
+    document.getElementById("editAddrBtn").innerText = isEditingAddress ? "💾 Save Address" : "✏️ Edit Address";
+};
 
-/* INITIALIZE */
+document.getElementById("payNowBtn").onclick = function(){
+    alert("🎉 Order Placed Successfully! Thank you for shopping with Green Angan.");
+    cart = [];
+    saveCart();
+    updateCart();
+    closeCheckout();
+};
+
+/* INITIAL LOAD */
 updateAccountUI();
 loadCart();
-renderProducts();
-updateCart();
 </script>
-
 </body>
 </html>
