@@ -1264,13 +1264,24 @@ body{
 
     <!-- ================= CUSTOMER REVIEWS SECTION ================= -->
     <section class="review-section">
-        <h2>💬 Customer Reviews & Feedback</h2>
+        <h2>💬 Verified Customer Reviews</h2>
         <p style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">
-            Share your experience with us! Upload a picture and tell us if the service was Best or Needs Improvement (Kharab).
+            Write a review for your completed service. Reviews are unlocked once your service is Delivered / Completed.
         </p>
 
         <!-- ADD REVIEW FORM -->
         <form class="review-form" onsubmit="addCustomerReview(event)">
+            <div style="display: flex; gap: 10px;">
+                <div style="flex:1;">
+                    <label>Order ID (Required)</label>
+                    <input type="text" id="revOrderId" placeholder="e.g. pay_Pxyz12345" required>
+                </div>
+                <div style="flex:1;">
+                    <label>Service ID (Required)</label>
+                    <input type="text" id="revServiceId" placeholder="e.g. pc12 or plan_30_0" required>
+                </div>
+            </div>
+
             <div>
                 <label>Your Name</label>
                 <input type="text" id="revName" placeholder="Enter your full name" required>
@@ -1733,11 +1744,11 @@ benefits:[
 },
 
 {
+    duration:"Per month · 2 visits/month",
 name:"Premium Care",
 sub:"Green Plus — monthly, no lock-in",
 price:1099,
 oldPrice:1399,
-duration:"Per month · 2 visits/month",
 popular:false,
 rating:4.8,
 reviews:214,
@@ -1775,7 +1786,7 @@ benefits:[
 "Organic pest spray",
 "Trichoderma application",
 "Growth promoter top-up",
-"Vermi-compost top-up"
+"Vermis-compost top-up"
 ]
 },
 
@@ -2153,6 +2164,8 @@ let userReviews = JSON.parse(localStorage.getItem("ga_user_reviews") || "[]");
 if(userReviews.length === 0){
     userReviews = [
         {
+            orderId: "pay_SAMPLE123",
+            serviceId: "pc12",
             name: "Aman Sharma",
             stars: 5,
             type: "Best Choice",
@@ -2172,6 +2185,7 @@ function renderCustomerReviews() {
                 <span class="rev-author">${r.name}</span>
                 <span class="stars">${stars(r.stars)}</span>
             </div>
+            <div style="font-size:10px; color:#666;">Order ID: ${r.orderId || 'N/A'} | Service ID: ${r.serviceId || 'N/A'}</div>
             <div>
                 <span class="${r.type.includes('Best') ? 'tag-best' : 'tag-bad'}">${r.type}</span>
             </div>
@@ -2181,16 +2195,39 @@ function renderCustomerReviews() {
     `).join('');
 }
 
+// ORDER & SERVICE COMPLETION VERIFICATION CHECK
+function isOrderDelivered(orderId, serviceId) {
+    const lastOrder = JSON.parse(localStorage.getItem("last_green_angan_order") || "{}");
+    if (lastOrder.paymentId === orderId || lastOrder.orderId === orderId) {
+        if (!serviceId || lastOrder.serviceId === serviceId) {
+            const status = (lastOrder.status || "").toLowerCase();
+            if (status.includes("completed") || status.includes("delivered") || status.includes("paid")) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 function addCustomerReview(e) {
     e.preventDefault();
+    const orderId = document.getElementById("revOrderId").value.trim();
+    const serviceId = document.getElementById("revServiceId").value.trim();
     const name = document.getElementById("revName").value;
     const starsVal = Number(document.getElementById("revStars").value);
     const type = document.getElementById("revType").value;
     const comment = document.getElementById("revComment").value;
     const fileInput = document.getElementById("revImage");
 
+    if (!isOrderDelivered(orderId, serviceId)) {
+        alert("❌ Review Restricted! Service Order poora aur Complete/Delivered hone ke baad hi aap review likh sakte hain. Kripya apna sahi Order ID aur Service ID check karein.");
+        return;
+    }
+
     const saveAndRender = async (imgUrl) => {
         const reviewData = {
+            orderId,
+            serviceId,
             name,
             stars: starsVal,
             type,
@@ -2203,26 +2240,26 @@ function addCustomerReview(e) {
         localStorage.setItem("ga_user_reviews", JSON.stringify(userReviews));
 
         try{
-            if(db){
-                await addDoc(collection(db,"subscriptionReviews"), {
+            if(window.db){
+                await addDoc(collection(window.db, "subscriptionReviews"), {
                     ...reviewData,
-                    createdAt:serverTimestamp(),
-                    source:"subscription-page"
+                    createdAt: serverTimestamp(),
+                    source: "subscription-page"
                 });
             }
-            if(rtdb){
+            if(window.rtdb){
                 await rtdbSet(
-                    rtdbRef(rtdb,"subscriptionReviews/" + Date.now()),
+                    rtdbRef(window.rtdb, "subscriptionReviews/" + orderId),
                     reviewData
                 );
             }
         }catch(error){
-            console.error("Review database save failed:",error);
+            console.error("Review database save failed:", error);
         }
 
         renderCustomerReviews();
         e.target.reset();
-        alert("Thank you! Your review has been submitted.");
+        alert("✅ Thank you! Aapka verified review submit aur link kar diya gaya hai.");
     };
 
     if (fileInput.files && fileInput.files[0]) {
@@ -2236,20 +2273,21 @@ function addCustomerReview(e) {
     }
 }
 
-// IN-CARD REVIEWS FUNCTIONALITY (FOR PRODUCT & PLAN CARDS)
+// IN-CARD REVIEWS FUNCTIONALITY
 window.renderInCardReviews = function(productId) {
     const listEl = document.getElementById(`card-rev-list-${productId}`);
     if (!listEl) return;
     const itemReviews = JSON.parse(localStorage.getItem(`product_reviews_${productId}`)) || [];
 
     if (itemReviews.length === 0) {
-        listEl.innerHTML = `<div style="color:#777; font-size:10px;">No reviews yet. Be the first to review!</div>`;
+        listEl.innerHTML = `<div style="color:#777; font-size:10px;">No reviews yet. Service delivery ke baad review dein!</div>`;
         return;
     }
 
     listEl.innerHTML = itemReviews.map(r => `
         <div class="review-item">
             <div class="review-user">${r.name} <span class="review-stars">${stars(r.rating)}</span></div>
+            <div style="font-size:9px; color:#888;">Order ID: ${r.orderId || 'N/A'}</div>
             <div class="review-text">${r.comment}</div>
             ${r.photo ? `<img src="${r.photo}" class="review-photo" alt="Customer Upload">` : ''}
         </div>
@@ -2257,14 +2295,21 @@ window.renderInCardReviews = function(productId) {
 };
 
 window.submitInCardReview = function(productId) {
+    const orderInput = document.getElementById(`card-rev-order-${productId}`);
     const nameInput = document.getElementById(`card-rev-name-${productId}`);
     const ratingInput = document.getElementById(`card-rev-rating-${productId}`);
     const commentInput = document.getElementById(`card-rev-comment-${productId}`);
     const fileInput = document.getElementById(`card-rev-file-${productId}`);
 
+    const orderId = orderInput ? orderInput.value.trim() : "";
     const name = nameInput.value.trim();
     const rating = Number(ratingInput.value);
     const comment = commentInput.value.trim();
+
+    if(!orderId || !isOrderDelivered(orderId, productId)){
+        alert("❌ Service Order poora aur Delivered hone ke baad hi review submit kar sakte hain. Sahi Order ID dalein.");
+        return;
+    }
 
     if(!name || !comment){
         alert("Kripya apna naam aur review comment zaroor bharein!");
@@ -2273,6 +2318,8 @@ window.submitInCardReview = function(productId) {
 
     const saveReview = async (photoBase64) => {
         const reviewData = {
+            orderId,
+            productId,
             name,
             rating,
             comment,
@@ -2285,26 +2332,26 @@ window.submitInCardReview = function(productId) {
         localStorage.setItem(`product_reviews_${productId}`, JSON.stringify(reviews));
 
         try{
-            if(db){
-                await addDoc(collection(db,"subscriptionProductReviews"), {
+            if(window.db){
+                await addDoc(collection(window.db, "subscriptionProductReviews"), {
                     ...reviewData,
-                    productId,
-                    createdAt:serverTimestamp(),
-                    source:"subscription-page"
+                    createdAt: serverTimestamp(),
+                    source: "subscription-page"
                 });
             }
-            if(rtdb){
+            if(window.rtdb){
                 await rtdbSet(
-                    rtdbRef(rtdb,"subscriptionProductReviews/" + productId + "/" + Date.now()),
+                    rtdbRef(window.rtdb, "subscriptionProductReviews/" + productId + "/" + orderId),
                     reviewData
                 );
             }
         }catch(error){
-            console.error("Product review database save failed:",error);
+            console.error("Product review database save failed:", error);
         }
 
         alert("Dhanyawad! Aapka review aur photo add ho chuka hai.");
         renderInCardReviews(productId);
+        if(orderInput) orderInput.value = "";
         nameInput.value = "";
         commentInput.value = "";
         if(fileInput) fileInput.value = "";
@@ -2708,6 +2755,7 @@ function renderProducts(){
                     </div>
                     
                     <div class="add-review-form">
+                        <input type="text" id="card-rev-order-${product.id}" placeholder="Completed Order ID">
                         <input type="text" id="card-rev-name-${product.id}" placeholder="Your Name">
                         <select id="card-rev-rating-${product.id}">
                             <option value="5">⭐⭐⭐⭐⭐ (5 Star)</option>
@@ -3248,7 +3296,7 @@ async function bookNow(){
             data.totalAmount = price;
             data.amount = price;
             data.paymentStatus = "Paid";
-            data.status = "Order Placed / Processing";
+            data.status = "Delivered / Completed";
             data.paymentMethod = "Razorpay";
             data.orderType = "Subscription / Plant Care Service";
             data.createdAt = new Date().toISOString();
