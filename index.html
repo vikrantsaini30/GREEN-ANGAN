@@ -2063,6 +2063,10 @@ function renderProducts(){
 
 window.openProductDetail=function(index){
  const product=products[index]; if(!product)return;
+ const productId = product.firebaseKey || index;
+ window.location.href = "product.html?id=" + encodeURIComponent(productId);
+ return;
+/* OLD INLINE PRODUCT PAGE CODE KEPT BELOW UNCHANGED FOR BACKWARD COMPATIBILITY */
  const price=Number(product.price||0),original=Number(product.originalPrice||Math.round(price*1.4));
  const discount=original>price?Math.round(((original-price)/original)*100):0,stock=Number(product.stock||0);
  const images=Array.isArray(product.images)&&product.images.length?product.images.slice(0,10):[product.image||"Logo.png"];
