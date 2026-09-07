@@ -1767,28 +1767,92 @@ button{
 
 <a class="whatsapp" href="https://wa.me/919821846004" target="_blank" title="Contact Green Angan">💬</a>
 
+<!-- ================= WORKING FOOTER ================= -->
 <footer class="footer">
     <div class="footer-top">
         <div class="footer-column">
             <h3>Get to Know Us</h3>
-            <p>About Green Angan</p><p>Our Products</p><p>Quality Promise</p><p>Sustainability</p>
+            <p><a href="index.html#about">About Green Angan</a></p>
+            <p><a href="index.html#products">Our Products</a></p>
+            <p><a href="index.html#promise">Quality Promise</a></p>
+            <p><a href="index.html#sustainability">Sustainability</a></p>
         </div>
+
         <div class="footer-column">
             <h3>Customer Service</h3>
-            <p>Your Orders</p><p>Delivery Information</p><p>Contact Us</p><p>Help Center</p>
+            <p><a href="order.html">Your Orders</a></p>
+            <p><a href="javascript:void(0)" onclick="alert('🚚 Standard Delivery: 2-4 Days across Delhi NCR.')">Delivery Information</a></p>
+            <p><a href="tel:+919821846004">Contact Us</a></p>
+            <p><a href="javascript:void(0)" onclick="alert('💬 Help Center: Reach us via WhatsApp or Phone for immediate support.')">Help Center</a></p>
         </div>
+
         <div class="footer-column">
             <h3>Shop</h3>
-            <p>Seeds</p><p>Organic Wheat</p><p>Fertilizers</p><p>Honey</p>
+            <p><a href="index.html?category=seeds">Seeds</a></p>
+            <p><a href="index.html?category=wheat">Organic Wheat</a></p>
+            <p><a href="index.html?category=fertilizers">Fertilizers</a></p>
+            <p><a href="index.html?category=honey">Honey</a></p>
         </div>
+
         <div class="footer-column">
             <h3>Green Angan</h3>
-            <p>📍 Gurgaon, Haryana</p><p>📞 +91 9821846004</p><p>✉ greenangan@gmail.com</p><p>🌿 Where Homes Bloom with Life</p><p><button onclick="openAdminLogin()" style="background:none;border:0;color:#ddd;padding:0;font-size:12px;font-weight:700;cursor:pointer">🔐 Admin Dashboard</button></p>
+            <p><a href="https://maps.google.com/?q=Gurgaon,Haryana" target="_blank" rel="noopener">📍 Gurgaon, Haryana</a></p>
+            <p><a href="tel:+919821846004">📞 +91 9821846004</a></p>
+            <p><a href="mailto:greenangan@gmail.com">✉ greenangan@gmail.com</a></p>
+            <p>🌿 Where Homes Bloom with Life</p>
+            <p>
+                <button onclick="openAdminLogin()" style="background:none;border:0;color:#ddd;padding:0;font-size:12px;font-weight:700;cursor:pointer">
+                    🔐 Admin Dashboard
+                </button>
+            </p>
         </div>
     </div>
     <div class="footer-bottom">© 2026 Green Angan | Where Homes Bloom with Life</div>
 </footer>
 
+<!-- ADMIN LOGIN MODAL -->
+<div id="adminModal" class="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:9999;">
+    <div style="background:#fff; padding:25px; border-radius:10px; width:min(320px,90%); text-align:center;">
+        <h3 style="margin-top:0; color:#0b4d3a;">Admin Access</h3>
+        <input type="password" id="adminPassInput" placeholder="Enter Admin Password" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px; margin-bottom:12px;">
+        <button onclick="verifyAdminPassword()" style="background:#0b4d3a; color:#fff; border:0; padding:10px 18px; border-radius:5px; font-weight:bold; cursor:pointer;">Login</button>
+        <button onclick="closeAdminLogin()" style="background:#eee; color:#333; border:0; padding:10px 14px; border-radius:5px; margin-left:5px; cursor:pointer;">Cancel</button>
+    </div>
+</div>
+
+<!-- FOOTER CSS & JS INTEGRATION -->
+<style>
+.footer-column a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.footer-column a:hover {
+    color: #a6d96a;
+    text-decoration: underline;
+}
+</style>
+
+<script>
+function openAdminLogin() {
+    const modal = document.getElementById("adminModal");
+    if(modal) modal.style.display = "flex";
+}
+
+function closeAdminLogin() {
+    const modal = document.getElementById("adminModal");
+    if(modal) modal.style.display = "none";
+}
+
+function verifyAdminPassword() {
+    const pass = document.getElementById("adminPassInput").value;
+    if(pass === "admin123") { // Change your password here
+        window.location.href = "admin.html";
+    } else {
+        alert("❌ Incorrect Admin Password!");
+    }
+}
+</script>
 <nav class="mobile-nav">
     <div class="mobile-item active" onclick="scrollHome()"><span class="mobile-icon">🏠</span>Home</div>
     <div class="mobile-item" onclick="goOrders()"><span class="mobile-icon">📦</span>Orders</div>
