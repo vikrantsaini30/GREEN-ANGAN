@@ -5,23 +5,644 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Green Angan | Product Details</title>
 <style>
-:root{--green:#006b4f;--green-dark:#004d3a;--yellow:#ffd814;--orange:#ff9900;--nav:#063d30;--bg:#eaeded;--border:#d5d9d9;--muted:#667085}
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}body{margin:0;background:var(--bg);color:#17202a}
-.header{background:var(--nav);color:#fff;position:sticky;top:0;z-index:10}.header-inner{max-width:1500px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:18px}
-.logo{font-size:21px;font-weight:900;cursor:pointer}.logo span{color:#9ff0c9}.back{margin-left:auto;background:#fff;border:0;padding:10px 16px;border-radius:5px;font-weight:800;cursor:pointer}
-.page{max-width:1500px;margin:auto;padding:18px}.box{background:#fff;border:2px solid var(--border);padding:22px}
-.layout{display:grid;grid-template-columns:48% 52%;gap:28px}.main-image{height:500px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;padding:18px}.main-image img{max-width:100%;max-height:100%;object-fit:contain}
-.thumbs{display:flex;gap:9px;overflow-x:auto;padding:12px 0}.thumb{width:70px;height:70px;object-fit:contain;border:1px solid #bbb;padding:4px;cursor:pointer;flex:0 0 auto}.thumb.active,.thumb:hover{border:2px solid var(--green)}
-.title{font-size:28px;line-height:1.3;margin:0 0 8px}.brand{color:#007185;font-size:14px;margin-bottom:8px}.rating{display:inline-block;background:var(--green);color:#fff;padding:5px 9px;border-radius:3px;font-size:12px;font-weight:800;margin:4px 0 12px}
-.price{font-size:32px;font-weight:900}.old{font-size:14px;color:var(--muted);text-decoration:line-through;margin-left:8px}.discount{font-size:14px;color:#c40000;font-weight:900;margin-left:8px}
-.divider{border:0;border-top:1px solid #ddd;margin:15px 0}.delivery{margin:18px 0;border:1px solid var(--border);background:#f7fafa;padding:14px;font-size:14px;line-height:1.75}.section-title{font-size:19px;margin:17px 0 8px}.description{font-size:14px;line-height:1.7;color:#333;white-space:pre-line}.features{font-size:14px;line-height:1.8}
-.buybox{border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:18px;max-width:430px}.more-products{margin-top:28px;border-top:1px solid #ddd;padding-top:20px}.more-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.more-card{border:1px solid var(--border);background:#fff;padding:10px;cursor:pointer}.more-card:hover{box-shadow:0 3px 10px rgba(0,0,0,.12)}.more-card img{width:100%;height:180px;object-fit:contain}.more-card strong{display:block;font-size:14px;margin:8px 0}.more-card .small-price{font-size:17px;font-weight:900}@media(max-width:900px){.more-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:500px){.more-grid{grid-template-columns:1fr 1fr}.more-card img{height:130px}}.stock{margin:10px 0;font-weight:800;color:#007600}.stock.low{color:#b12704}.stock.out{color:#c40000}.actions{display:flex;gap:9px}.actions button{flex:1;border-radius:20px;padding:12px;font-weight:900;border:1px solid #aaa;cursor:pointer}.add{background:var(--yellow)}.buy{background:var(--orange)}.loading{text-align:center;padding:80px;font-size:18px}
-@media(max-width:800px){.layout{grid-template-columns:1fr;gap:12px}.main-image{height:350px}.title{font-size:21px}.price{font-size:26px}.page{padding:10px}.box{padding:14px}}
+:root{
+    --green:#006b4f;
+    --green-dark:#004d3a;
+    --green-soft:#e9f7f1;
+    --yellow:#ffd814;
+    --orange:#ffa41c;
+    --orange-hover:#f7ca00;
+    --nav:#063d30;
+    --nav2:#075a45;
+    --bg:#eaeded;
+    --text:#0f1111;
+    --border:#d5d9d9;
+    --muted:#565959;
+    --shadow:0 2px 5px rgba(15,17,17,.15);
+}
+
+*{
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    padding-bottom:70px; /* Space for bottom mobile nav */
+}
+
+button, input, select{
+    font-family:inherit;
+}
+
+/* ================= HEADER (AMAZON / INDEX STYLE) ================= */
+.header{
+    position:sticky;
+    top:0;
+    z-index:5000;
+    color:white;
+}
+
+.header-main{
+    background:var(--nav);
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:6px 16px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+    text-decoration:none;
+}
+
+.logo{
+    width:38px;
+    height:38px;
+    object-fit:contain;
+    border-radius:4px;
+    background:white;
+}
+
+.logo-text{
+    font-size:20px;
+    font-weight:900;
+    color:white;
+    margin-left:8px;
+    letter-spacing:-.5px;
+}
+
+.logo-text span{
+    color:#9ff0c9;
+}
+
+.location{
+    display:flex;
+    flex-direction:column;
+    cursor:pointer;
+    padding:4px 6px;
+    border:1px solid transparent;
+    border-radius:2px;
+}
+
+.location:hover, .header-account:hover, .header-orders:hover, .cart-header:hover{
+    border-color:white;
+}
+
+.location small, .header-account small, .header-orders small{
+    font-size:11px;
+    color:#ccc;
+}
+
+.location strong, .header-account strong, .header-orders strong{
+    font-size:13px;
+    font-weight:700;
+    color:white;
+}
+
+.header-account{
+    margin-left:auto;
+    cursor:pointer;
+    padding:4px 6px;
+    border:1px solid transparent;
+}
+
+.header-orders{
+    cursor:pointer;
+    padding:4px 6px;
+    border:1px solid transparent;
+}
+
+.cart-header{
+    position:relative;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    padding:4px 6px;
+    border:1px solid transparent;
+}
+
+.cart-icon{
+    font-size:26px;
+}
+
+.cart-label{
+    font-weight:900;
+    font-size:13px;
+    color:white;
+}
+
+/* SUBNAV BAR */
+.subnav{
+    background:var(--nav2);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 12px;
+    min-height:38px;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+.subnav::-webkit-scrollbar{ display:none; }
+
+.nav-link{
+    color:white;
+    padding:6px 10px;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    border:1px solid transparent;
+    border-radius:2px;
+}
+
+.nav-link:hover{
+    border-color:white;
+}
+
+/* ================= PAGE & PRODUCT CONTENT ================= */
+.page{
+    max-width:1380px;
+    margin:auto;
+    padding:16px;
+}
+
+.box{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:20px;
+    box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:42% 33% 25%;
+    gap:20px;
+}
+
+/* GALLERY */
+.gallery-container{
+    position:sticky;
+    top:110px;
+    display:flex;
+    gap:12px;
+}
+
+.thumbs-col{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    max-height:480px;
+    overflow-y:auto;
+}
+
+.thumbs-col::-webkit-scrollbar{ width:4px; }
+.thumbs-col::-webkit-scrollbar-thumb{ background:#ccc; border-radius:4px; }
+
+.thumb{
+    width:50px;
+    height:50px;
+    object-fit:contain;
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:3px;
+    cursor:pointer;
+    background:#fff;
+}
+
+.thumb.active, .thumb:hover{
+    border:2px solid var(--green);
+    box-shadow:0 0 4px rgba(0,107,79,.3);
+}
+
+.main-image{
+    flex:1;
+    height:420px;
+    border:1px solid #f0f0f0;
+    border-radius:4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px;
+    background:#fff;
+}
+
+.main-image img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+}
+
+/* PRODUCT DETAILS MIDDLE COLUMN */
+.product-details{
+    display:flex;
+    flex-direction:column;
+}
+
+.title{
+    font-size:22px;
+    line-height:1.3;
+    font-weight:700;
+    color:#0f1111;
+    margin-bottom:6px;
+}
+
+.brand{
+    color:#007185;
+    font-size:13px;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.rating-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.rating-badge{
+    background:var(--green);
+    color:#fff;
+    padding:3px 7px;
+    border-radius:3px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.review-count{
+    font-size:13px;
+    color:#007185;
+}
+
+.divider{
+    border:0;
+    border-top:1px solid #e7e7e7;
+    margin:12px 0;
+}
+
+.price-row{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+}
+
+.badge-discount{
+    color:#cc0c39;
+    font-size:24px;
+    font-weight:300;
+}
+
+.price-main{
+    font-size:28px;
+    font-weight:800;
+    color:#0f1111;
+}
+
+.mrp-row{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+.mrp-row span{
+    text-decoration:line-through;
+}
+
+.tax-text{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.delivery-box{
+    margin:14px 0;
+    background:#f7fafa;
+    border:1px solid #d5d9d9;
+    border-radius:6px;
+    padding:12px;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.delivery-box strong{
+    color:#0f1111;
+}
+
+.section-title{
+    font-size:16px;
+    font-weight:700;
+    margin:14px 0 6px;
+    color:#0f1111;
+}
+
+.description{
+    font-size:13px;
+    line-height:1.6;
+    color:#333;
+    white-space:pre-line;
+}
+
+.features{
+    font-size:13px;
+    line-height:1.7;
+    padding-left:18px;
+    color:#333;
+}
+
+/* BUY BOX RIGHT COLUMN */
+.buybox{
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px;
+    background:#fff;
+    height:max-content;
+}
+
+.buybox-price{
+    font-size:22px;
+    font-weight:800;
+    color:#b12704;
+    margin-bottom:8px;
+}
+
+.stock-status{
+    font-size:15px;
+    font-weight:700;
+    color:#007600;
+    margin-bottom:12px;
+}
+
+.stock-status.low{ color:#b12704; }
+.stock-status.out{ color:#c40000; }
+
+.actions-btn{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.actions-btn button{
+    width:100%;
+    border-radius:20px;
+    padding:11px;
+    font-weight:700;
+    font-size:13px;
+    border:1px solid;
+    cursor:pointer;
+    box-shadow:0 2px 5px rgba(213,217,217,.5);
+    transition:.1s ease;
+}
+
+.btn-add{
+    background:var(--yellow);
+    border-color:#fcd200;
+    color:#0f1111;
+}
+
+.btn-add:hover{
+    background:#f7ca00;
+}
+
+.btn-buy{
+    background:var(--orange);
+    border-color:#ff8f00;
+    color:#0f1111;
+}
+
+.btn-buy:hover{
+    background:#e28a00;
+}
+
+/* MORE PRODUCTS SECTION */
+.more-products{
+    margin-top:30px;
+    border-top:1px solid #e7e7e7;
+    padding-top:20px;
+}
+
+.more-grid{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:14px;
+}
+
+.more-card{
+    border:1px solid var(--border);
+    border-radius:6px;
+    background:#fff;
+    padding:12px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+}
+
+.more-card:hover{
+    box-shadow:0 4px 10px rgba(0,0,0,.1);
+    transform:translateY(-2px);
+}
+
+.more-card img{
+    width:100%;
+    height:140px;
+    object-fit:contain;
+}
+
+.more-card strong{
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    font-size:13px;
+    margin:8px 0 4px;
+    height:34px;
+    line-height:1.3;
+    color:#0f1111;
+}
+
+.more-card .small-price{
+    font-size:15px;
+    font-weight:800;
+    color:var(--green-dark);
+}
+
+.loading{
+    text-align:center;
+    padding:60px 20px;
+    font-size:16px;
+    color:var(--muted);
+}
+
+/* FOOTER */
+.footer{
+    background:#102a23;
+    color:#ddd;
+    margin-top:40px;
+}
+
+.footer-bottom{
+    text-align:center;
+    padding:18px;
+    font-size:12px;
+}
+
+/* ================= MOBILE BOTTOM NAV BAR ================= */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-top: 1px solid var(--border);
+    z-index: 6000;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+}
+
+.mobile-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+    font-size: 11px;
+    color: #555;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.mobile-item.active {
+    color: var(--green);
+}
+
+.mobile-icon {
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
+/* ================= RESPONSIVE DESIGN (MOBILE & TABLET) ================= */
+@media(max-width:1024px){
+    .layout{
+        grid-template-columns:45% 55%;
+    }
+    .buybox{
+        grid-column:span 2;
+        margin-top:10px;
+    }
+    .more-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:768px){
+    .mobile-nav {
+        display: flex;
+    }
+    .header-main{ padding:6px 10px; gap:8px; }
+    .location{ display:none; }
+    .logo-text{ font-size:17px; }
+    .logo{ width:32px; height:32px; }
+    .header-account small, .header-orders small{ font-size:10px; }
+    .header-account strong, .header-orders strong{ font-size:11px; }
+    .cart-label{ font-size:11px; }
+    
+    .layout{
+        grid-template-columns:1fr;
+        gap:16px;
+    }
+    .gallery-container{
+        position:static;
+        flex-direction:column-reverse;
+    }
+    .thumbs-col{
+        flex-direction:row;
+        max-height:none;
+        overflow-x:auto;
+    }
+    .main-image{ height:300px; }
+    .buybox{ grid-column:auto; }
+    .more-grid{ grid-template-columns:repeat(2,1fr); }
+}
+
+@media(max-width:480px){
+    .page{ padding:8px; }
+    .box{ padding:12px; }
+    .title{ font-size:18px; }
+    .price-main{ font-size:24px; }
+    .badge-discount{ font-size:20px; }
+    .main-image{ height:250px; }
+    .thumb{ width:44px; height:44px; }
+    .more-grid{ grid-template-columns:repeat(2,1fr); gap:8px; }
+    .more-card{ padding:8px; }
+    .more-card img{ height:110px; }
+}
 </style>
 </head>
 <body>
-<header class="header"><div class="header-inner"><div class="logo" onclick="goBack()">Green <span>Angan</span></div><button class="back" onclick="goBack()">← Back to Products</button></div></header>
-<main class="page"><section class="box"><div id="productContent" class="loading">Loading product...</div></section></main>
+
+<!-- HEADER (INDEX STYLE) -->
+<header class="header">
+    <div class="header-main">
+        <a href="index.html" class="logo-area">
+            <img src="Logo.png" class="logo" alt="Green Angan">
+            <div class="logo-text">Green <span>Angan</span></div>
+        </a>
+        
+        <div class="location">
+            <small>📍 Deliver to</small>
+            <strong>Gurgaon, Haryana</strong>
+        </div>
+
+        <div class="header-account" onclick="openProfileOrLogin()">
+            <small>Hello, sign in</small>
+            <strong>Account & Lists</strong>
+        </div>
+
+        <div class="header-orders" onclick="goOrders()">
+            <small>Returns</small>
+            <strong>& Orders</strong>
+        </div>
+
+        <div class="cart-header" onclick="openCart()">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-label">Cart</span>
+        </div>
+    </div>
+
+  
+</header>
+
+<main class="page">
+    <section class="box">
+        <div id="productContent" class="loading">Loading product details...</div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer-bottom">© 2026 Green Angan | Where Homes Bloom with Life</div>
+</footer>
+
+<!-- MOBILE BOTTOM NAVIGATION -->
+<nav class="mobile-nav">
+    <div class="mobile-item active" onclick="scrollHome()"><span class="mobile-icon">🏠</span>Home</div>
+    <div class="mobile-item" onclick="goOrders()"><span class="mobile-icon">📦</span>Orders</div>
+    <div class="mobile-item" onclick="openCart()"><span class="mobile-icon">🛒</span>Cart</div>
+    <div class="mobile-item" onclick="openProfileOrLogin()"><span class="mobile-icon">👤</span>Account</div>
+</nav>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
@@ -41,6 +662,12 @@ const params=new URLSearchParams(location.search);
 const productId=params.get("id");
 
 function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+
+window.scrollHome=()=>{ location.href="index.html"; };
+window.goOrders=()=>{ location.href="order.html"; };
+window.openCart=()=>{ location.href="Cart.html"; };
+window.openProfileOrLogin=()=>{ location.href="index.html#account"; };
+
 window.goBack=()=>{
  const from=document.referrer;
  if(from && !from.includes("product.html")) { location.href=from.includes("#")?from:from+"#productsSection"; }
@@ -51,8 +678,8 @@ let allProducts=[];
 function getCachedProducts(){
  try{return JSON.parse(localStorage.getItem("green_angan_products"))||[]}catch(e){return[]}
 }
+
 async function loadProduct(){
- // Show instantly from cached database products first
  const cached=getCachedProducts();
  if(cached.length){
    allProducts=cached;
@@ -77,10 +704,11 @@ async function loadProduct(){
   if(!cached.length) document.getElementById("productContent").innerHTML='<div class="loading">Unable to load product.</div>';
  }
 }
+
 function renderMoreProducts(current){
- const others=allProducts.filter(p=>(p.firebaseKey||p.name)!==(current.firebaseKey||current.name)).slice(0,8);
+ const others=allProducts.filter(p=>(p.firebaseKey||p.name)!==(current.firebaseKey||current.name)).slice(0,10);
  if(!others.length) return "";
- return `<div class="more-products"><h2 class="section-title">More Products</h2><div class="more-grid">${
+ return `<div class="more-products"><h2 class="section-title">Similar Products You May Like</h2><div class="more-grid">${
    others.map(p=>{
     const image=Array.isArray(p.images)&&p.images.length?p.images[0]:(p.image||"Logo.png");
     return `<div class="more-card" data-product-id="${esc(p.firebaseKey||"")}" onclick="openOtherProduct(this.dataset.productId)">
@@ -91,7 +719,10 @@ function renderMoreProducts(current){
    }).join("")
  }</div></div>`;
 }
-window.openOtherProduct=(id)=>{if(!id)return; location.href="product.html?id="+encodeURIComponent(id)};function render(product){
+
+window.openOtherProduct=(id)=>{if(!id)return; location.href="product.html?id="+encodeURIComponent(id)};
+
+function render(product){
  const price=Number(product.price||0), original=Number(product.originalPrice||Math.round(price*1.4));
  const discount=original>price?Math.round(((original-price)/original)*100):0, stock=Number(product.stock||0);
  const images=Array.isArray(product.images)&&product.images.length?product.images.slice(0,10):[product.image||"Logo.png"];
@@ -99,28 +730,73 @@ window.openOtherProduct=(id)=>{if(!id)return; location.href="product.html?id="+e
  const avg=reviews.length?(reviews.reduce((a,r)=>a+Number(r.rating||5),0)/reviews.length).toFixed(1):"5.0";
  const features=Array.isArray(product.features)?product.features.filter(Boolean):[];
  const stockClass=stock<=0?"out":stock<=5?"low":"";
- const stockText=stock<=0?"Currently unavailable":stock<=5?`Only ${stock} left in stock`:`In Stock: ${stock} ${esc(product.unit||"PC")}`;
+ const stockText=stock<=0?"Currently unavailable":stock<=5?`Only ${stock} left in stock - order soon.`:`In Stock`;
+
  document.getElementById("productContent").className="";
  document.getElementById("productContent").innerHTML=`<div class="layout">
-  <div><div class="main-image"><img id="mainImage" src="${esc(images[0])}" alt="${esc(product.name)}"></div>
-  <div class="thumbs">${images.map((img,i)=>`<img src="${esc(img)}" class="thumb ${i===0?"active":""}" onclick="changeImage('${esc(img)}',this)">`).join("")}</div></div>
-  <div><h1 class="title">${esc(product.name||"Green Angan Product")}</h1>
-  ${product.brand?`<div class="brand">Brand: ${esc(product.brand)}</div>`:""}
-  <div class="rating">⭐ ${avg} / 5</div> <span style="font-size:13px;color:#007185">${reviews.length} customer reviews</span>
-  <hr class="divider"><div><span class="price">₹${price.toLocaleString("en-IN")}</span><span class="old">₹${original.toLocaleString("en-IN")}</span><span class="discount">${discount}% off</span></div>
-  <div style="font-size:12px;color:#667085;margin-top:4px">Inclusive of applicable taxes</div>
-  <div class="delivery"><strong>🚚 FREE Delivery</strong><br>Delivery available for your location<br><strong>💵 Cash on Delivery available</strong><br>Unit: ${esc(product.unit||"PC")}</div>
-  <h2 class="section-title">About this product</h2><div class="description">${esc(product.description||"Fresh and quality product supplied by Green Angan.")}</div>
-  ${features.length?`<h2 class="section-title">Key Features</h2><ul class="features">${features.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>`:""}
-  <div class="buybox"><div class="stock ${stockClass}">${stockText}</div>
-  ${stock>0?`<div class="actions"><button class="add" onclick="addToCart()">🛒 Add to Cart</button><button class="buy" onclick="buyNow()">⚡ Buy Now</button></div>`:`<button disabled style="width:100%;padding:12px;border:0;border-radius:20px">Sold Out</button>`}</div></div></div>`;
+  <!-- LEFT: GALLERY -->
+  <div class="gallery-container">
+    <div class="thumbs-col">${images.map((img,i)=>`<img src="${esc(img)}" class="thumb ${i===0?"active":""}" onclick="changeImage('${esc(img)}',this)">`).join("")}</div>
+    <div class="main-image"><img id="mainImage" src="${esc(images[0])}" alt="${esc(product.name)}"></div>
+  </div>
+
+  <!-- CENTER: DETAILS -->
+  <div class="product-details">
+    <h1 class="title">${esc(product.name||"Green Angan Product")}</h1>
+    ${product.brand?`<div class="brand">Brand: ${esc(product.brand)}</div>`:""}
+    
+    <div class="rating-row">
+      <span class="rating-badge">⭐ ${avg}</span>
+      <span class="review-count">${reviews.length} ratings</span>
+    </div>
+
+    <hr class="divider">
+
+    <div class="price-row">
+      ${discount>0?`<span class="badge-discount">-${discount}%</span>`:''}
+      <span class="price-main">₹${price.toLocaleString("en-IN")}</span>
+    </div>
+    <div class="mrp-row">M.R.P.: <span>₹${original.toLocaleString("en-IN")}</span></div>
+    <div class="tax-text">Inclusive of all taxes</div>
+
+    <div class="delivery-box">
+      <strong>🚚 FREE Delivery</strong> on your order<br>
+      <strong>💵 Cash on Delivery</strong> available<br>
+      Unit: <strong>${esc(product.unit||"PC")}</strong>
+    </div>
+
+    <h2 class="section-title">About this item</h2>
+    <div class="description">${esc(product.description||"Fresh and quality product supplied by Green Angan.")}</div>
+    
+    ${features.length?`<h2 class="section-title">Key Features</h2><ul class="features">${features.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>`:""}
+  </div>
+
+  <!-- RIGHT: BUY BOX -->
+  <div class="buybox">
+    <div class="buybox-price">₹${price.toLocaleString("en-IN")}</div>
+    <div class="stock-status ${stockClass}">${stockText}</div>
+    
+    ${stock>0?`
+      <div class="actions-btn">
+        <button class="btn-add" onclick="addToCart()">🛒 Add to Cart</button>
+        <button class="btn-buy" onclick="buyNow()">⚡ Buy Now</button>
+      </div>
+    `:`
+      <button disabled style="width:100%;padding:11px;border:0;border-radius:20px;background:#e7e7e7;color:#888;font-weight:700">Sold Out</button>
+    `}
+  </div>
+ </div>`;
+ 
  document.getElementById("productContent").insertAdjacentHTML("beforeend", renderMoreProducts(product));
  window.currentProduct=product;
 }
+
 window.changeImage=(src,el)=>{document.getElementById("mainImage").src=src;document.querySelectorAll(".thumb").forEach(x=>x.classList.remove("active"));el.classList.add("active")}
 function cartKey(){const c=JSON.parse(localStorage.getItem("current_green_angan_customer")||"null");return "green_angan_cart_"+(c?.phone||"guest")}
 window.addToCart=()=>{const p=window.currentProduct;if(!p)return;let c=JSON.parse(localStorage.getItem(cartKey())||"[]");const found=c.find(x=>(x.firebaseKey||x.name)===(p.firebaseKey||p.name));if(found)found.qty=Number(found.qty||0)+1;else c.push({...p,qty:1});localStorage.setItem(cartKey(),JSON.stringify(c));alert("✓ Added to Cart");}
 window.buyNow=()=>{const p=window.currentProduct;if(!p)return;const c=JSON.parse(localStorage.getItem(cartKey())||"[]");const found=c.find(x=>(x.firebaseKey||x.name)===(p.firebaseKey||p.name));if(found)found.qty=1;else c.push({...p,qty:1});localStorage.setItem(cartKey(),JSON.stringify(c));location.href="address.html?buyNow=1";}
+
 loadProduct();
 </script>
-</body></html>
+</body>
+</html>
