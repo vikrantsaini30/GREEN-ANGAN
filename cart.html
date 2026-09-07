@@ -399,12 +399,420 @@ button{
     font-size:12px;
 }
 
+
+/* ===== ADVANCED AMAZON-STYLE CART ===== */
+.cart-box{
+    border:1px solid #d5d9d9;
+    border-radius:4px;
+    padding:20px;
+}
+
+.cart-title{
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.cart-title-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.cart-tools{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:-4px 0 12px;
+    padding-bottom:12px;
+    border-bottom:1px solid #e7e7e7;
+    font-size:13px;
+}
+
+.select-all-wrap{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    user-select:none;
+}
+
+.cart-checkbox{
+    width:18px;
+    height:18px;
+    accent-color:var(--green);
+    cursor:pointer;
+}
+
+.tool-btn{
+    border:0;
+    background:transparent;
+    color:#0066c0;
+    font-size:13px;
+    cursor:pointer;
+    padding:4px 0;
+}
+
+.tool-btn:hover{
+    color:#c45500;
+    text-decoration:underline;
+}
+
+.cart-item-row{
+    display:grid;
+    grid-template-columns:28px 120px minmax(0,1fr) 170px;
+    gap:15px;
+    padding:20px 0;
+    border-bottom:1px solid #eee;
+    align-items:start;
+    position:relative;
+}
+
+.cart-item-row:last-child{
+    border-bottom:0;
+}
+
+.item-select{
+    padding-top:7px;
+}
+
+.cart-item-img{
+    width:120px;
+    height:120px;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:6px;
+    padding:8px;
+}
+
+.cart-item-info{
+    min-width:0;
+}
+
+.cart-item-info h3{
+    font-size:17px;
+    line-height:1.35;
+    margin-bottom:7px;
+    overflow-wrap:anywhere;
+}
+
+.cart-item-info h3 a{
+    color:#007185;
+    text-decoration:none;
+}
+
+.cart-item-info h3 a:hover{
+    color:#c45500;
+    text-decoration:underline;
+}
+
+.item-status{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    color:#007600;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.cart-item-unit{
+    margin-bottom:9px;
+}
+
+.item-price-mobile{
+    display:none;
+}
+
+.item-actions{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:0;
+    margin-top:10px;
+}
+
+.item-actions button{
+    border:0;
+    background:transparent;
+    color:#007185;
+    font-size:12px;
+    padding:0 10px;
+    border-right:1px solid #ddd;
+}
+
+.item-actions button:first-child{
+    padding-left:0;
+}
+
+.item-actions button:last-child{
+    border-right:0;
+}
+
+.item-actions button:hover{
+    color:#c45500;
+    text-decoration:underline;
+}
+
+.cart-item-qty{
+    display:flex;
+    align-items:center;
+    gap:0;
+    border:1px solid #aaa;
+    border-radius:5px;
+    overflow:hidden;
+    width:max-content;
+    background:#fff;
+}
+
+.cart-item-qty button{
+    width:34px;
+    height:30px;
+    border:0;
+    background:#f7f7f7;
+    border-radius:0;
+    font-size:16px;
+}
+
+.cart-item-qty button:hover{
+    background:#e9e9e9;
+}
+
+.cart-item-qty span{
+    min-width:38px;
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+    font-size:13px;
+}
+
+.cart-item-price{
+    text-align:right;
+    min-width:0;
+}
+
+.cart-item-price strong{
+    font-size:20px;
+    color:#111;
+}
+
+.unit-price{
+    display:block;
+    color:#667085;
+    font-size:12px;
+    margin-top:5px;
+}
+
+.item-total-label{
+    display:block;
+    color:#565959;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.remove-btn{
+    display:none;
+}
+
+.item-subtotal-line{
+    margin-top:8px;
+    color:#565959;
+    font-size:12px;
+}
+
+.item-subtotal-line strong{
+    color:#111;
+}
+
+.summary-box{
+    position:sticky;
+    top:125px;
+    border:1px solid #d5d9d9;
+    border-radius:5px;
+}
+
+.summary-selection{
+    font-size:12px;
+    color:#667085;
+    margin-bottom:12px;
+    padding-bottom:10px;
+    border-bottom:1px solid #eee;
+}
+
+.summary-note{
+    font-size:12px;
+    line-height:1.5;
+    color:#565959;
+    margin-top:12px;
+}
+
+.checkout-btn:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.delivery-message{
+    margin-top:10px;
+    background:#f0fdf4;
+    border:1px solid #ccebd7;
+    color:#166534;
+    border-radius:5px;
+    padding:9px 10px;
+    font-size:12px;
+    line-height:1.4;
+}
+
+@media(max-width:1000px){
+    .cart-item-row{
+        grid-template-columns:28px 100px minmax(0,1fr) 130px;
+        gap:12px;
+    }
+    .cart-item-img{
+        width:100px;
+        height:100px;
+    }
+}
+
+@media(max-width:800px){
+    .page{
+        padding:10px 8px;
+    }
+
+    .cart-box{
+        padding:12px;
+    }
+
+    .cart-title{
+        font-size:20px;
+    }
+
+    .cart-item-row{
+        grid-template-columns:24px 82px minmax(0,1fr);
+        gap:9px;
+        padding:15px 0;
+    }
+
+    .cart-item-img{
+        width:82px;
+        height:82px;
+    }
+
+    .cart-item-info h3{
+        font-size:14px;
+    }
+
+    .cart-item-price{
+        grid-column:3;
+        text-align:left;
+        margin-top:2px;
+    }
+
+    .cart-item-price strong{
+        font-size:17px;
+    }
+
+    .item-price-mobile{
+        display:block;
+    }
+
+    .item-subtotal-line{
+        display:none;
+    }
+
+    .summary-box{
+        position:static;
+    }
+
+    .cart-tools{
+        font-size:12px;
+        gap:9px;
+    }
+}
+
+@media(max-width:430px){
+    .cart-title-left{
+        gap:7px;
+    }
+
+    .cart-title-left span:first-child{
+        font-size:19px;
+    }
+
+    .cart-item-row{
+        grid-template-columns:22px 72px minmax(0,1fr);
+        gap:7px;
+    }
+
+    .cart-item-img{
+        width:72px;
+        height:72px;
+    }
+
+    .cart-item-info h3{
+        font-size:13px;
+    }
+
+    .item-actions button{
+        padding:0 7px;
+        font-size:11px;
+    }
+
+    .item-actions button:first-child{
+        padding-left:0;
+    }
+}
+
 @media(max-width:800px){
     .cart-page-layout{ grid-template-columns:1fr; }
     .cart-item-row{ grid-template-columns:80px 1fr; }
     .cart-item-price{ text-align:left; grid-column:2; }
     .footer-top{ grid-template-columns:repeat(2,1fr); }
 }
+
+@media(max-width:800px){
+    .header-main{
+        gap:7px;
+        padding:7px 9px;
+        overflow:hidden;
+    }
+    .logo-area{
+        min-width:auto;
+        flex:1;
+    }
+    .logo-text{
+        font-size:16px;
+    }
+    .logo{
+        width:35px;
+        height:35px;
+    }
+    .location{
+        display:none;
+    }
+    .header-account{
+        min-width:auto;
+        margin-left:0;
+    }
+    .header-account small,
+    .header-account strong,
+    .header-orders small,
+    .header-orders strong{
+        font-size:10px;
+    }
+    .header-orders{
+        min-width:auto;
+    }
+    .cart-header{
+        min-width:58px;
+    }
+    .cart-label{
+        font-size:11px;
+    }
+}
+
 </style>
 </head>
 
@@ -445,14 +853,28 @@ button{
     <div class="cart-page-layout">
         <div class="cart-box">
             <div class="cart-title">
-                <span>🛒 Shopping Cart</span>
-                <span style="font-size:14px;color:var(--muted)" id="cartItemsHeaderCount">0 Items</span>
+                <div class="cart-title-left">
+                    <span>🛒 Shopping Cart</span>
+                    <span style="font-size:14px;color:var(--muted)" id="cartItemsHeaderCount">0 Items</span>
+                </div>
+                <span style="font-size:13px;color:var(--muted)">Price</span>
             </div>
+
+            <div class="cart-tools">
+                <label class="select-all-wrap">
+                    <input type="checkbox" class="cart-checkbox" id="selectAllCart" onchange="toggleSelectAll(this.checked)">
+                    <span>Select all items</span>
+                </label>
+                <button class="tool-btn" onclick="removeSelectedItems()">Delete selected</button>
+            </div>
+
             <div id="cartPageList"></div>
         </div>
 
         <div class="summary-box">
             <div class="summary-title">Order Summary</div>
+            <div class="summary-selection" id="summarySelection">0 items selected</div>
+
             <div class="summary-row">
                 <span>Subtotal</span>
                 <span id="summarySubtotal">₹0</span>
@@ -465,7 +887,16 @@ button{
                 <span>Total</span>
                 <span id="summaryTotal">₹0</span>
             </div>
-            <button class="checkout-btn" onclick="startCheckout()">Proceed to Checkout</button>
+
+            <div class="delivery-message">
+                ✓ Free delivery on your Green Angan order
+            </div>
+
+            <button class="checkout-btn" id="checkoutBtn" onclick="startCheckout()">Proceed to Checkout</button>
+
+            <div class="summary-note">
+                You can select products individually. Each product keeps its own quantity and price, just like a standard marketplace cart.
+            </div>
         </div>
     </div>
 </main>
@@ -522,17 +953,75 @@ let cart = [];
 let total = 0;
 const CART_STORAGE_KEY = "green_angan_cart";
 
+/* Every cart row gets its own stable identity.
+   Existing carts without an id are automatically upgraded. */
 function getCartStorageKey(){
-    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    let customer = null;
+    try{
+        customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    }catch(e){}
+
     if(customer && customer.phone){
         return CART_STORAGE_KEY + "_" + customer.phone;
     }
     return CART_STORAGE_KEY + "_guest";
 }
 
+function makeCartItemId(item, index = 0){
+    if(item && item.cartItemId) return String(item.cartItemId);
+
+    const base = [
+        item?.id,
+        item?.productId,
+        item?.sku,
+        item?.name,
+        item?.unit,
+        item?.price,
+        index
+    ].filter(v => v !== undefined && v !== null && v !== "").join("|");
+
+    return "ga_" + btoa(unescape(encodeURIComponent(base))).replace(/[^a-zA-Z0-9]/g,"").slice(0,32) + "_" + Date.now().toString(36);
+}
+
+function normalizeCartItems(items){
+    if(!Array.isArray(items)) return [];
+
+    return items.map((item, index) => {
+        const normalized = {
+            ...item,
+            cartItemId: item.cartItemId || makeCartItemId(item, index),
+            qty: Math.max(1, Number(item.qty || 1)),
+            price: Number(item.price || 0),
+            selected: item.selected !== false
+        };
+
+        return normalized;
+    });
+}
+
+function formatINR(value){
+    return "₹" + Number(value || 0).toLocaleString("en-IN");
+}
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
 async function saveCart(){
+    cart = normalizeCartItems(cart);
+
     localStorage.setItem(getCartStorageKey(), JSON.stringify(cart));
-    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+
+    let customer = null;
+    try{
+        customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    }catch(e){}
+
     if(database && customer && customer.phone){
         try{
             await set(ref(database, "carts/" + customer.phone), {
@@ -546,34 +1035,75 @@ async function saveCart(){
 }
 
 async function loadCart(){
-    const customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    let customer = null;
+    try{
+        customer = JSON.parse(localStorage.getItem("current_green_angan_customer"));
+    }catch(e){}
+
     try{
         if(database && customer && customer.phone){
             const snapshot = await get(ref(database, "carts/" + customer.phone));
             const data = snapshot.val();
+
             if(data && Array.isArray(data.items)){
-                cart = data.items;
+                cart = normalizeCartItems(data.items);
                 localStorage.setItem(getCartStorageKey(), JSON.stringify(cart));
             }else{
-                cart = JSON.parse(localStorage.getItem(getCartStorageKey())) || [];
+                cart = normalizeCartItems(JSON.parse(localStorage.getItem(getCartStorageKey())) || []);
             }
         }else{
-            cart = JSON.parse(localStorage.getItem(getCartStorageKey())) || [];
+            cart = normalizeCartItems(JSON.parse(localStorage.getItem(getCartStorageKey())) || []);
         }
     }catch(error){
-        cart = JSON.parse(localStorage.getItem(getCartStorageKey())) || [];
+        cart = normalizeCartItems(JSON.parse(localStorage.getItem(getCartStorageKey())) || []);
     }
+
     renderCartPage();
 }
 
-function renderCartPage(){
-    total = cart.reduce((sum, item) => sum + (Number(item.price || 0) * Number(item.qty || 0)), 0);
-    const count = cart.reduce((sum, item) => sum + Number(item.qty || 0), 0);
+function getSelectedItems(){
+    return cart.filter(item => item.selected !== false);
+}
 
-    document.getElementById("cartCount").innerText = count;
-    document.getElementById("cartItemsHeaderCount").innerText = count + " Items";
-    document.getElementById("summarySubtotal").innerText = "₹" + total.toLocaleString("en-IN");
-    document.getElementById("summaryTotal").innerText = "₹" + total.toLocaleString("en-IN");
+function calculateCartTotal(items = getSelectedItems()){
+    return items.reduce((sum, item) => {
+        return sum + (Number(item.price || 0) * Number(item.qty || 0));
+    }, 0);
+}
+
+function renderCartPage(){
+    cart = normalizeCartItems(cart);
+
+    const totalQty = cart.reduce((sum, item) => sum + Number(item.qty || 0), 0);
+    const selectedItems = getSelectedItems();
+    total = calculateCartTotal(selectedItems);
+    const selectedQty = selectedItems.reduce((sum, item) => sum + Number(item.qty || 0), 0);
+
+    document.getElementById("cartCount").innerText = totalQty;
+    document.getElementById("cartItemsHeaderCount").innerText =
+        totalQty + (totalQty === 1 ? " Item" : " Items");
+
+    document.getElementById("summarySubtotal").innerText = formatINR(total);
+    document.getElementById("summaryTotal").innerText = formatINR(total);
+
+    const selectionEl = document.getElementById("summarySelection");
+    if(selectionEl){
+        selectionEl.innerText =
+            selectedQty + (selectedQty === 1 ? " item" : " items") + " selected";
+    }
+
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    if(checkoutBtn){
+        checkoutBtn.disabled = selectedItems.length === 0;
+    }
+
+    const selectAll = document.getElementById("selectAllCart");
+    if(selectAll){
+        selectAll.checked = cart.length > 0 && cart.every(item => item.selected !== false);
+        selectAll.indeterminate =
+            cart.some(item => item.selected !== false) &&
+            !cart.every(item => item.selected !== false);
+    }
 
     const container = document.getElementById("cartPageList");
     if(!container) return;
@@ -588,47 +1118,145 @@ function renderCartPage(){
         return;
     }
 
-    container.innerHTML = cart.map((item, index) => `
-        <div class="cart-item-row">
-            <img src="${item.image || 'Logo.png'}" class="cart-item-img" alt="${item.name}">
+    container.innerHTML = cart.map((item) => {
+        const id = escapeHTML(item.cartItemId);
+        const name = escapeHTML(item.name || "Green Angan Product");
+        const unit = escapeHTML(item.unit || "PC");
+        const image = escapeHTML(item.image || "Logo.png");
+        const qty = Number(item.qty || 1);
+        const price = Number(item.price || 0);
+        const itemTotal = price * qty;
+        const selected = item.selected !== false;
+
+        return `
+        <div class="cart-item-row" data-cart-id="${id}">
+            <div class="item-select">
+                <input
+                    type="checkbox"
+                    class="cart-checkbox item-checkbox"
+                    ${selected ? "checked" : ""}
+                    onchange="toggleItemSelection('${id}', this.checked)"
+                    aria-label="Select ${name}"
+                >
+            </div>
+
+            <img src="${image}" class="cart-item-img" alt="${name}" loading="lazy">
+
             <div class="cart-item-info">
-                <h3>${item.name}</h3>
-                <div class="cart-item-unit">Unit: ${item.unit || 'PC'}</div>
-                <div class="cart-item-qty">
-                    <button onclick="changeQty(${index}, -1)">−</button>
-                    <span>${item.qty}</span>
-                    <button onclick="changeQty(${index}, 1)">+</button>
+                <h3>${name}</h3>
+
+                <div class="item-status">✓ In stock</div>
+
+                <div class="cart-item-unit">Unit: ${unit}</div>
+
+                <div class="cart-item-qty" aria-label="Quantity controls">
+                    <button onclick="changeQtyById('${id}', -1)" aria-label="Decrease quantity">−</button>
+                    <span>${qty}</span>
+                    <button onclick="changeQtyById('${id}', 1)" aria-label="Increase quantity">+</button>
+                </div>
+
+                <div class="item-subtotal-line">
+                    ${formatINR(price)} × ${qty} = <strong>${formatINR(itemTotal)}</strong>
+                </div>
+
+                <div class="item-actions">
+                    <button onclick="removeItemById('${id}')">Delete</button>
+                    <button onclick="toggleItemSelection('${id}', false)">Deselect</button>
                 </div>
             </div>
+
             <div class="cart-item-price">
-                <strong>₹${(Number(item.price || 0) * item.qty).toLocaleString("en-IN")}</strong>
-                <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                <strong>${formatINR(itemTotal)}</strong>
+                <span class="unit-price">${formatINR(price)} each</span>
+                <span class="item-total-label">Item total</span>
             </div>
-        </div>
-    `).join("");
+        </div>`;
+    }).join("");
 }
 
-window.changeQty = function(index, change){
-    const item = cart[index];
+window.toggleItemSelection = function(cartItemId, checked){
+    const item = cart.find(i => String(i.cartItemId) === String(cartItemId));
     if(!item) return;
-    const newQty = Number(item.qty || 0) + change;
-    if(newQty <= 0) cart.splice(index, 1);
-    else item.qty = newQty;
+
+    item.selected = checked;
     saveCart();
     renderCartPage();
 };
 
+window.toggleSelectAll = function(checked){
+    cart.forEach(item => item.selected = checked);
+    saveCart();
+    renderCartPage();
+};
+
+window.changeQtyById = function(cartItemId, change){
+    const item = cart.find(i => String(i.cartItemId) === String(cartItemId));
+    if(!item) return;
+
+    const newQty = Number(item.qty || 1) + Number(change || 0);
+
+    if(newQty <= 0){
+        cart = cart.filter(i => String(i.cartItemId) !== String(cartItemId));
+    }else{
+        item.qty = newQty;
+    }
+
+    saveCart();
+    renderCartPage();
+};
+
+/* Kept for compatibility with any existing code that calls changeQty(index, change). */
+window.changeQty = function(index, change){
+    const item = cart[index];
+    if(!item) return;
+    changeQtyById(item.cartItemId, change);
+};
+
+window.removeItemById = function(cartItemId){
+    cart = cart.filter(item => String(item.cartItemId) !== String(cartItemId));
+    saveCart();
+    renderCartPage();
+};
+
+/* Kept for compatibility with the previous cart implementation. */
 window.removeItem = function(index){
-    cart.splice(index, 1);
+    const item = cart[index];
+    if(!item) return;
+    removeItemById(item.cartItemId);
+};
+
+window.removeSelectedItems = function(){
+    const selected = cart.filter(item => item.selected !== false);
+
+    if(selected.length === 0){
+        alert("Please select at least one product.");
+        return;
+    }
+
+    cart = cart.filter(item => item.selected === false);
     saveCart();
     renderCartPage();
 };
 
 window.startCheckout = function(){
-    if(cart.length === 0){
-        alert("Your cart is empty!");
+    const selectedItems = getSelectedItems();
+
+    if(selectedItems.length === 0){
+        alert("Please select at least one product to continue.");
         return;
     }
+
+    /*
+      Only selected products are sent to checkout.
+      The original cart remains saved, so unselected products stay in the cart.
+    */
+    const checkoutItems = selectedItems.map(item => ({
+        ...item,
+        qty: Number(item.qty || 1),
+        price: Number(item.price || 0)
+    }));
+
+    localStorage.setItem("green_angan_checkout_items", JSON.stringify(checkoutItems));
     window.location.href = "address.html";
 };
 
