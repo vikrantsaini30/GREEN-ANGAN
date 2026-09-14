@@ -21,43 +21,52 @@
 <div class="steps"><span class="done">1. Cart</span><span class="line"></span><span class="active">2. Delivery Address</span><span class="line"></span><span>3. Payment</span></div>
 <main class="page"><div class="heading"><h1>Select a delivery address</h1><button class="back" onclick="location.href='index.html'">← Back to Shopping</button></div>
 <div id="content" class="grid"><section>
-<div class="box" id="savedBox" style="display:none"><div class="boxHead"><h2>Your Addresses</h2><span class="badge">✓ SAVED</span></div><div class="boxBody"><div class="saved"><div class="savedTop"><strong id="savedName"></strong><span class="badge">DEFAULT</span></div><div class="addr" id="savedAddr"></div><div class="addr" id="savedPhone"></div><button class="edit" onclick="editSaved()">✏️ Edit address</button></div></div></div>
-<div class="box"><div class="boxHead"><h2 id="formTitle">Add a new address</h2></div><div class="boxBody"><form id="addressForm"><div class="formGrid">
+<div class="box" id="savedBox" style="display:none"><div class="boxHead"><h2>Your Address</h2><span class="badge">✓ SAVED</span></div><div class="boxBody"><div class="saved"><div class="savedTop"><strong id="savedName"></strong><span class="badge">DEFAULT</span></div><div class="addr" id="savedAddr"></div><div class="addr" id="savedPhone"></div></div></div></div>
+<div class="box"><div class="boxHead"><h2 id="formTitle">Delivery Address</h2></div><div class="boxBody"><form id="addressForm"><div class="formGrid">
 <div class="field"><label>Full name <span class="required">*</span></label><input id="name" autocomplete="name" required></div><div class="field"><label>Mobile number <span class="required">*</span></label><input id="phone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" required></div>
 <div class="field"><label>PIN code <span class="required">*</span></label><input id="pincode" inputmode="numeric" maxlength="6" autocomplete="postal-code" required></div><div class="field"><label>State <span class="required">*</span></label><select id="state" required><option value="">Select State</option><option>Haryana</option><option>Delhi</option><option>Punjab</option><option>Uttar Pradesh</option><option>Rajasthan</option><option>Himachal Pradesh</option><option>Uttarakhand</option><option>Other</option></select></div>
 <div class="field full"><label>Flat, House no., Building, Apartment <span class="required">*</span></label><input id="line1" required></div><div class="field full"><label>Area, Street, Sector, Village <span class="required">*</span></label><input id="line2" required></div>
 <div class="field"><label>Landmark</label><input id="landmark"></div><div class="field"><label>Town/City <span class="required">*</span></label><input id="city" required></div><div class="field"><label>Address type</label><select id="addressType"><option>Home</option><option>Work</option></select></div></div>
-<div class="actions"><button class="primary" type="submit" id="saveBtn">Save address</button><button class="secondary" type="button" id="cancelBtn" onclick="cancelEdit()" style="display:none">Cancel</button></div></form></div></div>
+<div class="actions" style="margin-top:15px"><button class="secondary" type="submit" id="saveBtn">Save Address for Future</button></div></form></div></div>
 </section><aside class="summary"><div class="box"><div class="boxHead summaryHead"><h2>Order summary</h2></div><div id="items"></div><div class="row"><span>Items</span><strong id="subtotal">₹0</strong></div><div class="row"><span>Delivery</span><strong>FREE</strong></div><div class="total"><span>Order Total</span><span id="total">₹0</span></div><div class="payment-methods"><h3>Select payment method</h3><label class="payment-option"><input type="radio" name="paymentMethod" value="online" checked> 💳 Pay Online (UPI / Card / Net Banking)</label><label class="payment-option"><input type="radio" name="paymentMethod" value="cod"> 💵 Cash on Delivery (COD)</label></div><button class="pay" id="payBtn">Place Order</button><div class="note">Your delivery address is saved to your Green Angan account and Firebase.</div></div></aside></div>
 <div id="empty" class="empty" style="display:none"><div style="font-size:45px">🛒</div><h2>Your cart is empty</h2><p style="margin-top:8px;color:#667085">Add products before checkout.</p><button class="primary" style="margin-top:15px" onclick="location.href='index.html'">Continue Shopping</button></div></main>
+
+<!-- Razorpay Checkout SDK Script -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";import{getDatabase,ref,get,set,push}from"https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 const firebaseConfig={apiKey:"AIzaSyAwydVIDNYu6n3ze_yaI-Q9r1Ms6MMCcYM",authDomain:"greenangan-7a085.firebaseapp.com",databaseURL:"https://greenangan-7a085-default-rtdb.firebaseio.com/",projectId:"greenangan-7a085",storageBucket:"greenangan-7a085.firebasestorage.app",messagingSenderId:"105971440710",appId:"1:105971440710:web:32e03bcb5cd2fcf8713347",measurementId:"G-L5KCJ9FS2F"};
 let database=null;try{database=getDatabase(initializeApp(firebaseConfig))}catch(e){console.error(e)}
-const customer=JSON.parse(localStorage.getItem("current_green_angan_customer")||"null"),cartKey=customer&&customer.phone?"green_angan_cart_"+customer.phone:"green_angan_cart_guest";let cart=JSON.parse(localStorage.getItem(cartKey)||"[]"),total=cart.reduce((s,i)=>s+Number(i.price||0)*Number(i.qty||0),0),saved=null,editing=false;
-const $=id=>document.getElementById(id),money=n=>"₹"+Number(n||0).toLocaleString("en-IN");function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+
+const customer=JSON.parse(localStorage.getItem("current_green_angan_customer")||"null"),cartKey=customer&&customer.phone?"green_angan_cart_"+customer.phone:"green_angan_cart_guest";
+let cart=JSON.parse(localStorage.getItem(cartKey)||"[]"),total=cart.reduce((s,i)=>s+Number(i.price||0)*Number(i.qty||0),0),saved=null;
+
+const $=id=>document.getElementById(id),money=n=>"₹"+Number(n||0).toLocaleString("en-IN");
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+
 function render(){if(!cart.length){$("content").style.display="none";$("empty").style.display="block";return}$('items').innerHTML=cart.map(i=>`<div class="item"><div class="itemImg"><img src="${esc(i.image||"Logo.png")}" alt="${esc(i.name)}"></div><div class="itemInfo"><div class="itemName">${esc(i.name)}</div><div class="meta">Qty: ${Number(i.qty||0)} ${esc(i.unit||"PC")}</div><div class="meta">${money(i.price)} each</div></div><div class="itemPrice">${money(Number(i.price||0)*Number(i.qty||0))}</div></div>`).join("");$("subtotal").textContent=money(total);$("total").textContent=money(total)}
+
 function showSaved(a){saved=a;$("savedBox").style.display="block";$("savedName").textContent=a.name||customer?.name||"";$("savedAddr").textContent=a.address||"";$("savedPhone").textContent="📞 "+(a.phone||customer?.phone||"")}
 function fill(a){$("name").value=a?.name||customer?.name||"";$("phone").value=a?.phone||customer?.phone||"";$("pincode").value=a?.pincode||"";$("state").value=a?.state||"";$("line1").value=a?.line1||"";$("line2").value=a?.line2||"";$("landmark").value=a?.landmark||"";$("city").value=a?.city||"";$("addressType").value=a?.addressType||"Home"}
-async function loadSaved(){if(customer?.phone){try{const l=JSON.parse(localStorage.getItem("saved_address_"+customer.phone)||"null");if(l?.address){showSaved(l);return}}catch(e){}if(database)try{const s=await get(ref(database,"users/"+customer.phone+"/address"));if(s.exists()){showSaved(s.val());localStorage.setItem("saved_address_"+customer.phone,JSON.stringify(s.val()))}}catch(e){console.error(e)}}}
-window.editSaved=()=>{editing=true;$("formTitle").textContent="Edit your delivery address";$("saveBtn").textContent="Update address";$("cancelBtn").style.display="inline-block";fill(saved);scrollTo({top:0,behavior:"smooth"})};window.cancelEdit=()=>{editing=false;$("formTitle").textContent="Add a new address";$("saveBtn").textContent="Save address";$("cancelBtn").style.display="none";$("addressForm").reset();fill(null)};
+
+async function loadSaved(){
+if(customer?.phone){
+try{const l=JSON.parse(localStorage.getItem("saved_address_"+customer.phone)||"null");if(l?.address){showSaved(l);fill(l);return}}catch(e){}
+if(database)try{const s=await get(ref(database,"users/"+customer.phone+"/address"));if(s.exists()){const data=s.val();showSaved(data);fill(data);localStorage.setItem("saved_address_"+customer.phone,JSON.stringify(data))}}catch(e){console.error(e)}
+}
+}
+
 function buildAddress(){
-const cleanDigits=v=>String(v||"").replace(/\D/g,"");
-const l1=$("line1").value.trim(),l2=$("line2").value.trim(),lm=$("landmark").value.trim();
-const city=$("city").value.trim(),state=$("state").value,pin=cleanDigits($("pincode").value),phone=cleanDigits($("phone").value);
-return{
-name:$("name").value.trim(),phone,pincode:pin,state,line1:l1,line2:l2,landmark:lm,city,
-addressType:$("addressType").value,
-address:[l1,l2,lm?"Landmark: "+lm:"",[city,state,pin].filter(Boolean).join(", ")].filter(Boolean).join(", ")
-};
+const l1=$("line1").value.trim(),l2=$("line2").value.trim(),lm=$("landmark").value.trim(),city=$("city").value.trim(),state=$("state").value,pin=$("pincode").value.trim();
+return{name:$("name").value.trim(),phone:$("phone").value.trim(),pincode:pin,state,line1:l1,line2:l2,landmark:lm,city,addressType:$("addressType").value,address:[l1,l2,lm?"Landmark: "+lm:"",[city,state,pin].filter(Boolean).join(", ")].filter(Boolean).join(", "),timestamp:new Date().toISOString()}
 }
 
 function validateAddress(showAlert=true){
 const a=buildAddress();
 const checks=[
 [a.name.length>=2,"Please enter your full name."],
-[/^[6-9]\d{9}$/.test(a.phone),"Please enter a valid 10-digit Indian mobile number."],
+[/^\d{10}$/.test(a.phone),"Please enter a valid 10-digit mobile number."],
 [/^\d{6}$/.test(a.pincode),"Please enter a valid 6-digit PIN code."],
 [!!a.state,"Please select your state."],
 [a.line1.length>=3,"Please enter your Flat / House / Building details."],
@@ -65,80 +74,30 @@ const checks=[
 [a.city.length>=2,"Please enter your Town / City."],
 [!!a.addressType,"Please select address type."]
 ];
-for(const [ok,msg] of checks){
-if(!ok){
-if(showAlert) alert("⚠️ "+msg);
-return false;
-}}
+for(const [ok,msg] of checks){if(!ok){if(showAlert)alert("⚠️ "+msg);return false}}
 return a;
 }
 
-function sameAddress(a,b){
-if(!a||!b)return false;
-return ["name","phone","pincode","state","line1","line2","landmark","city","addressType","address"]
-.every(k=>String(a[k]??"")===String(b[k]??""));
-}
-
-async function saveAddress(){
-const a=validateAddress();
-if(!a)return false;
-
+async function saveAddressSilently(a){
 try{
 localStorage.setItem("saved_address_"+a.phone,JSON.stringify(a));
-
 const current=JSON.parse(localStorage.getItem("current_green_angan_customer")||"null");
-if(current){
-current.name=a.name;
-current.phone=a.phone;
-current.savedAddress=a.address;
-localStorage.setItem("current_green_angan_customer",JSON.stringify(current));
-}
-
-if(database){
-await set(ref(database,"users/"+a.phone+"/address"),a);
-await set(ref(database,"users/"+a.phone+"/savedAddress"),a.address);
-}
-
+if(current){current.name=a.name;current.phone=a.phone;current.savedAddress=a.address;localStorage.setItem("current_green_angan_customer",JSON.stringify(current))}
+if(database){await set(ref(database,"users/"+a.phone+"/address"),a);await set(ref(database,"users/"+a.phone+"/savedAddress"),a.address)}
 showSaved(a);
-saved=a;
-editing=false;
-$("formTitle").textContent="Add a new address";
-$("saveBtn").textContent="Save address";
-$("cancelBtn").style.display="none";
-return true;
-}catch(e){
-console.error("Address save error:",e);
-alert("⚠️ Address save nahi ho pa raha. Internet/Firebase connection check karke dobara try karein.");
-return false;
-}
+}catch(e){console.error(e)}
 }
 
-$("addressForm").onsubmit=async e=>{
-e.preventDefault();
-if(!e.currentTarget.checkValidity()){
-e.currentTarget.reportValidity();
-return;
-}
-if(await saveAddress()) alert("✅ Address saved successfully.");
-};
+$("addressForm").onsubmit=async e=>{e.preventDefault();const a=validateAddress();if(a){await saveAddressSilently(a);alert("✅ Address saved successfully.")}};
 
 $("payBtn").onclick=async()=>{
-if(!cart.length){alert("Your cart is empty.");return;}
+if(!cart.length){alert("Your cart is empty.");return}
+const a=validateAddress();
+if(!a)return;
 
-const validated=validateAddress();
-if(!validated)return;
+// Auto Save Address on Place Order
+await saveAddressSilently(a);
 
-if(editing){
-alert("⚠️ Address edit kiya hai. Pehle Update address button dabayein.");
-return;
-}
-
-if(!saved || !sameAddress(saved,validated)){
-alert("⚠️ Address mein changes hain. Pehle Save address button dabayein.");
-return;
-}
-
-const a=saved;
 const method=document.querySelector('input[name="paymentMethod"]:checked')?.value||"online";
 
 const placeOrder=async(paymentId,paymentMethod)=>{
@@ -149,16 +108,9 @@ paymentMethod,
 customerName:a.name,
 customerPhone:a.phone,
 customerAddress:a.address,
-addressDetails:{
-pincode:a.pincode,state:a.state,line1:a.line1,line2:a.line2,
-landmark:a.landmark,city:a.city,addressType:a.addressType
-},
+addressDetails:{pincode:a.pincode,state:a.state,line1:a.line1,line2:a.line2,landmark:a.landmark,city:a.city,addressType:a.addressType},
 items:cart.map(i=>`${i.name} (x${i.qty})`).join(", "),
-products:cart.map(i=>({
-productKey:i.productKey||i.firebaseKey||i.name,name:i.name,
-price:Number(i.price||0),qty:Number(i.qty||0),unit:i.unit||"PC",
-image:i.image||"Logo.png"
-})),
+products:cart.map(i=>({productKey:i.productKey||i.firebaseKey||i.name,name:i.name,price:Number(i.price||0),qty:Number(i.qty||0),unit:i.unit||"PC",image:i.image||"Logo.png"})),
 totalAmount:total,
 status:paymentMethod==="COD"?"Order Placed - Cash on Delivery":"Order Placed / Processing",
 date:new Date().toISOString()
@@ -173,21 +125,19 @@ if(!key||!data[key])for(const k of Object.keys(data))if(data[k]?.name===item.nam
 if(key&&data[key]){
 const stock=Number(data[key].stock||0),qty=Number(item.qty||0);
 if(qty>stock){alert("Some product stock changed. Please contact Green Angan.");return}
-await set(ref(database,"products/"+key+"/stock"),Math.max(0,stock-qty));
-}}
+await set(ref(database,"products/"+key+"/stock"),Math.max(0,stock-qty))
+}
+}
 await push(ref(database,"orders"),orderData);
-await push(ref(database,"users/"+a.phone+"/orders"),orderData);
+await push(ref(database,"users/"+a.phone+"/orders"),orderData)
 }
 const local=JSON.parse(localStorage.getItem("green_angan_orders")||"[]");
 local.push(orderData);
 localStorage.setItem("green_angan_orders",JSON.stringify(local));
 localStorage.removeItem(cartKey);
 alert(paymentMethod==="COD"?"🎉 Order Placed! Pay cash on delivery.":"🎉 Payment Successful! Order Placed.");
-location.href="order.html";
-}catch(e){
-console.error(e);
-alert("Order save failed. Please try again.");
-}
+location.href="order.html"
+}catch(e){console.error(e);alert("Order save failed. Please try again.")}
 };
 
 if(method==="cod"){
@@ -196,21 +146,38 @@ return;
 }
 
 if(typeof Razorpay==="undefined"){
-alert("Payment system could not load. Please try again.");
+alert("Payment system could not load. Please check your internet connection.");
 return;
 }
 
-new Razorpay({
+const options={
 key:"rzp_live_T6yhVp368wh7Uc",
 amount:Math.round(total*100),
 currency:"INR",
 name:"Green Angan",
-description:"Green Angan Order",
-prefill:{name:a.name,contact:a.phone},
-notes:{delivery_address:a.address},
-handler:async r=>{await placeOrder(r.razorpay_payment_id,"Online Payment")}
-}).open();
+description:"Order Checkout Payment",
+image:"Logo.png",
+prefill:{
+name:a.name,
+contact:a.phone
+},
+notes:{
+delivery_address:a.address
+},
+theme:{
+color:"#006b4f"
+},
+handler:async function(response){
+await placeOrder(response.razorpay_payment_id,"Online Payment");
+}
 };
 
-render();loadSaved().then(()=>{if(!saved)fill(null)});
-</script></body></html>
+const rzp=new Razorpay(options);
+rzp.open();
+};
+
+render();
+loadSaved().then(()=>{if(!saved)fill(null)});
+</script>
+</body>
+</html>
