@@ -47,8 +47,8 @@ function validateAddress(showAlert=true){
 const a=buildAddress();
 const checks=[
 [a.name.length>=2,"Please enter your full name."],
-[/^\\d{10}$/.test(a.phone),"Please enter a valid 10-digit mobile number."],
-[/^\\d{6}$/.test(a.pincode),"Please enter a valid 6-digit PIN code."],
+[/^\d{10}$/.test(a.phone),"Please enter a valid 10-digit mobile number."],
+[/^\d{6}$/.test(a.pincode),"Please enter a valid 6-digit PIN code."],
 [!!a.state,"Please select your state."],
 [a.line1.length>=3,"Please enter your Flat / House / Building details."],
 [a.line2.length>=3,"Please enter your Area / Street / Sector / Village."],
